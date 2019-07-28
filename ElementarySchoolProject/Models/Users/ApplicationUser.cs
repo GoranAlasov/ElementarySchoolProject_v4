@@ -15,6 +15,6 @@ namespace ElementarySchoolProject.Models
 
         [Required]
         [MaxLength(100)]
-        public string LastName { get; set; }                
+        public string LastName { get; set; }        
     }
 }

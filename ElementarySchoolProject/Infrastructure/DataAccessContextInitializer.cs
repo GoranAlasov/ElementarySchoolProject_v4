@@ -12,6 +12,7 @@ namespace ElementarySchoolProject.Infrastructure
 {
     public class DataAccessContextInitializer : DropCreateDatabaseAlways<DataAccessContext>
     {
+        //This method closes the database after each run
         public override void InitializeDatabase(DataAccessContext context)
         {
             context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction
@@ -20,98 +21,334 @@ namespace ElementarySchoolProject.Infrastructure
             base.InitializeDatabase(context);
         }
 
-        private void SetAllRoles(List<ApplicationUser> users, DataAccessContext context)
-        {
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+        //private void SetAllRoles(List<ApplicationUser> users, DataAccessContext context)
+        //{
+        //    var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
 
-            foreach (var user in users)
-            {
-                if (user.GetType() == typeof(Admin))
-                {
-                    manager.AddToRole(user.Id, "admins");
-                }
-                else if (user.GetType() == typeof(Teacher))
-                {
-                    manager.AddToRole(user.Id, "teachers");
-                }
-                else if (user.GetType() == typeof(Parent))
-                {
-                    manager.AddToRole(user.Id, "parents");
-                }
-                else if (user.GetType() == typeof(Student))
-                {
-                    manager.AddToRole(user.Id, "students");
-                }
-            }            
-        }
+        //    foreach (var user in users)
+        //    {
+        //        if (user.GetType() == typeof(Admin))
+        //        {
+        //            manager.AddToRole(user.Id, "admins");
+        //        }
+        //        else if (user.GetType() == typeof(Teacher))
+        //        {
+        //            manager.AddToRole(user.Id, "teachers");
+        //        }
+        //        else if (user.GetType() == typeof(Parent))
+        //        {
+        //            manager.AddToRole(user.Id, "parents");
+        //        }
+        //        else if (user.GetType() == typeof(Student))
+        //        {
+        //            manager.AddToRole(user.Id, "students");
+        //        }
+        //    }            
+        //}
 
         protected override void Seed(DataAccessContext context)
         {
-            
+            #region AddingRoles
 
-            //var user = new ApplicationUser()
-            //{
-            //    UserName = "SuperPowerUser",
-            //    Email = "taiseer.joudeh@gmail.com",
-            //    EmailConfirmed = true,
-            //    FirstName = "Taiseer",
-            //    LastName = "Joudeh",
-            //    Level = 1,
-            //    JoinDate = DateTime.Now.AddYears(-3)
-            //};
-
-            //manager.Create(user, "MySuperP@ss!");
-
-            //if (roleManager.Roles.Count() == 0)
-            //{
-            //    roleManager.Create(new IdentityRole { Name = "SuperAdmin" });
-            //    roleManager.Create(new IdentityRole { Name = "Admin" });
-            //    roleManager.Create(new IdentityRole { Name = "User" });
-            //}
-
-            //var adminUser = manager.FindByName("SuperPowerUser");
-            
-            
-
-            context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "admins" });
-            context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "teachers" });
-            context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name= "parents" });
-            context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "students" });
-
-            context.SaveChanges();
-
-            List<ApplicationUser> allUsers = new List<ApplicationUser>();
-
-            ApplicationUser admin1 = new Admin()
+            using (var store = new RoleStore<IdentityRole>(context))
             {
-                Id = Guid.NewGuid().ToString(),
-                FirstName = "Chuck",
-                LastName = "Norris",
-                UserName = "chuckyboy",
-                Email = "chuck@mail.com",
-                PasswordHash = new PasswordHasher().HashPassword("qwerty")
-            };
+                using (var manager = new RoleManager<IdentityRole>(store))
+                {
+                    manager.Create(new IdentityRole("admins"));
+                    manager.Create(new IdentityRole("teachers"));
+                    manager.Create(new IdentityRole("parents"));
+                    manager.Create(new IdentityRole("students"));
+                }
+            }
 
-            ApplicationUser teacher1 = new Teacher()
+            #endregion
+
+            using (var userStore = new UserStore<ApplicationUser>(context))
             {
-                Id = Guid.NewGuid().ToString(),
-                FirstName = "Goran",
-                LastName = "Alasov",
-                UserName = "alas",
-                Email = "Ala@gsag",
-                PasswordHash = new PasswordHasher().HashPassword("qwerty")
-            };
+                using (var userManager = new UserManager<ApplicationUser>(userStore))
+                {
+                    #region AddingAdmins
 
-            allUsers.Add(admin1);
-            allUsers.Add(teacher1);
+                    ApplicationUser admin1 = new Admin()
+                    {                        
+                        FirstName = "Chuck",
+                        LastName = "Norris",
+                        UserName = "chuckyboy",
+                        Email = "chuck@mail.com",                        
+                    };
+                    userManager.Create(admin1, "qwerty");
+                    userManager.AddToRole(admin1.Id, "admins");
 
-            context.Users.Add(admin1);
-            context.Users.Add(teacher1);
+                    #endregion
+
+                    #region AddingTeachers
+
+                    ApplicationUser teacher1 = new Teacher()
+                    {
+                        FirstName = "Petar",
+                        LastName = "Stojakovic",
+                        UserName = "peca",
+                        Email = "peca@mail.com",
+                    };
+                    userManager.Create(teacher1, "pecaa1");
+                    userManager.AddToRole(teacher1.Id, "teachers");
+
+                    ApplicationUser teacher2 = new Teacher()
+                    {
+                        FirstName = "Eugen",
+                        LastName = "Plancak",
+                        UserName = "eugen_plancak",
+                        Email = "eugen@mail.com",
+                    };
+                    userManager.Create(teacher2, "eugen1");
+                    userManager.AddToRole(teacher2.Id, "teachers");
+
+                    ApplicationUser teacher3 = new Teacher()
+                    {
+                        FirstName = "Milos",
+                        LastName = "Kolarov",
+                        UserName = "milos_kolarov",
+                        Email = "milos_kolarov@mail.com",
+                    };
+                    userManager.Create(teacher3, "kolarov1");
+                    userManager.AddToRole(teacher3.Id, "teachers");
+
+                    ApplicationUser teacher4 = new Teacher()
+                    {
+                        FirstName = "Obrad",
+                        LastName = "Stojkovic",
+                        UserName = "obrad",
+                        Email = "obrad@mail.com",
+                    };
+                    userManager.Create(teacher4, "obrad1");
+                    userManager.AddToRole(teacher4.Id, "teachers");
+
+                    #endregion
+
+                    #region AddingParents
+
+                    ApplicationUser parent1 = new Parent()
+                    {
+                        FirstName = "Gordana",
+                        LastName = "Alasov",
+                        UserName = "gordana_alasov",
+                        Email = "gordana_alasov@mail.com",
+                    };
+                    userManager.Create(parent1, "gordana1");
+                    userManager.AddToRole(parent1.Id, "parents");
+
+                    ApplicationUser parent2 = new Parent()
+                    {
+                        FirstName = "Vidosava",
+                        LastName = "Maodus",
+                        UserName = "vida_maodus",
+                        Email = "vida_maodus@mail.com",
+                    };
+                    userManager.Create(parent2, "vidaa1");
+                    userManager.AddToRole(parent2.Id, "parents");
+
+                    ApplicationUser parent3 = new Parent()
+                    {
+                        FirstName = "Djordje",
+                        LastName = "Atanackovic",
+                        UserName = "djordje_atanackovic",
+                        Email = "djordje_atanackovic@mail.com",
+                    };
+                    userManager.Create(parent3, "djole1");
+                    userManager.AddToRole(parent3.Id, "parents");
+
+                    ApplicationUser parent4 = new Parent()
+                    {
+                        FirstName = "Snezana",
+                        LastName = "Stojsic",
+                        UserName = "sneza_stojsic",
+                        Email = "sneza_stojsic@mail.com",
+                    };
+                    userManager.Create(parent4, "sneza1");
+                    userManager.AddToRole(parent4.Id, "parents");
+
+                    ApplicationUser parent5 = new Parent()
+                    {
+                        FirstName = "Tatjana",
+                        LastName = "Lekic",
+                        UserName = "tanja_lekic",
+                        Email = "tanja_lekic@mail.com",
+                    };
+                    userManager.Create(parent5, "tanja1");
+                    userManager.AddToRole(parent5.Id, "parents");
+
+                    ApplicationUser parent6 = new Parent()
+                    {
+                        FirstName = "Macone",
+                        LastName = "Nedeljkov",
+                        UserName = "maca_nedeljkov",
+                        Email = "maca_nedeljkov@mail.com",
+                    };
+                    userManager.Create(parent6, "macaa1");
+                    userManager.AddToRole(parent6.Id, "parents");
+
+                    ApplicationUser parent7 = new Parent()
+                    {
+                        FirstName = "Mile",
+                        LastName = "Etinski",
+                        UserName = "mile_etinski",
+                        Email = "mile_etinski@mail.com",
+                    };
+                    userManager.Create(parent7, "milee1");
+                    userManager.AddToRole(parent7.Id, "parents");
+
+                    #endregion
+
+                    #region AddingStudents
+
+                    ApplicationUser student1 = new Student()
+                    {
+                        FirstName = "Goran",
+                        LastName = "Alasov",
+                        UserName = "goran_alasov",
+                        Email = "alasov.jr@mail.com",
+                        ParentId = parent1.Id
+                    };
+                    userManager.Create(student1, "alasov1");
+                    userManager.AddToRole(student1.Id, "students");
+
+                    ApplicationUser student2 = new Student()
+                    {
+                        FirstName = "Milan",
+                        LastName = "Maodus",
+                        UserName = "milan_maodus",
+                        Email = "milan_maodus@mail.com",
+                        ParentId = parent2.Id
+                    };
+                    userManager.Create(student2, "maodus1");
+                    userManager.AddToRole(student2.Id, "students");
+
+                    ApplicationUser student3 = new Student()
+                    {
+                        FirstName = "Nenad",
+                        LastName = "Maodus",
+                        UserName = "nenad_maodus",
+                        Email = "nenad_maodus@mail.com",
+                        ParentId = parent2.Id
+                    };
+                    userManager.Create(student3, "rokii1");
+                    userManager.AddToRole(student3.Id, "students");
+
+                    ApplicationUser student4 = new Student()
+                    {
+                        FirstName = "Bojan",
+                        LastName = "Atanackovic",
+                        UserName = "bojan_atanackovic",
+                        Email = "bojan_atanackovic@mail.com",
+                        ParentId = parent3.Id
+                    };
+                    userManager.Create(student4, "facan1");
+                    userManager.AddToRole(student4.Id, "students");
+
+                    ApplicationUser student5 = new Student()
+                    {
+                        FirstName = "Aleksandar",
+                        LastName = "Atanackovic",
+                        UserName = "aleksandar_atanackovic",
+                        Email = "aleksandar_atanackovic@mail.com",
+                        ParentId = parent3.Id
+                    };
+                    userManager.Create(student5, "jebac1");
+                    userManager.AddToRole(student5.Id, "students");
+
+                    ApplicationUser student6 = new Student()
+                    {
+                        FirstName = "Vladimir",
+                        LastName = "Stojsic",
+                        UserName = "vladimir_stojsic",
+                        Email = "vladimir_stojsic@mail.com",
+                        ParentId = parent4.Id
+                    };
+                    userManager.Create(student6, "doktor1");
+                    userManager.AddToRole(student6.Id, "students");
+
+                    ApplicationUser student7 = new Student()
+                    {
+                        FirstName = "Bogdan",
+                        LastName = "Stojsic",
+                        UserName = "bogdan_stojsic",
+                        Email = "bogdan_stojsic@mail.com",
+                        ParentId = parent4.Id
+                    };
+                    userManager.Create(student7, "bogdan1");
+                    userManager.AddToRole(student7.Id, "students");
+
+                    ApplicationUser student8 = new Student()
+                    {
+                        FirstName = "Svetozar",
+                        LastName = "Lekic",
+                        UserName = "sveta_lekic",
+                        Email = "svetozar_lekic@mail.com",
+                        ParentId = parent5.Id
+                    };
+                    userManager.Create(student8, "sveta1");
+                    userManager.AddToRole(student8.Id, "students");
+
+                    ApplicationUser student9 = new Student()
+                    {
+                        FirstName = "Nebojsa",
+                        LastName = "Nedeljkov",
+                        UserName = "nebojsa_nedeljkov",
+                        Email = "nebojsa_nedeljkov@mail.com",
+                        ParentId = parent6.Id
+                    };
+                    userManager.Create(student9, "nebojsa1");
+                    userManager.AddToRole(student9.Id, "students");
+
+                    ApplicationUser student10 = new Student()
+                    {
+                        FirstName = "Marko",
+                        LastName = "Nedeljkov",
+                        UserName = "marko_nedeljkov",
+                        Email = "marko_nedeljkov@mail.com",
+                        ParentId = parent6.Id
+                    };
+                    userManager.Create(student10, "marko1");
+                    userManager.AddToRole(student10.Id, "students");
+
+                    ApplicationUser student11 = new Student()
+                    {
+                        FirstName = "Dragan",
+                        LastName = "Etinski",
+                        UserName = "dragan_etinski",
+                        Email = "dragan_etinski@mail.com",
+                        ParentId = parent7.Id
+                    };
+                    userManager.Create(student11, "pista1");
+                    userManager.AddToRole(student11.Id, "students");
+
+                    #endregion                   
+                }
+            }
+
             
-            context.SaveChanges();
-            SetAllRoles(allUsers, context);
 
-            
+
+
+            //context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "admins" });
+            //context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "teachers" });
+            //context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name= "parents" });
+            //context.Roles.Add(new IdentityRole() { Id = Guid.NewGuid().ToString(), Name = "students" });
+
+            //context.SaveChanges();
+
+            //List<ApplicationUser> allUsers = new List<ApplicationUser>();                        
+
+            //allUsers.Add(admin1);
+            //allUsers.Add(teacher1);
+
+            //context.Users.Add(admin1);
+            //context.Users.Add(teacher1);
+
+            //context.SaveChanges();
+            //SetAllRoles(allUsers, context);
+
+
             context.SaveChanges();
 
             //Admin admin1 = new Admin()

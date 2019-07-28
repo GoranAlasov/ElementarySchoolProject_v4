@@ -17,6 +17,16 @@ namespace ElementarySchoolProject.Services.UsersService
         Task<IdentityResult> RegisterStudent(RegisterUserDTO user);
 
         Task<IList<ApplicationUser>> GetAllUsers();
+        Task<ApplicationUser> GetUserById(string id);
+
+        IEnumerable<Admin> GetAllAdmins();
+        IEnumerable<Teacher> GetAllTeachers();
+        IEnumerable<Parent> GetAllParents();
+        IEnumerable<Student> GetAllStudents();
+        Admin GetAdminById(string id);
+        Teacher GetTeacherById(string id);
+        Parent GetParentById(string id);
+        Student GetStudentById(string id);
 
         //Task<IdentityResult> GetUserById(string Id);
     }

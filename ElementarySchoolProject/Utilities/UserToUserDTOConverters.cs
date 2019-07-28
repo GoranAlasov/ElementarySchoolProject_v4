@@ -1,15 +1,18 @@
 ﻿using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.Users.UserDTOs;
+using ElementarySchoolProject.Repositories;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 
 namespace ElementarySchoolProject.Utilities
 {
     public static class UserToUserDTOConverters
     {
+        
         #region RegisterUserDTOs
 
         public static Admin RegisterUserDTOtoAdmin(RegisterUserDTO dto)
@@ -69,16 +72,17 @@ namespace ElementarySchoolProject.Utilities
             };
         }
 
-        public static UserBasicInfoDTO UserToBasicInfoDTO(ApplicationUser user)
-        {
-            return new UserBasicInfoDTO()
+        public static UserAdminViewInfoDTO UserToAdminViewInfoDTO(ApplicationUser user)
+        {            
+            return new UserAdminViewInfoDTO()
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,
-                Email = user.Email
-            };            
-        }
+                Email = user.Email,
+                RoleIds = user.Roles.Select(x => x.RoleId)
+            };
+        }        
     }
 }

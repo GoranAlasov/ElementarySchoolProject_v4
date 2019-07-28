@@ -20,6 +20,8 @@ namespace ElementarySchoolProject.Repositories
 
         Task<ApplicationUser> FindUser(string userName, string password);
 
+        Task<ApplicationUser> FindUserById(string id);
+
         Task<IList<string>> FindRoles(string userId);
 
         Task<IList<ApplicationUser>> GetAllUsers();

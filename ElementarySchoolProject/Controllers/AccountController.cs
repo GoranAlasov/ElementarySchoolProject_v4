@@ -1,4 +1,5 @@
-﻿using ElementarySchoolProject.Models.Users.UserDTOs;
+﻿using ElementarySchoolProject.Models;
+using ElementarySchoolProject.Models.Users.UserDTOs;
 using ElementarySchoolProject.Services.UsersService;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace ElementarySchoolProject.Controllers
@@ -113,25 +115,35 @@ namespace ElementarySchoolProject.Controllers
         #endregion
 
         [Route("getall")]
-        [Authorize(Roles = "admins")]
-        public async Task<IList<UserBasicInfoDTO>> GetAllUsers()
+        [AllowAnonymous]
+        public async Task<IList<UserAdminViewInfoDTO>> GetAllUsers()
         {
             var result = await service.GetAllUsers();
 
-            IList<UserBasicInfoDTO> result2 = new List<UserBasicInfoDTO>();
+            IList<UserAdminViewInfoDTO> retVal = new List<UserAdminViewInfoDTO>();
 
             foreach (var item in result)
-            {
-                result2.Add(Utilities.UserToUserDTOConverters.UserToBasicInfoDTO(item));
+            {                
+                retVal.Add(Utilities.UserToUserDTOConverters.UserToAdminViewInfoDTO(item));
             }
 
-            return result2;
+            return retVal;
+        }
+
+        public async Task<UserAdminViewInfoDTO> GetUserById(string id)
+        {
+            Task<ApplicationUser> retTask =  service.GetUserById(id);
+
+            ApplicationUser retUser = await retTask;
+
+            var retVal = Utilities.UserToUserDTOConverters.UserToAdminViewInfoDTO(retUser);
+
+            return retVal;
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-        }
-
+        }        
     }
 }

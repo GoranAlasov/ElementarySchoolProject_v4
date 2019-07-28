@@ -7,5 +7,6 @@ namespace ElementarySchoolProject.Models
 {
     public class Parent : ApplicationUser
     {
+        public List<Student> Children { get; set; }
     }
 }

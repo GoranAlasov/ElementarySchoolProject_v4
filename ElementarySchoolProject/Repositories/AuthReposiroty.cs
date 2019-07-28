@@ -57,6 +57,13 @@ namespace ElementarySchoolProject.Repositories
             return user;
         }
 
+        public async Task<ApplicationUser> FindUserById(string id)
+        {
+            ApplicationUser user = await _userManager.FindByIdAsync(id);            
+
+            return user;
+        }
+
         //TODO111: moje izmisljanje
         public async Task<IList<ApplicationUser>> GetAllUsers()
         {
@@ -64,7 +71,6 @@ namespace ElementarySchoolProject.Repositories
 
             return users;
         }
-
 
         public async Task<IList<string>> FindRoles(string userId)
         {

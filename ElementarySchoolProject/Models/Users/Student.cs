@@ -7,5 +7,7 @@ namespace ElementarySchoolProject.Models
 {
     public class Student : ApplicationUser
     {
+        public string ParentId { get; set; }
+        public virtual Parent Parent { get; set; }
     }
 }
