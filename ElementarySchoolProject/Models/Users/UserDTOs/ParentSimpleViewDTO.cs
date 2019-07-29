@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ElementarySchoolProject.Models.Users.UserDTOs
 {
-    public class UserAdminViewInfoDTO
+    public class ParentSimpleViewDTO
     {
         public string Id { get; set; }
 
@@ -23,6 +23,7 @@ namespace ElementarySchoolProject.Models.Users.UserDTOs
         public string LastName { get; set; }
 
         [Required]
-        public IEnumerable<string> RoleIds { get; set; }
+        public IEnumerable<UserSimpleViewDTO> Children { get; set; }
+
     }
 }

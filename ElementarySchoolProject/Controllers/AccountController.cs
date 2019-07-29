@@ -1,11 +1,13 @@
 ﻿using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.Users.UserDTOs;
 using ElementarySchoolProject.Services.UsersService;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -22,22 +24,11 @@ namespace ElementarySchoolProject.Controllers
             this.service = userService;
         }
 
-        //[Authorize(Roles = "admins, teachers, parents, students")]
-        //[Route("me")]
-        //public RegisterUserDTO GetMySelfAdmin()
-        //{
-        //    RegisterUserDTO retVal = new RegisterUserDTO();
+        #region RegisteringUsers
 
-        //    string userId = User.Identity.Name.
-        //     = RequestContext.Principal.Identity;
-
-        //    return retVal;
-        //}
-
-        #region RegisterUsers
-
-        [Authorize(Roles = "admins")]
+        [Authorize(Roles = "admin")]
         [Route("register-admin")]
+        [HttpPost]
         public async Task<IHttpActionResult> RegisterAdmin(RegisterUserDTO userModel)
         {
             if (!ModelState.IsValid)
@@ -52,11 +43,12 @@ namespace ElementarySchoolProject.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+            return Ok(result);
         }
 
-        [Authorize(Roles = "admins")]
+        [Authorize(Roles = "admin")]
         [Route("register-teacher")]
+        [HttpPost]
         public async Task<IHttpActionResult> RegisterTeacher(RegisterUserDTO userModel)
         {
             if (!ModelState.IsValid)
@@ -71,11 +63,12 @@ namespace ElementarySchoolProject.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+            return Ok(result);
         }
 
-        [Authorize(Roles = "admins")]
+        [Authorize(Roles = "admin")]
         [Route("register-parent")]
+        [HttpPost]
         public async Task<IHttpActionResult> RegisterParent(RegisterUserDTO userModel)
         {
             if (!ModelState.IsValid)
@@ -89,13 +82,15 @@ namespace ElementarySchoolProject.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            return Ok();
+            
+            return Ok(result);
         }
 
         
+        [Authorize(Roles = "admin")]
         [Route("register-student")]
-        public async Task<IHttpActionResult> RegisterStudent(RegisterUserDTO userModel)
+        [HttpPost]
+        public async Task<IHttpActionResult> RegisterStudent(RegisterStudentDTO userModel)
         {
             if (!ModelState.IsValid)
             {
@@ -109,41 +104,146 @@ namespace ElementarySchoolProject.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok();
+            return Ok(result);
         }
 
         #endregion
 
-        [Route("getall")]
-        [AllowAnonymous]
-        public async Task<IList<UserAdminViewInfoDTO>> GetAllUsers()
+        #region GettingUsers
+        
+        [Authorize(Roles = "admin")]
+        [Route("me")]
+        public IHttpActionResult GetMySelfAdmin()
         {
-            var result = await service.GetAllUsers();
+            string userId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
 
-            IList<UserAdminViewInfoDTO> retVal = new List<UserAdminViewInfoDTO>();
+            UserSimpleViewDTO retVal = service.GetAdminById(userId);
 
-            foreach (var item in result)
-            {                
-                retVal.Add(Utilities.UserToUserDTOConverters.UserToAdminViewInfoDTO(item));
+            if (retVal == null)
+            {
+                return NotFound();
             }
+
+            return Ok(retVal);
+        }
+
+        [Route("")]
+        [Authorize(Roles = "admin")]
+        public async Task<IEnumerable<UserViewWithRoleIds>> GetAllUsers()
+        {
+            var retVal = await service.GetAllUsers();            
 
             return retVal;
         }
 
-        public async Task<UserAdminViewInfoDTO> GetUserById(string id)
+        [Route("admins")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "admin")]
+        public IEnumerable<UserSimpleViewDTO> GetAllAdmins()
         {
-            Task<ApplicationUser> retTask =  service.GetUserById(id);
-
-            ApplicationUser retUser = await retTask;
-
-            var retVal = Utilities.UserToUserDTOConverters.UserToAdminViewInfoDTO(retUser);
+            var retVal = service.GetAllAdmins();
 
             return retVal;
+        }
+
+        [Route("teachers")]
+        [Authorize(Roles = "admin")]
+        public IEnumerable<UserSimpleViewDTO> GetAllTeachers()
+        {
+            var retVal = service.GetAllTeachers();
+
+            return retVal;
+        }
+
+        [Route("parents")]
+        [Authorize(Roles = "admin")]
+        public IEnumerable<ParentSimpleViewDTO> GetAllParents()
+        {
+            var retVal = service.GetAllParents();
+
+            return retVal;
+        }
+
+        [Route("students")]
+        [Authorize(Roles = "admin")]        
+        public IEnumerable<UserSimpleViewDTO> GetAllStudents()
+        {
+            var retVal = service.GetAllStudents();
+
+            return retVal;
+        }
+
+        [Route("{id}")]
+        [Authorize(Roles = "admin")]
+        public async Task<UserViewWithRoleIds> GetUserById(string id)
+        {
+            UserViewWithRoleIds retVal = await service.GetUserById(id);            
+
+            return retVal;
+        }
+
+        [Route("admins/{id}")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        public IHttpActionResult GetAdminById(string id)
+        {
+            UserSimpleViewDTO retVal = service.GetAdminById(id);
+
+            if (retVal == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(retVal);
+        }
+
+        [Route("teachers/{id}")]
+        [Authorize(Roles = "admin")]
+        public IHttpActionResult GetTeacherById(string id)
+        {
+            UserSimpleViewDTO retVal = service.GetTeacherById(id);
+
+            if (retVal == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(retVal);
+        }
+
+        [Route("parents/{id}")]
+        [Authorize(Roles = "admin")]
+        public IHttpActionResult GetParentById(string id)
+        {
+            ParentSimpleViewDTO retVal = service.GetParentById(id);
+
+            if (retVal == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(retVal);
         }
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-        }        
+        }
+
+        [Route("students/{id}")]
+        [Authorize(Roles = "admin")]
+        public IHttpActionResult GetStudentById(string id)
+        {
+            UserSimpleViewDTO retVal = service.GetStudentById(id);
+
+            if (retVal == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(retVal);
+        }
+
+        #endregion
     }
 }

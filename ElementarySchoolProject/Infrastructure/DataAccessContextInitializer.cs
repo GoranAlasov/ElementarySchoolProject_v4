@@ -54,10 +54,10 @@ namespace ElementarySchoolProject.Infrastructure
             {
                 using (var manager = new RoleManager<IdentityRole>(store))
                 {
-                    manager.Create(new IdentityRole("admins"));
-                    manager.Create(new IdentityRole("teachers"));
-                    manager.Create(new IdentityRole("parents"));
-                    manager.Create(new IdentityRole("students"));
+                    manager.Create(new IdentityRole("admin"));
+                    manager.Create(new IdentityRole("teacher"));
+                    manager.Create(new IdentityRole("parent"));
+                    manager.Create(new IdentityRole("student"));
                 }
             }
 
@@ -74,10 +74,10 @@ namespace ElementarySchoolProject.Infrastructure
                         FirstName = "Chuck",
                         LastName = "Norris",
                         UserName = "chuckyboy",
-                        Email = "chuck@mail.com",                        
+                        Email = "alasov.jr@gmail.com",                        
                     };
                     userManager.Create(admin1, "qwerty");
-                    userManager.AddToRole(admin1.Id, "admins");
+                    userManager.AddToRole(admin1.Id, "admin");
 
                     #endregion
 
@@ -91,7 +91,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "peca@mail.com",
                     };
                     userManager.Create(teacher1, "pecaa1");
-                    userManager.AddToRole(teacher1.Id, "teachers");
+                    userManager.AddToRole(teacher1.Id, "teacher");
 
                     ApplicationUser teacher2 = new Teacher()
                     {
@@ -101,7 +101,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "eugen@mail.com",
                     };
                     userManager.Create(teacher2, "eugen1");
-                    userManager.AddToRole(teacher2.Id, "teachers");
+                    userManager.AddToRole(teacher2.Id, "teacher");
 
                     ApplicationUser teacher3 = new Teacher()
                     {
@@ -111,7 +111,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "milos_kolarov@mail.com",
                     };
                     userManager.Create(teacher3, "kolarov1");
-                    userManager.AddToRole(teacher3.Id, "teachers");
+                    userManager.AddToRole(teacher3.Id, "teacher");
 
                     ApplicationUser teacher4 = new Teacher()
                     {
@@ -121,7 +121,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "obrad@mail.com",
                     };
                     userManager.Create(teacher4, "obrad1");
-                    userManager.AddToRole(teacher4.Id, "teachers");
+                    userManager.AddToRole(teacher4.Id, "teacher");
 
                     #endregion
 
@@ -135,7 +135,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "gordana_alasov@mail.com",
                     };
                     userManager.Create(parent1, "gordana1");
-                    userManager.AddToRole(parent1.Id, "parents");
+                    userManager.AddToRole(parent1.Id, "parent");
 
                     ApplicationUser parent2 = new Parent()
                     {
@@ -145,7 +145,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "vida_maodus@mail.com",
                     };
                     userManager.Create(parent2, "vidaa1");
-                    userManager.AddToRole(parent2.Id, "parents");
+                    userManager.AddToRole(parent2.Id, "parent");
 
                     ApplicationUser parent3 = new Parent()
                     {
@@ -155,7 +155,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "djordje_atanackovic@mail.com",
                     };
                     userManager.Create(parent3, "djole1");
-                    userManager.AddToRole(parent3.Id, "parents");
+                    userManager.AddToRole(parent3.Id, "parent");
 
                     ApplicationUser parent4 = new Parent()
                     {
@@ -165,7 +165,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "sneza_stojsic@mail.com",
                     };
                     userManager.Create(parent4, "sneza1");
-                    userManager.AddToRole(parent4.Id, "parents");
+                    userManager.AddToRole(parent4.Id, "parent");
 
                     ApplicationUser parent5 = new Parent()
                     {
@@ -175,7 +175,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "tanja_lekic@mail.com",
                     };
                     userManager.Create(parent5, "tanja1");
-                    userManager.AddToRole(parent5.Id, "parents");
+                    userManager.AddToRole(parent5.Id, "parent");
 
                     ApplicationUser parent6 = new Parent()
                     {
@@ -185,7 +185,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "maca_nedeljkov@mail.com",
                     };
                     userManager.Create(parent6, "macaa1");
-                    userManager.AddToRole(parent6.Id, "parents");
+                    userManager.AddToRole(parent6.Id, "parent");
 
                     ApplicationUser parent7 = new Parent()
                     {
@@ -195,7 +195,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Email = "mile_etinski@mail.com",
                     };
                     userManager.Create(parent7, "milee1");
-                    userManager.AddToRole(parent7.Id, "parents");
+                    userManager.AddToRole(parent7.Id, "parent");
 
                     #endregion
 
@@ -210,7 +210,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent1.Id
                     };
                     userManager.Create(student1, "alasov1");
-                    userManager.AddToRole(student1.Id, "students");
+                    userManager.AddToRole(student1.Id, "student");
 
                     ApplicationUser student2 = new Student()
                     {
@@ -221,7 +221,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent2.Id
                     };
                     userManager.Create(student2, "maodus1");
-                    userManager.AddToRole(student2.Id, "students");
+                    userManager.AddToRole(student2.Id, "student");
 
                     ApplicationUser student3 = new Student()
                     {
@@ -232,7 +232,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent2.Id
                     };
                     userManager.Create(student3, "rokii1");
-                    userManager.AddToRole(student3.Id, "students");
+                    userManager.AddToRole(student3.Id, "student");
 
                     ApplicationUser student4 = new Student()
                     {
@@ -243,7 +243,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent3.Id
                     };
                     userManager.Create(student4, "facan1");
-                    userManager.AddToRole(student4.Id, "students");
+                    userManager.AddToRole(student4.Id, "student");
 
                     ApplicationUser student5 = new Student()
                     {
@@ -254,7 +254,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent3.Id
                     };
                     userManager.Create(student5, "jebac1");
-                    userManager.AddToRole(student5.Id, "students");
+                    userManager.AddToRole(student5.Id, "student");
 
                     ApplicationUser student6 = new Student()
                     {
@@ -265,7 +265,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent4.Id
                     };
                     userManager.Create(student6, "doktor1");
-                    userManager.AddToRole(student6.Id, "students");
+                    userManager.AddToRole(student6.Id, "student");
 
                     ApplicationUser student7 = new Student()
                     {
@@ -276,7 +276,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent4.Id
                     };
                     userManager.Create(student7, "bogdan1");
-                    userManager.AddToRole(student7.Id, "students");
+                    userManager.AddToRole(student7.Id, "student");
 
                     ApplicationUser student8 = new Student()
                     {
@@ -287,7 +287,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent5.Id
                     };
                     userManager.Create(student8, "sveta1");
-                    userManager.AddToRole(student8.Id, "students");
+                    userManager.AddToRole(student8.Id, "student");
 
                     ApplicationUser student9 = new Student()
                     {
@@ -298,7 +298,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent6.Id
                     };
                     userManager.Create(student9, "nebojsa1");
-                    userManager.AddToRole(student9.Id, "students");
+                    userManager.AddToRole(student9.Id, "student");
 
                     ApplicationUser student10 = new Student()
                     {
@@ -309,7 +309,7 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent6.Id
                     };
                     userManager.Create(student10, "marko1");
-                    userManager.AddToRole(student10.Id, "students");
+                    userManager.AddToRole(student10.Id, "student");
 
                     ApplicationUser student11 = new Student()
                     {
@@ -320,12 +320,13 @@ namespace ElementarySchoolProject.Infrastructure
                         ParentId = parent7.Id
                     };
                     userManager.Create(student11, "pista1");
-                    userManager.AddToRole(student11.Id, "students");
+                    userManager.AddToRole(student11.Id, "student");
 
-                    #endregion                   
+                    #endregion                                       
                 }
-            }
 
+            }
+            
             
 
 

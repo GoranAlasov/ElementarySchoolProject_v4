@@ -11,10 +11,10 @@ namespace ElementarySchoolProject.Infrastructure
     public class DataAccessContext : IdentityDbContext<ApplicationUser>
     {
         public DataAccessContext() : base("Elementary")
+        //public DataAccessContext() : base("RemoteElementary")
         {
             Database.SetInitializer<DataAccessContext>(new DataAccessContextInitializer());
-        }
-            
+        }            
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

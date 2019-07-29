@@ -43,7 +43,7 @@ namespace ElementarySchoolProject
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(15),
                 Provider = new SimpleAuthorizationServerProvider(container)
             };
 
