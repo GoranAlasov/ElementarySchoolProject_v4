@@ -10,7 +10,7 @@ using ElementarySchoolProject.Repositories;
 using Microsoft.AspNet.Identity;
 using ElementarySchoolProject.Utilities;
 
-namespace ElementarySchoolProject.Services.UsersService
+namespace ElementarySchoolProject.Services.UsersServices
 {
     public class UsersService : IUsersService
     {
@@ -20,6 +20,8 @@ namespace ElementarySchoolProject.Services.UsersService
         {
             this.db = db;
         }
+
+        #region RegisteringUsers
 
         public async Task<IdentityResult> RegisterAdmin(RegisterUserDTO user)
         {
@@ -48,6 +50,10 @@ namespace ElementarySchoolProject.Services.UsersService
 
             return await db.AuthRepository.RegisterStudent(userToInsert, user.Password);
         }
+
+        #endregion
+
+        #region GettingUsers
 
         public async Task<IEnumerable<UserViewWithRoleIds>> GetAllUsers()
         {
@@ -90,10 +96,10 @@ namespace ElementarySchoolProject.Services.UsersService
             return retVal;
         }
 
-        public IEnumerable<UserSimpleViewDTO> GetAllStudents()
+        public IEnumerable<StudentSimpleViewDTO> GetAllStudents()
         {
-            IEnumerable<ApplicationUser> users = db.StudentsRepository.Get();
-            IEnumerable<UserSimpleViewDTO> retVal = users.Select(x => UserToUserDTOConverters.UserToUserSimpleViewDTO(x));
+            IEnumerable<Student> users = db.StudentsRepository.Get();
+            IEnumerable<StudentSimpleViewDTO> retVal = users.Select(x => UserToUserDTOConverters.StudentToStudentSimpleViewDTO(x));
 
             return retVal;
         }
@@ -142,18 +148,97 @@ namespace ElementarySchoolProject.Services.UsersService
             return retVal;
         }
 
-        public UserSimpleViewDTO GetStudentById(string id)
+        public StudentSimpleViewDTO GetStudentById(string id)
         {
             Student student = db.StudentsRepository.Get(s => s.Id == id).FirstOrDefault();
-
+            
             if (student == null)
             {
                 return null;
             }
 
-            UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(student);
+            StudentSimpleViewDTO retVal = UserToUserDTOConverters.StudentToStudentSimpleViewDTO(student);
 
             return retVal;
         }
+
+        #endregion
+
+        #region DeletingUsers
+
+        public UserSimpleViewDTO DeleteAdmin(string id)
+        {
+            Admin admin = db.AdminsRepository.Get(user => user.Id == id).FirstOrDefault();
+
+            int adminCount = db.AdminsRepository.Get().Count();
+
+            if (admin == null || adminCount < 2)
+            {
+                return null;
+            }
+
+            db.AdminsRepository.Delete(admin);
+            db.Save();
+            UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(admin);
+
+            return retVal;
+        }
+
+        public UserSimpleViewDTO DeleteTeacher(string id)
+        {
+            Teacher teacher = db.TeachersRepository.Get(user => user.Id == id).FirstOrDefault();
+
+            if (teacher == null)
+            {
+                return null;
+            }
+
+            db.TeachersRepository.Delete(teacher);
+            db.Save();
+            UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(teacher);
+
+            return retVal;
+        }
+
+        public UserSimpleViewDTO DeleteParent(string id)
+        {
+            Parent parent = db.ParentsRepository.Get(user => user.Id == id).FirstOrDefault();
+            
+            IEnumerable<Student> students = db.StudentsRepository.Get(s => s.Parent.Id == parent.Id);
+
+            if (parent == null)
+            {
+                return null;
+            }
+
+            foreach (var item in students)
+            {
+                item.Parent = null;
+            }
+
+            db.ParentsRepository.Delete(parent);
+            db.Save();
+            UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(parent);
+
+            return retVal;            
+        }
+
+        public UserSimpleViewDTO DeleteStudent(string id)
+        {
+            Admin admin = db.AdminsRepository.Get(user => user.Id == id).FirstOrDefault();
+
+            if (admin == null)
+            {
+                return null;
+            }
+
+            db.AdminsRepository.Delete(admin);
+            db.Save();
+            UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(admin);
+
+            return retVal;
+        }
+
+        #endregion
     }
 }

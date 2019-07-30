@@ -63,18 +63,112 @@ namespace ElementarySchoolProject.Infrastructure
 
             #endregion
 
+            context.SaveChanges();
+
+            #region AddingSchoolSubjects
+
+            SchoolSubject geography5 = new SchoolSubject()
+            {
+                Id = 1,
+                Name = "Geografija 5",
+                WeeklyClasses = 3
+            };
+            context.SchoolSubjects.Add(geography5);
+
+            SchoolSubject geography6 = new SchoolSubject()
+            {
+                Id = 2,
+                Name = "Geografija 6",
+                WeeklyClasses = 4
+            };
+            context.SchoolSubjects.Add(geography6);
+
+            SchoolSubject biology5 = new SchoolSubject()
+            {
+                Id = 3,
+                Name = "Biologija 5",
+                WeeklyClasses = 2
+            };
+            context.SchoolSubjects.Add(biology5);
+
+            SchoolSubject biology6 = new SchoolSubject()
+            {
+                Id = 4,
+                Name = "Biologija 6",
+                WeeklyClasses = 3
+            };
+            context.SchoolSubjects.Add(biology6);
+
+            SchoolSubject serbian5 = new SchoolSubject()
+            {
+                Id = 5,
+                Name = "Srpski 5",
+                WeeklyClasses = 4
+            };
+            context.SchoolSubjects.Add(serbian5);
+
+            SchoolSubject serbian6 = new SchoolSubject()
+            {
+                Id = 6,
+                Name = "Srpski 6",
+                WeeklyClasses = 4
+            };
+            context.SchoolSubjects.Add(serbian6);            
+
+            #endregion
+
+            context.SaveChanges();
+
+            #region AddingSchoolClasses
+
+            SchoolClass petiA = new SchoolClass()
+            {
+                Id = 1,
+                SchoolGrade = 5,
+                Name = "A"
+            };
+            //context.SchoolClasses.Add(petiA);
+
+            SchoolClass petiB = new SchoolClass()
+            {
+                Id = 2,
+                SchoolGrade = 5,
+                Name = "B"
+            };
+            //context.SchoolClasses.Add(petiB);
+
+            SchoolClass sestiA = new SchoolClass()
+            {
+                Id = 3,
+                SchoolGrade = 6,
+                Name = "A"
+            };
+            //context.SchoolClasses.Add(sestiA);
+
+            SchoolClass sestiB = new SchoolClass()
+            {
+                Id = 4,
+                SchoolGrade = 6,
+                Name = "B"
+            };
+            //context.SchoolClasses.Add(sestiB);
+
+            #endregion            
+
+            context.SaveChanges();
+
             using (var userStore = new UserStore<ApplicationUser>(context))
             {
                 using (var userManager = new UserManager<ApplicationUser>(userStore))
                 {
                     #region AddingAdmins
 
-                    ApplicationUser admin1 = new Admin()
-                    {                        
+                    Admin admin1 = new Admin()
+                    {
                         FirstName = "Chuck",
                         LastName = "Norris",
                         UserName = "chuckyboy",
-                        Email = "alasov.jr@gmail.com",                        
+                        Email = "alasov.jr@gmail.com",
                     };
                     userManager.Create(admin1, "qwerty");
                     userManager.AddToRole(admin1.Id, "admin");
@@ -83,51 +177,51 @@ namespace ElementarySchoolProject.Infrastructure
 
                     #region AddingTeachers
 
-                    ApplicationUser teacher1 = new Teacher()
+                    Teacher peca = new Teacher()
                     {
                         FirstName = "Petar",
                         LastName = "Stojakovic",
                         UserName = "peca",
-                        Email = "peca@mail.com",
+                        Email = "peca@mail.com",                        
                     };
-                    userManager.Create(teacher1, "pecaa1");
-                    userManager.AddToRole(teacher1.Id, "teacher");
+                    userManager.Create(peca, "pecaa1");
+                    userManager.AddToRole(peca.Id, "teacher");
 
-                    ApplicationUser teacher2 = new Teacher()
+                    Teacher eugen = new Teacher()
                     {
                         FirstName = "Eugen",
                         LastName = "Plancak",
                         UserName = "eugen_plancak",
                         Email = "eugen@mail.com",
                     };
-                    userManager.Create(teacher2, "eugen1");
-                    userManager.AddToRole(teacher2.Id, "teacher");
+                    userManager.Create(eugen, "eugen1");
+                    userManager.AddToRole(eugen.Id, "teacher");
 
-                    ApplicationUser teacher3 = new Teacher()
+                    Teacher kolarov = new Teacher()
                     {
                         FirstName = "Milos",
                         LastName = "Kolarov",
                         UserName = "milos_kolarov",
                         Email = "milos_kolarov@mail.com",
                     };
-                    userManager.Create(teacher3, "kolarov1");
-                    userManager.AddToRole(teacher3.Id, "teacher");
+                    userManager.Create(kolarov, "kolarov1");
+                    userManager.AddToRole(kolarov.Id, "teacher");
 
-                    ApplicationUser teacher4 = new Teacher()
+                    Teacher obrad = new Teacher()
                     {
                         FirstName = "Obrad",
                         LastName = "Stojkovic",
                         UserName = "obrad",
                         Email = "obrad@mail.com",
                     };
-                    userManager.Create(teacher4, "obrad1");
-                    userManager.AddToRole(teacher4.Id, "teacher");
+                    userManager.Create(obrad, "obrad1");
+                    userManager.AddToRole(obrad.Id, "teacher");
 
                     #endregion
 
                     #region AddingParents
 
-                    ApplicationUser parent1 = new Parent()
+                    Parent parent1 = new Parent()
                     {
                         FirstName = "Gordana",
                         LastName = "Alasov",
@@ -137,7 +231,7 @@ namespace ElementarySchoolProject.Infrastructure
                     userManager.Create(parent1, "gordana1");
                     userManager.AddToRole(parent1.Id, "parent");
 
-                    ApplicationUser parent2 = new Parent()
+                    Parent parent2 = new Parent()
                     {
                         FirstName = "Vidosava",
                         LastName = "Maodus",
@@ -147,7 +241,7 @@ namespace ElementarySchoolProject.Infrastructure
                     userManager.Create(parent2, "vidaa1");
                     userManager.AddToRole(parent2.Id, "parent");
 
-                    ApplicationUser parent3 = new Parent()
+                    Parent parent3 = new Parent()
                     {
                         FirstName = "Djordje",
                         LastName = "Atanackovic",
@@ -157,7 +251,7 @@ namespace ElementarySchoolProject.Infrastructure
                     userManager.Create(parent3, "djole1");
                     userManager.AddToRole(parent3.Id, "parent");
 
-                    ApplicationUser parent4 = new Parent()
+                    Parent parent4 = new Parent()
                     {
                         FirstName = "Snezana",
                         LastName = "Stojsic",
@@ -167,7 +261,7 @@ namespace ElementarySchoolProject.Infrastructure
                     userManager.Create(parent4, "sneza1");
                     userManager.AddToRole(parent4.Id, "parent");
 
-                    ApplicationUser parent5 = new Parent()
+                    Parent parent5 = new Parent()
                     {
                         FirstName = "Tatjana",
                         LastName = "Lekic",
@@ -177,7 +271,7 @@ namespace ElementarySchoolProject.Infrastructure
                     userManager.Create(parent5, "tanja1");
                     userManager.AddToRole(parent5.Id, "parent");
 
-                    ApplicationUser parent6 = new Parent()
+                    Parent parent6 = new Parent()
                     {
                         FirstName = "Macone",
                         LastName = "Nedeljkov",
@@ -187,7 +281,7 @@ namespace ElementarySchoolProject.Infrastructure
                     userManager.Create(parent6, "macaa1");
                     userManager.AddToRole(parent6.Id, "parent");
 
-                    ApplicationUser parent7 = new Parent()
+                    Parent parent7 = new Parent()
                     {
                         FirstName = "Mile",
                         LastName = "Etinski",
@@ -199,130 +293,273 @@ namespace ElementarySchoolProject.Infrastructure
 
                     #endregion
 
+
+                    
+
                     #region AddingStudents
 
-                    ApplicationUser student1 = new Student()
+                    Student goran = new Student()
                     {
                         FirstName = "Goran",
                         LastName = "Alasov",
                         UserName = "goran_alasov",
                         Email = "alasov.jr@mail.com",
-                        ParentId = parent1.Id
-                    };
-                    userManager.Create(student1, "alasov1");
-                    userManager.AddToRole(student1.Id, "student");
+                        Parent = parent1,
+                        SchoolClass = sestiA,                        
+                    };                    
+                    
+                    userManager.Create(goran, "alasov1");
+                    userManager.AddToRole(goran.Id, "student");
 
-                    ApplicationUser student2 = new Student()
+                    Student mao = new Student()
                     {
                         FirstName = "Milan",
                         LastName = "Maodus",
                         UserName = "milan_maodus",
                         Email = "milan_maodus@mail.com",
-                        ParentId = parent2.Id
+                        Parent = parent2,
+                        SchoolClass = sestiA
                     };
-                    userManager.Create(student2, "maodus1");
-                    userManager.AddToRole(student2.Id, "student");
+                    userManager.Create(mao, "maodus1");
+                    userManager.AddToRole(mao.Id, "student");
 
-                    ApplicationUser student3 = new Student()
+                    Student roki = new Student()
                     {
                         FirstName = "Nenad",
                         LastName = "Maodus",
                         UserName = "nenad_maodus",
                         Email = "nenad_maodus@mail.com",
-                        ParentId = parent2.Id
+                        Parent = parent2,
+                        SchoolClass = petiB
                     };
-                    userManager.Create(student3, "rokii1");
-                    userManager.AddToRole(student3.Id, "student");
+                    userManager.Create(roki, "rokii1");
+                    userManager.AddToRole(roki.Id, "student");
 
-                    ApplicationUser student4 = new Student()
+                    Student facan = new Student()
                     {
                         FirstName = "Bojan",
                         LastName = "Atanackovic",
                         UserName = "bojan_atanackovic",
                         Email = "bojan_atanackovic@mail.com",
-                        ParentId = parent3.Id
+                        Parent = parent3,
+                        SchoolClass = sestiA
                     };
-                    userManager.Create(student4, "facan1");
-                    userManager.AddToRole(student4.Id, "student");
+                    userManager.Create(facan, "facan1");
+                    userManager.AddToRole(facan.Id, "student");
 
-                    ApplicationUser student5 = new Student()
+                    Student jebac = new Student()
                     {
                         FirstName = "Aleksandar",
                         LastName = "Atanackovic",
                         UserName = "aleksandar_atanackovic",
                         Email = "aleksandar_atanackovic@mail.com",
-                        ParentId = parent3.Id
+                        Parent = parent3,
+                        SchoolClass = petiA
                     };
-                    userManager.Create(student5, "jebac1");
-                    userManager.AddToRole(student5.Id, "student");
+                    userManager.Create(jebac, "jebac1");
+                    userManager.AddToRole(jebac.Id, "student");
 
-                    ApplicationUser student6 = new Student()
+                    Student doca = new Student()
                     {
                         FirstName = "Vladimir",
                         LastName = "Stojsic",
                         UserName = "vladimir_stojsic",
                         Email = "vladimir_stojsic@mail.com",
-                        ParentId = parent4.Id
+                        Parent = parent4,
+                        SchoolClass = sestiB
                     };
-                    userManager.Create(student6, "doktor1");
-                    userManager.AddToRole(student6.Id, "student");
+                    userManager.Create(doca, "doktor1");
+                    userManager.AddToRole(doca.Id, "student");
 
-                    ApplicationUser student7 = new Student()
+                    Student bogdan = new Student()
                     {
                         FirstName = "Bogdan",
                         LastName = "Stojsic",
                         UserName = "bogdan_stojsic",
                         Email = "bogdan_stojsic@mail.com",
-                        ParentId = parent4.Id
+                        Parent = parent4,
+                        SchoolClass = petiA
                     };
-                    userManager.Create(student7, "bogdan1");
-                    userManager.AddToRole(student7.Id, "student");
+                    userManager.Create(bogdan, "bogdan1");
+                    userManager.AddToRole(bogdan.Id, "student");
 
-                    ApplicationUser student8 = new Student()
+                    Student sveta = new Student()
                     {
                         FirstName = "Svetozar",
                         LastName = "Lekic",
                         UserName = "sveta_lekic",
                         Email = "svetozar_lekic@mail.com",
-                        ParentId = parent5.Id
+                        Parent = parent5,
+                        SchoolClass = sestiB
                     };
-                    userManager.Create(student8, "sveta1");
-                    userManager.AddToRole(student8.Id, "student");
+                    userManager.Create(sveta, "sveta1");
+                    userManager.AddToRole(sveta.Id, "student");
 
-                    ApplicationUser student9 = new Student()
+                    Student seba = new Student()
                     {
                         FirstName = "Nebojsa",
                         LastName = "Nedeljkov",
                         UserName = "nebojsa_nedeljkov",
                         Email = "nebojsa_nedeljkov@mail.com",
-                        ParentId = parent6.Id
+                        Parent = parent6,
+                        SchoolClass = sestiB
                     };
-                    userManager.Create(student9, "nebojsa1");
-                    userManager.AddToRole(student9.Id, "student");
+                    userManager.Create(seba, "nebojsa1");
+                    userManager.AddToRole(seba.Id, "student");
 
-                    ApplicationUser student10 = new Student()
+                    Student tanatelo = new Student()
                     {
                         FirstName = "Marko",
                         LastName = "Nedeljkov",
                         UserName = "marko_nedeljkov",
                         Email = "marko_nedeljkov@mail.com",
-                        ParentId = parent6.Id
+                        Parent = parent6,
+                        SchoolClass = petiB
                     };
-                    userManager.Create(student10, "marko1");
-                    userManager.AddToRole(student10.Id, "student");
+                    userManager.Create(tanatelo, "marko1");
+                    userManager.AddToRole(tanatelo.Id, "student");
 
-                    ApplicationUser student11 = new Student()
+                    Student pista = new Student()
                     {
                         FirstName = "Dragan",
                         LastName = "Etinski",
                         UserName = "dragan_etinski",
                         Email = "dragan_etinski@mail.com",
-                        ParentId = parent7.Id
+                        Parent = parent7,
+                        SchoolClass = petiB
                     };
-                    userManager.Create(student11, "pista1");
-                    userManager.AddToRole(student11.Id, "student");
+                    userManager.Create(pista, "pista1");
+                    userManager.AddToRole(pista.Id, "student");
 
-                    #endregion                                       
+                    #endregion
+
+                    context.SaveChanges();                    
+
+                    #region AddingTeacherSchoolSubjects
+
+                    TeacherSchoolSubject pecaGeo5 = new TeacherSchoolSubject()
+                    {
+                        Id = 1,
+                        Teacher = peca,
+                        SchoolSubject = geography5,
+                        SchoolClasses = new List<SchoolClass>()
+                        {
+                            petiA,
+                            petiB
+                        }
+                    };
+                    context.TeacherSchoolSubjects.Add(pecaGeo5);
+
+                    TeacherSchoolSubject pecaGeo6 = new TeacherSchoolSubject()
+                    {
+                        Id = 2,
+                        Teacher = peca,
+                        SchoolSubject = geography6,
+                        SchoolClasses = new List<SchoolClass>()
+                        {
+                            sestiA,
+                            sestiB
+                        }
+                    };
+                    context.TeacherSchoolSubjects.Add(pecaGeo6);
+
+                    TeacherSchoolSubject eugenBio5 = new TeacherSchoolSubject()
+                    {
+                        Id = 3,
+                        Teacher = eugen,
+                        SchoolSubject = biology5,
+                        SchoolClasses = new List<SchoolClass>()
+                        {
+                            petiA,
+                            petiB
+                        }
+                    };
+                    context.TeacherSchoolSubjects.Add(eugenBio5);
+
+                    TeacherSchoolSubject eugenBio6 = new TeacherSchoolSubject()
+                    {
+                        Id = 4,
+                        Teacher = eugen,
+                        SchoolSubject = biology6,
+                        SchoolClasses = new List<SchoolClass>()
+                        {
+                            sestiA,
+                            sestiB
+                        }
+                    };
+                    context.TeacherSchoolSubjects.Add(eugenBio6);
+
+                    TeacherSchoolSubject kolarovSrp5 = new TeacherSchoolSubject()
+                    {
+                        Id = 5,
+                        Teacher = kolarov,
+                        SchoolSubject = serbian5,
+                        SchoolClasses = new List<SchoolClass>()
+                        {
+                            petiA,
+                            petiB
+                        }
+                    };
+                    context.TeacherSchoolSubjects.Add(kolarovSrp5);
+
+                    TeacherSchoolSubject obradSrp6 = new TeacherSchoolSubject()
+                    {
+                        Id = 6,
+                        Teacher = obrad,
+                        SchoolSubject = serbian6,
+                        SchoolClasses = new List<SchoolClass>()
+                        {
+                            sestiA,
+                            sestiB
+                        }
+                    };
+                    context.TeacherSchoolSubjects.Add(obradSrp6);
+
+                    #endregion
+
+                    context.SaveChanges();
+
+                    Grade g1 = new Grade()
+                    {
+                        Id = 1,
+                        Value = 4,
+                        DateOfGrading = new DateTime(2000, 12, 21),
+                        Student = goran,
+                        TeacherSchoolSubject = pecaGeo6
+                    };
+                    context.Grades.Add(g1);
+
+                    Grade g2 = new Grade()
+                    {
+                        Id = 2,
+                        Value = 3,
+                        DateOfGrading = new DateTime(1998, 5, 8),
+                        Student = mao,
+                        TeacherSchoolSubject = obradSrp6
+                    };
+                    context.Grades.Add(g2);
+
+                    Grade g3 = new Grade()
+                    {
+                        Id = 2,
+                        Value = 3,
+                        DateOfGrading = new DateTime(1997, 1, 27),
+                        Student = mao,
+                        TeacherSchoolSubject = eugenBio6
+                    };
+                    context.Grades.Add(g3);
+
+                    Grade g4 = new Grade()
+                    {
+                        Id = 2,
+                        Value = 1,
+                        DateOfGrading = new DateTime(1997, 9, 11),
+                        Student = roki,
+                        TeacherSchoolSubject = eugenBio5
+                    };
+                    context.Grades.Add(g4);
+
+                    context.SaveChanges();
                 }
 
             }

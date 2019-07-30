@@ -67,7 +67,7 @@ namespace ElementarySchoolProject.Utilities
             retVal.UserName = dto.UserName;
             retVal.FirstName = dto.FirstName;
             retVal.LastName = dto.LastName;
-            retVal.ParentId = dto.ParentId;
+            retVal.Parent.Id = dto.ParentId;
 
             return retVal;
         }
@@ -119,11 +119,81 @@ namespace ElementarySchoolProject.Utilities
             retVal.LastName = user.LastName;
             retVal.UserName = user.UserName;
             retVal.Email = user.Email;
-            retVal.Children = user.Children.Select(child =>
+
+            if (user.Students.Count < 0)
             {
-                UserSimpleViewDTO dto = UserToUserSimpleViewDTO(child);
-                return dto;
-            }).ToList();
+                retVal.Students = null;
+            }
+            else
+            {
+                retVal.Students = user.Students.Select(child =>
+                {
+                    UserSimpleViewDTO dto = UserToUserSimpleViewDTO(child);
+                    return dto;
+                }).ToList();
+            }            
+
+            return retVal;
+        }
+
+        public static StudentSimpleViewDTO StudentToStudentSimpleViewDTO(Student user)
+        {
+            StudentSimpleViewDTO retVal = new StudentSimpleViewDTO();
+
+            retVal.Id = user.Id;
+            retVal.FirstName = user.FirstName;
+            retVal.LastName = user.LastName;
+            retVal.UserName = user.UserName;
+            retVal.Email = user.Email;
+
+            if (user.Parent == null)
+            {
+                retVal.Parent = null;
+            }
+            else
+            {
+                retVal.Parent = UserToUserSimpleViewDTO(user.Parent);
+            }            
+
+            return retVal;
+        }
+
+        public static StudentWithGradesView StudentToStudentWithGradesView(Student user)
+        {
+            StudentWithGradesView retVal = new StudentWithGradesView();
+
+            retVal.Id = user.Id;
+            retVal.FirstName = user.FirstName;
+            retVal.LastName = user.LastName;
+            retVal.UserName = user.UserName;
+            retVal.Email = user.Email;
+
+            if (user.Parent == null)
+            {
+                retVal.Parent = null;
+            }
+            else
+            {
+                retVal.Parent = UserToUserSimpleViewDTO(user.Parent);
+            }
+
+            if (user.SchoolClass == null)
+            {
+                retVal.Class = null;
+            }
+            else
+            {
+                retVal.Class = SchoolClassToSchoolClassDTOConverters.SchoolClassToSchoolClassDTO(user.SchoolClass);
+            }
+
+            if (user.Grades.Count() < 1)
+            {
+                retVal.Grades = null;
+            }
+            else
+            {
+                retVal.Grades = user.Grades.Select(x => GradeToGradeDTOConverters.GradeToGradeDTO(x));
+            }
 
             return retVal;
         }

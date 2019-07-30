@@ -64,6 +64,12 @@ namespace ElementarySchoolProject.Repositories
             return user;
         }
 
+        //public void DeleteUser(string id)
+        //{         
+        //    ApplicationUser user = _userManager.FindById(id);
+        //    _userManager.Delete(user);           
+        //}
+
         //TODO111: moje izmisljanje
         public async Task<IList<ApplicationUser>> GetAllUsers()
         {
@@ -71,6 +77,13 @@ namespace ElementarySchoolProject.Repositories
 
             return users;
         }
+
+        //public async Task<IList<ApplicationUser>> GetAllActiveUsers()
+        //{
+        //    List<ApplicationUser> users = await _userManager.Users.Where(u => u.Status == UserStatus.Active).ToListAsync();
+
+        //    return users;
+        //}
 
         public async Task<IList<string>> FindRoles(string userId)
         {

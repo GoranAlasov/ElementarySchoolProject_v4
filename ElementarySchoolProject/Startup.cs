@@ -2,7 +2,7 @@
 using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Providers;
 using ElementarySchoolProject.Repositories;
-using ElementarySchoolProject.Services.UsersService;
+using ElementarySchoolProject.Services.UsersServices;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
@@ -66,16 +66,23 @@ namespace ElementarySchoolProject
             container.RegisterType<IAuthRepository, AuthRepository>();
 
             container.RegisterType<IGenericRepository<ApplicationUser>, GenericRepository<ApplicationUser>>();
-            
+
             container.RegisterType<IGenericRepository<Admin>, GenericRepository<Admin>>();
             container.RegisterType<IGenericRepository<Teacher>, GenericRepository<Teacher>>();
             container.RegisterType<IGenericRepository<Parent>, GenericRepository<Parent>>();
             container.RegisterType<IGenericRepository<Student>, GenericRepository<Student>>();
 
+            container.RegisterType<IGenericRepository<SchoolClass>, GenericRepository<SchoolClass>>();
+            container.RegisterType<IGenericRepository<SchoolSubject>, GenericRepository<SchoolSubject>>();
+            container.RegisterType<IGenericRepository<TeacherSchoolSubject>, GenericRepository<TeacherSchoolSubject>>();
+            container.RegisterType<IGenericRepository<Grade>, GenericRepository<Grade>>();
+
             container.RegisterType<IUsersService, UsersService>();
+            container.RegisterType<IStudentsService, StudentsService>();
+            container.RegisterType<IParentsSerivce, ParentsService>();
 
             //TODO 0.1: Adding dependencies
-            //container.RegisterType<IUserService, UserService>();
+            
             return container;
         }
     }

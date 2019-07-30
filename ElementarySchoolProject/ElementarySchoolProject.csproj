@@ -160,8 +160,17 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ParentsController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Infrastructure\DataAccessContext.cs" />
     <Compile Include="Infrastructure\DataAccessContextInitializer.cs" />
+    <Compile Include="Models\DTOs\GradeDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectDTO.cs" />
+    <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\SchoolClass.cs" />
+    <Compile Include="Models\SchoolSubject.cs" />
+    <Compile Include="Models\TeacherSchoolSubject.cs" />
     <Compile Include="Models\Users\Admin.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Users\Parent.cs" />
@@ -170,8 +179,11 @@
     <Compile Include="Models\Users\UserDTOs\ParentSimpleViewDTO.cs" />
     <Compile Include="Models\Users\UserDTOs\RegisterStudentDTO.cs" />
     <Compile Include="Models\Users\UserDTOs\RegisterUserDTO.cs" />
+    <Compile Include="Models\Users\UserDTOs\StudentSimpleViewDTO.cs" />
+    <Compile Include="Models\Users\UserDTOs\StudentWithGradesView.cs" />
     <Compile Include="Models\Users\UserDTOs\UserViewWithRoleIds.cs" />
     <Compile Include="Models\Users\UserDTOs\UserSimpleViewDTO.cs" />
+    <Compile Include="Models\Users\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Repositories\AuthReposiroty.cs" />
@@ -180,13 +192,21 @@
     <Compile Include="Repositories\IGenericRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
-    <Compile Include="Services\UsersService\IUsersService.cs" />
-    <Compile Include="Services\UsersService\UsersService.cs" />
+    <Compile Include="Services\UsersServices\IParentsService.cs" />
+    <Compile Include="Services\UsersServices\IStudentsService.cs" />
+    <Compile Include="Services\UsersServices\IUsersService.cs" />
+    <Compile Include="Services\UsersServices\ParentsService.cs" />
+    <Compile Include="Services\UsersServices\StudentsService.cs" />
+    <Compile Include="Services\UsersServices\UsersService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\EmailSenders.cs" />
+    <Compile Include="Utilities\GradeToGradeDTOConverters.cs" />
+    <Compile Include="Utilities\SchoolClassToSchoolClassDTOConverters.cs" />
+    <Compile Include="Utilities\SchoolSubjectToSchoolSubjectDTOConverters.cs" />
     <Compile Include="Utilities\UserToUserDTOConverters.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

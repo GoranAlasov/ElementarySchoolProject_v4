@@ -7,6 +7,12 @@ using System.Web;
 
 namespace ElementarySchoolProject.Models
 {
+    public enum UserStatus
+    {
+        Active,
+        NotActive
+    }
+
     public abstract class ApplicationUser : IdentityUser
     {
         [Required]
@@ -15,6 +21,9 @@ namespace ElementarySchoolProject.Models
 
         [Required]
         [MaxLength(100)]
-        public string LastName { get; set; }        
+        public string LastName { get; set; }
+        
+        //[Required]
+        //public UserStatus Status { get; set; }
     }
 }

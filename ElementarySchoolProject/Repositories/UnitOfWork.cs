@@ -17,7 +17,6 @@ namespace ElementarySchoolProject.Repositories
             this.context = context;
         }
 
-        #region UserRepos
 
         [Dependency]
         public IAuthRepository AuthRepository { get; set; }
@@ -37,13 +36,19 @@ namespace ElementarySchoolProject.Repositories
         [Dependency]
         public IGenericRepository<Student> StudentsRepository { get; set; }
 
-        #endregion
 
-        #region OtherRepos
 
-        #endregion
+        [Dependency]
+        public IGenericRepository<SchoolClass> SchoolClassesRepository { get; set; }
 
-        #region SaveAndDispose
+        [Dependency]
+        public IGenericRepository<SchoolSubject> SchoolSubjectsRepository { get; set; }
+
+        [Dependency]
+        public IGenericRepository<TeacherSchoolSubject> TeacherSchoolSubjectSRepository { get; set; }
+
+        [Dependency]
+        public IGenericRepository<Grade> GradesRepository { get; set; }
 
         public void Save()
         {
@@ -68,7 +73,5 @@ namespace ElementarySchoolProject.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        #endregion
     }
 }

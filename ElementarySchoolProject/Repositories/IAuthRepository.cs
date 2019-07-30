@@ -22,8 +22,12 @@ namespace ElementarySchoolProject.Repositories
 
         Task<ApplicationUser> FindUserById(string id);
 
+        //void DeleteUser(string id);
+
         Task<IList<string>> FindRoles(string userId);
 
         Task<IList<ApplicationUser>> GetAllUsers();
+
+        //Task<IList<ApplicationUser>> GetAllActiveUsers();
     }
 }
