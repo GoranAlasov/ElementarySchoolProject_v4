@@ -9,7 +9,7 @@ namespace ElementarySchoolProject.Services.UsersServices
 {
     public interface IParentsSerivce
     {
+        IEnumerable<ParentSimpleViewDTO> GetAll();
         ParentSimpleViewDTO GetById(string id);
-        StudentWithGradesView GetChildById(string parentId, string childId);
     }
 }

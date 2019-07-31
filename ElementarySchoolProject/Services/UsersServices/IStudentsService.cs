@@ -11,5 +11,16 @@ namespace ElementarySchoolProject.Services.UsersServices
     {
         IEnumerable<StudentSimpleViewDTO> GetAll();
         StudentWithGradesView GetById(string id);
+        StudentWithGradesView GetByIdAndParentUserName(string parentId, string childId);
+        IEnumerable<StudentSimpleViewDTO> GetByParentId(string parentId);
+        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolClassId(int id);
+        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolClassGrade(int grade);
+        IEnumerable<StudentSimpleViewDTO> GetAllByTeacherId(string id);
+        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolClassGradeAndTeacherId(int grade, string id);
+        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolSubjectId(int id);
+        IEnumerable<StudentSimpleViewDTO> GetAllByTeacherSchoolSubjectId(int id);
+        //IEnumerable<StudentSimpleViewDTO> GetAllByGradeValues(double minValue, double maxValue);
+        IEnumerable<StudentSimpleViewDTO> GetAllByGradeDates(DateTime minValue, DateTime maxValue);
     }
 }
+

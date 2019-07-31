@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
+using System.Web.Http;
 using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.Users.UserDTOs;
 using ElementarySchoolProject.Repositories;
@@ -17,29 +19,21 @@ namespace ElementarySchoolProject.Services.UsersServices
             this.db = db;
         }
 
+        public IEnumerable<ParentSimpleViewDTO> GetAll()
+        {
+            throw new NotImplementedException();
+        }
 
         public ParentSimpleViewDTO GetById(string id)
         {
             Parent parent = db.ParentsRepository.GetByID(id);
 
+            if (parent == null || !(parent is Parent))
+            {
+                throw new KeyNotFoundException();
+            }
+
             return Utilities.UserToUserDTOConverters.ParentToParentSimpleViewDTO(parent);
-        }
-
-        public StudentWithGradesView GetChildById(string parentUserName, string childId)
-        {
-            Student student = db.StudentsRepository.GetByID(childId);
-
-            if (student == null)
-            {
-                throw new ArgumentException("No such student"); 
-            }
-
-            if (student.Parent.UserName != parentUserName)
-            {
-                throw new ArgumentException("That is not your child!");
-            }
-
-            return Utilities.UserToUserDTOConverters.StudentToStudentWithGradesView(student);
-        }
+        }        
     }
 }

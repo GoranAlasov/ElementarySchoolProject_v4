@@ -291,10 +291,7 @@ namespace ElementarySchoolProject.Infrastructure
                     userManager.Create(parent7, "milee1");
                     userManager.AddToRole(parent7.Id, "parent");
 
-                    #endregion
-
-
-                    
+                    #endregion                    
 
                     #region AddingStudents
 
