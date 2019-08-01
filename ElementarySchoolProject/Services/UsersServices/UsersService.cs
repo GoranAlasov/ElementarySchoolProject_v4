@@ -225,16 +225,16 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public UserSimpleViewDTO DeleteStudent(string id)
         {
-            Admin admin = db.AdminsRepository.Get(user => user.Id == id).FirstOrDefault();
+            Student student = db.StudentsRepository.Get(user => user.Id == id).FirstOrDefault();
 
-            if (admin == null)
+            if (student == null)
             {
                 return null;
             }
 
-            db.AdminsRepository.Delete(admin);
+            db.StudentsRepository.Delete(student);
             db.Save();
-            UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(admin);
+            UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(student);
 
             return retVal;
         }

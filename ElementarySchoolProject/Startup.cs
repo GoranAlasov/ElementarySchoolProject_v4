@@ -2,6 +2,7 @@
 using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Providers;
 using ElementarySchoolProject.Repositories;
+using ElementarySchoolProject.Services;
 using ElementarySchoolProject.Services.UsersServices;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
@@ -80,7 +81,7 @@ namespace ElementarySchoolProject
             container.RegisterType<IUsersService, UsersService>();
             container.RegisterType<IStudentsService, StudentsService>();
             container.RegisterType<IParentsSerivce, ParentsService>();
-
+            container.RegisterType<ISchoolSubjectsService, SchoolSubjectsService>();
             //TODO 0.1: Adding dependencies
             
             return container;

@@ -168,7 +168,9 @@
     <Compile Include="Infrastructure\DataAccessContextInitializer.cs" />
     <Compile Include="Models\DTOs\GradeDTO.cs" />
     <Compile Include="Models\DTOs\SchoolClassDTO.cs" />
-    <Compile Include="Models\DTOs\SchoolSubjectDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectBasicDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectWithWeeklyClassesDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectCreateAndEditDTO.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\SchoolClass.cs" />
     <Compile Include="Models\SchoolSubject.cs" />
@@ -194,7 +196,10 @@
     <Compile Include="Repositories\IGenericRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
+    <Compile Include="Services\ISchoolClassService.cs" />
+    <Compile Include="Services\SchoolSubjectsService.cs" />
     <Compile Include="Services\UsersServices\IParentsService.cs" />
+    <Compile Include="Services\ISchoolSubjectsService.cs" />
     <Compile Include="Services\UsersServices\IStudentsService.cs" />
     <Compile Include="Services\UsersServices\IUsersService.cs" />
     <Compile Include="Services\UsersServices\ParentsService.cs" />

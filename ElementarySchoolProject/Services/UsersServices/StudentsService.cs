@@ -133,7 +133,7 @@ namespace ElementarySchoolProject.Services.UsersServices
             return Utilities.UserToUserDTOConverters.StudentToStudentWithGradesView(student);
         }
 
-        public IEnumerable<StudentSimpleViewDTO> GetByParentId(string parentId)
+        public IEnumerable<StudentSimpleViewDTO> GetAllByParentId(string parentId)
         {
             //TODO 11.11: exception if parentId nonexistant
             //TODO 11.12 exception if parentId is of other user type

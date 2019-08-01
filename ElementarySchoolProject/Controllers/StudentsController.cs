@@ -64,8 +64,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [AllowAnonymous]
-        [Route("getbygradedates")]
-        public IHttpActionResult GetAllByGradeDates([FromUri]int d1, [FromUri]int m1, [FromUri]int y1, [FromUri]int d2, [FromUri]int m2, [FromUri]int y2)
+        [Route("grade_dates")]
+        public IHttpActionResult GetStudentsByGradeDates([FromUri]int d1, [FromUri]int m1, [FromUri]int y1, [FromUri]int d2, [FromUri]int m2, [FromUri]int y2)
         {
             DateTime date1 = new DateTime(y1, m1, d1);
             DateTime date2 = new DateTime(y2, m2, d2);

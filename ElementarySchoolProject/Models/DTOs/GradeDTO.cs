@@ -11,7 +11,7 @@ namespace ElementarySchoolProject.Models.DTOs
         public int Id { get; set; }
         public int Value { get; set; }
         public DateTime DateOfGrading { get; set; }
-        public SchoolSubjectDTO Subject { get; set; }
+        public SchoolSubjectBasicDTO Subject { get; set; }
         public UserSimpleViewDTO GradingTeacher { get; set; }
     }
 }

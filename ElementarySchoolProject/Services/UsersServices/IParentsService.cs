@@ -11,5 +11,8 @@ namespace ElementarySchoolProject.Services.UsersServices
     {
         IEnumerable<ParentSimpleViewDTO> GetAll();
         ParentSimpleViewDTO GetById(string id);
+        IEnumerable<ParentSimpleViewDTO> GetAllByNumberOfChildren(int numberOfChildern);
+        IEnumerable<ParentSimpleViewDTO> GetAllByChildrenGradeRange(int gradeLow, int gradeHigh);
+        IEnumerable<ParentSimpleViewDTO> GetAllByChildrenClass(int schoolClassId);
     }
 }

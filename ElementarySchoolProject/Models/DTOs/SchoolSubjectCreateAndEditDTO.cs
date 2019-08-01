@@ -5,9 +5,9 @@ using System.Web;
 
 namespace ElementarySchoolProject.Models.DTOs
 {
-    public class SchoolSubjectDTO
+    public class SchoolSubjectCreateAndEditDTO
     {
-        public int Id;
-        public string Name;
+        public string Name { get; set; }
+        public int WeeklyClasses { get; set; }
     }
 }

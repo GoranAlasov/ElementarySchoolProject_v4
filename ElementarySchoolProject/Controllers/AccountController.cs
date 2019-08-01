@@ -305,7 +305,7 @@ namespace ElementarySchoolProject.Controllers
             return Ok(retVal);
         }
 
-        [Route("students/delete/id")]
+        [Route("students/{id}")]
         [AllowAnonymous]
         [HttpDelete]
         public IHttpActionResult DeleteStudent(string id)

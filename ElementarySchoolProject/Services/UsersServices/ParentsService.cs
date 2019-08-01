@@ -7,6 +7,7 @@ using System.Web.Http;
 using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.Users.UserDTOs;
 using ElementarySchoolProject.Repositories;
+using ElementarySchoolProject.Utilities;
 
 namespace ElementarySchoolProject.Services.UsersServices
 {
@@ -21,7 +22,43 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<ParentSimpleViewDTO> GetAll()
         {
-            throw new NotImplementedException();
+            var parents = db.ParentsRepository.Get();
+
+            return parents
+                .Select(x => UserToUserDTOConverters.ParentToParentSimpleViewDTO(x));
+        }
+
+        public IEnumerable<ParentSimpleViewDTO> GetAllByChildrenClass(int schoolClassId)
+        {
+            //TODO 11.13: exception if school class id nonexistant
+            var parents = db.ParentsRepository
+                .Get(p => p.Students.Any(s => s.SchoolClass.Id == schoolClassId));
+
+            return parents
+                .Select(x => UserToUserDTOConverters.ParentToParentSimpleViewDTO(x));
+        }
+
+        public IEnumerable<ParentSimpleViewDTO> GetAllByChildrenGradeRange(int gradeLow, int gradeHigh)
+        {
+            //TODO 11.14: exception if grade not in range 1-8
+            //TODO 11.15: TEST MISSING PARAMETERS EXCEPTION EVERYWHERE!!
+
+            var parents = db.ParentsRepository
+                .Get(p => p.Students.Any(s => s.SchoolClass.SchoolGrade >= gradeLow && s.SchoolClass.SchoolGrade <= gradeHigh));
+
+            return parents
+                .Select(x => UserToUserDTOConverters.ParentToParentSimpleViewDTO(x));
+        }
+
+        public IEnumerable<ParentSimpleViewDTO> GetAllByNumberOfChildren(int numberOfChildern)
+        {
+            //TODO 11.16 exception if number of children < 1
+
+            var parents = db.ParentsRepository
+                .Get(p => p.Students.Count() == numberOfChildern);
+
+            return parents.
+                Select(x => UserToUserDTOConverters.ParentToParentSimpleViewDTO(x));
         }
 
         public ParentSimpleViewDTO GetById(string id)
@@ -33,7 +70,7 @@ namespace ElementarySchoolProject.Services.UsersServices
                 throw new KeyNotFoundException();
             }
 
-            return Utilities.UserToUserDTOConverters.ParentToParentSimpleViewDTO(parent);
+            return UserToUserDTOConverters.ParentToParentSimpleViewDTO(parent);
         }        
     }
 }
