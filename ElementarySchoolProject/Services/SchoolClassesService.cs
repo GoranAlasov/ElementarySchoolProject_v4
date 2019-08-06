@@ -42,10 +42,14 @@ namespace ElementarySchoolProject.Services
         {
             SchoolClass sc = db.SchoolClassesRepository.GetByID(id);
 
-            sc = SchoolClassToSchoolClassDTOConverters.SchoolClassCreateAndEditDTOToSchoolClass(dto);
+            if (sc != null)
+            {
+                sc.Name = dto.ClassName;
+                sc.SchoolGrade = dto.SchoolGrade;
 
-            db.SchoolClassesRepository.Update(sc);
-            db.Save();
+                db.SchoolClassesRepository.Update(sc);
+                db.Save();
+            }            
 
             return SchoolClassToSchoolClassDTOConverters.SchoolClassToSchoolClassDTO(sc);
         }
@@ -63,9 +67,9 @@ namespace ElementarySchoolProject.Services
             return sc.Select(x => SchoolClassToSchoolClassDTOConverters.SchoolClassToSchoolClassDTO(x));
         }
 
-        public SchoolClassDTO GetById(int id)
+        public SchoolClassDetailsDTO GetById(int id)
         {
-            return SchoolClassToSchoolClassDTOConverters.SchoolClassToSchoolClassDTO(db.SchoolClassesRepository.GetByID(id));
+            return SchoolClassToSchoolClassDTOConverters.SchoolClassToSchoolClassDetailsDTO(db.SchoolClassesRepository.GetByID(id));
         }
     }
 }

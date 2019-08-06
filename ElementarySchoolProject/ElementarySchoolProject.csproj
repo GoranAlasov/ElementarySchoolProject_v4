@@ -163,6 +163,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ParentsController.cs" />
+    <Compile Include="Controllers\SchoolClassesController.cs" />
+    <Compile Include="Controllers\SchoolClassTeacherSchoolSubjectsController.cs" />
     <Compile Include="Controllers\SchoolSubjectsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TeacherSchoolSubjectsController.cs" />
@@ -171,7 +173,10 @@
     <Compile Include="Models\DTOs\GradeCreateAndEditDTO.cs" />
     <Compile Include="Models\DTOs\GradeDTO.cs" />
     <Compile Include="Models\DTOs\SchoolClassCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassDetailsDTO.cs" />
     <Compile Include="Models\DTOs\SchoolClassDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassTeacherSchoolSubjectCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassTeacherSchoolSubjectDTO.cs" />
     <Compile Include="Models\DTOs\SchoolSubjectBasicDTO.cs" />
     <Compile Include="Models\DTOs\SchoolSubjectWithWeeklyClassesAndTeachersDTO.cs" />
     <Compile Include="Models\DTOs\SchoolSubjectWithWeeklyClassesDTO.cs" />
@@ -208,8 +213,10 @@
     <Compile Include="Services\GradesService.cs" />
     <Compile Include="Services\IGradesService.cs" />
     <Compile Include="Services\ISchoolClassesService.cs" />
+    <Compile Include="Services\ISchoolClassTeacherSchoolSubjectService.cs" />
     <Compile Include="Services\ITeacherSchoolSubjectsService.cs" />
     <Compile Include="Services\SchoolClassesService.cs" />
+    <Compile Include="Services\SchoolClassTeacherSchoolSubjectService.cs" />
     <Compile Include="Services\SchoolSubjectsService.cs" />
     <Compile Include="Services\TeacherSchoolSubjectService.cs" />
     <Compile Include="Services\UsersServices\IParentsService.cs" />
@@ -221,7 +228,9 @@
     <Compile Include="Services\UsersServices\UsersService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\EmailSenders.cs" />
+    <Compile Include="Utilities\Exceptions\DatesRangeException.cs" />
     <Compile Include="Utilities\GradeToGradeDTOConverters.cs" />
+    <Compile Include="Utilities\SchoolClassTeacherSchoolSubjectTo SchoolClassTeacherSchoolSubjectDTOConverters.cs" />
     <Compile Include="Utilities\SchoolClassToSchoolClassDTOConverters.cs" />
     <Compile Include="Utilities\SchoolSubjectToSchoolSubjectDTOConverters.cs" />
     <Compile Include="Utilities\TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.cs" />

@@ -20,6 +20,8 @@ namespace ElementarySchoolProject.Services.UsersServices
             this.db = db;
         }
 
+
+
         public IEnumerable<ParentSimpleViewDTO> GetAll()
         {
             var parents = db.ParentsRepository.Get();
@@ -30,29 +32,28 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<ParentSimpleViewDTO> GetAllByChildrenClass(int schoolClassId)
         {
-            //TODO 11.13: exception if school class id nonexistant
+            //TODO 11.13: **DONE** exception if school class id nonexistant
+            var sc = db.SchoolClassesRepository.GetByID(schoolClassId);
+
+            if (sc == null)
+            {
+                throw new KeyNotFoundException("That school class does not exist.");
+            }
+
             var parents = db.ParentsRepository
                 .Get(p => p.Students.Any(s => s.SchoolClass.Id == schoolClassId));
 
             return parents
                 .Select(x => UserToUserDTOConverters.ParentToParentSimpleViewDTO(x));
-        }
-
-        public IEnumerable<ParentSimpleViewDTO> GetAllByChildrenGradeRange(int gradeLow, int gradeHigh)
-        {
-            //TODO 11.14: exception if grade not in range 1-8
-            //TODO 11.15: TEST MISSING PARAMETERS EXCEPTION EVERYWHERE!!
-
-            var parents = db.ParentsRepository
-                .Get(p => p.Students.Any(s => s.SchoolClass.SchoolGrade >= gradeLow && s.SchoolClass.SchoolGrade <= gradeHigh));
-
-            return parents
-                .Select(x => UserToUserDTOConverters.ParentToParentSimpleViewDTO(x));
-        }
+        }        
 
         public IEnumerable<ParentSimpleViewDTO> GetAllByNumberOfChildren(int numberOfChildern)
         {
-            //TODO 11.16 exception if number of children < 1
+            //TODO 11.16 **DONE** exception if number of children < 1
+            if (numberOfChildern < 1)
+            {
+                throw new ArgumentOutOfRangeException("Can't have less than 1 child!", new ArgumentOutOfRangeException());
+            }
 
             var parents = db.ParentsRepository
                 .Get(p => p.Students.Count() == numberOfChildern);

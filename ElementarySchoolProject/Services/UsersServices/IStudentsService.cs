@@ -12,7 +12,7 @@ namespace ElementarySchoolProject.Services.UsersServices
         IEnumerable<StudentWithParentDTO> GetAll();
         StudentWithParentGradesClassDTO GetById(string id);
         StudentWithParentGradesClassDTO GetByIdAndParentUserName(string parentId, string childId);
-        IEnumerable<StudentWithParentDTO> GetAllByParentId(string parentId);
+        IEnumerable<StudentWithParentGradesClassDTO> GetAllByParentId(string parentId);
         IEnumerable<StudentWithParentDTO> GetAllBySchoolClassId(int id);
         IEnumerable<StudentWithParentDTO> GetAllBySchoolClassGrade(int grade);
         IEnumerable<StudentWithParentDTO> GetAllByTeacherId(string id);

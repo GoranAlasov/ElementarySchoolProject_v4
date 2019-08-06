@@ -25,11 +25,24 @@ namespace ElementarySchoolProject.Utilities
         {
             SchoolClass retVal = new SchoolClass()
             {
-                Name = dto.Name,
+                Name = dto.ClassName,
                 SchoolGrade = dto.SchoolGrade
             };
 
             return retVal;
         }        
+
+        public static SchoolClassDetailsDTO SchoolClassToSchoolClassDetailsDTO(SchoolClass sc)
+        {
+            SchoolClassDetailsDTO retVal = new SchoolClassDetailsDTO()
+            {
+                Id = sc.Id,
+                SchoolGrade = sc.SchoolGrade,
+                ClassName = sc.Name,
+                Students = sc.Students.Select(student => UserToUserDTOConverters.StudentToStudentBasicDTO(student))
+            };
+
+            return retVal;
+        }
     }
 }

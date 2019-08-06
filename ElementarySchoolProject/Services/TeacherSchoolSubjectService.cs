@@ -45,5 +45,31 @@ namespace ElementarySchoolProject.Services
 
             return TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.TeacherSchoolSubjectToTeacherSchoolSubjectDTO(tss);
         }
+
+        public TeacherSchoolSubjectDTO EditTeacherSchoolSubject(int id, TeacherSchoolSubjectCreateAndEditDTO dto)
+        {
+            TeacherSchoolSubject ts = db.TeacherSchoolSubjectSRepository.GetByID(id);
+
+            if (ts != null)
+            {
+                ts.SchoolSubjectId = dto.SchoolSubjectId;
+                ts.TeacherId = dto.TeacherId;
+
+                db.TeacherSchoolSubjectSRepository.Update(ts);
+                db.Save();                
+            }
+
+            return TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.TeacherSchoolSubjectToTeacherSchoolSubjectDTO(ts);
+        }
+
+        public TeacherSchoolSubjectDTO DeleteTeacherSchoolSubject(int id)
+        {
+            TeacherSchoolSubject ts = db.TeacherSchoolSubjectSRepository.GetByID(id);
+
+            db.TeacherSchoolSubjectSRepository.Delete(ts);
+            db.Save();
+
+            return TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.TeacherSchoolSubjectToTeacherSchoolSubjectDTO(ts);
+        }
     }
 }

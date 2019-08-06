@@ -13,6 +13,7 @@ namespace ElementarySchoolProject.Services
         IEnumerable<TeacherSchoolSubjectDTO> GetAll();
         TeacherSchoolSubjectDTO GetById(int id);
         TeacherSchoolSubjectDTO CreateTeacherSchoolSubject(TeacherSchoolSubjectCreateAndEditDTO dto);
-
+        TeacherSchoolSubjectDTO EditTeacherSchoolSubject(int id, TeacherSchoolSubjectCreateAndEditDTO dto);
+        TeacherSchoolSubjectDTO DeleteTeacherSchoolSubject(int id);
     }
 }

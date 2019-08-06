@@ -35,7 +35,7 @@ namespace ElementarySchoolProject.Controllers
             catch (Exception)
             {
                 return NotFound();
-            }            
+            }
         }
 
         [Authorize(Roles = "parent")]
@@ -65,15 +65,109 @@ namespace ElementarySchoolProject.Controllers
 
         [AllowAnonymous]
         [Route("grade_dates")]
-        public IHttpActionResult GetStudentsByGradeDates([FromUri]int d1, [FromUri]int m1, [FromUri]int y1, [FromUri]int d2, [FromUri]int m2, [FromUri]int y2)
+        public IHttpActionResult GetStudentsByGradeDates([FromUri]DateTime d1, [FromUri]DateTime d2)
         {
-            DateTime date1 = new DateTime(y1, m1, d1);
-            DateTime date2 = new DateTime(y2, m2, d2);
+            try
+            {
+                var retVal = service.GetAllByGradeDates(d1, d2);
 
-            var retVal = service.GetAllByGradeDates(date1, date2);
-
-            return Ok(retVal);
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+                
+            }            
         }
 
+        [Route("grade/{grade}")]
+        public IHttpActionResult GetAllBySchoolClassGrade(int grade)
+        {
+            try
+            {
+                var retVal = service.GetAllBySchoolClassGrade(grade);
+
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("grade/{grade}/teacher/{teacherid}")]
+        public IHttpActionResult GetAllGetAllBySchoolClassGradeAndTeacherId(int grade, string teacherId)
+        {
+            try
+            {
+                var retVal = service.GetAllBySchoolClassGradeAndTeacherId(grade, teacherId);
+
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("schoolclass/{id}")]
+        public IHttpActionResult GetAllBySchoolClassId(int id)
+        {
+            try
+            {
+                var retVal = service.GetAllBySchoolClassId(id);
+
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("teacher/{id}")]
+        public IHttpActionResult GetAllByTeacherId (string id)
+        {
+            try
+            {
+                var retVal = service.GetAllByTeacherId(id);
+
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("teacherschoolsubject/{id}")]
+        public IHttpActionResult GetAllByTeacherSchoolSubject (int id)
+        {
+            try
+            {
+                var retVal = service.GetAllByTeacherSchoolSubjectId(id);
+
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("parent/{id}")]
+        public IHttpActionResult GetAllByParentId(string id)
+        {
+            try
+            {
+                var retVal = service.GetAllByParentId(id);
+
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

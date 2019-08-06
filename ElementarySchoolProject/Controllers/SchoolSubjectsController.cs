@@ -33,8 +33,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         //GET: api/SchoolSubjects/5
-        [ResponseType(typeof(SchoolSubject))]
-        public IHttpActionResult GetSchoolSubject(int id)
+        [ResponseType(typeof(SchoolSubjectWithWeeklyClassesAndTeachersDTO))]
+        public IHttpActionResult GetSchoolSubjectById(int id)
         {
             SchoolSubjectWithWeeklyClassesAndTeachersDTO schoolSubject = service.GetById(id);
             if (schoolSubject == null)
@@ -47,15 +47,14 @@ namespace ElementarySchoolProject.Controllers
 
         // PUT: api/SchoolSubjects/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSchoolSubject(int id, [FromBody]SchoolSubjectCreateAndEditDTO    dto)
+        public IHttpActionResult PutSchoolSubject(int id, [FromBody]SchoolSubjectCreateAndEditDTO dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            service.EditSchoolSubject(id, dto);
-                   
+            service.EditSchoolSubject(id, dto);                   
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -75,7 +74,7 @@ namespace ElementarySchoolProject.Controllers
         }
 
         // DELETE: api/SchoolSubjects/5
-        [ResponseType(typeof(SchoolSubject))]
+        [ResponseType(typeof(SchoolSubjectWithWeeklyClassesDTO))]
         public IHttpActionResult DeleteSchoolSubject(int id)
         {
             SchoolSubjectWithWeeklyClassesDTO retVal = service.DeleteSchoolSubject(id);

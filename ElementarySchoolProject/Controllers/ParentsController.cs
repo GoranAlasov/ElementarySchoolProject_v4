@@ -40,6 +40,49 @@ namespace ElementarySchoolProject.Controllers
             }            
         }
 
-        
+        [Route("")]
+        public IHttpActionResult GetAll()
+        {
+            try
+            {
+                var parents = service.GetAll();
+
+                return Ok(parents);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("schoolclass/{schoolClassId}")]
+        public IHttpActionResult GetAllByChildrenClass(int schoolClassId)
+        {
+            try
+            {
+                var parents = service.GetAllByChildrenClass(schoolClassId);
+
+                return Ok(parents);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("numberOfChildren/{numberOfChildern}")]
+        public IHttpActionResult GetAllByNumberOfChildren(int numberOfChildern)
+        {
+            try
+            {
+                var parents = service.GetAllByNumberOfChildren(numberOfChildern);
+
+                return Ok(parents);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -8,7 +8,6 @@ namespace ElementarySchoolProject.Models
     public class SchoolSubject
     {
         public int Id { get; set; }
-
         public string Name { get; set; }
         public int WeeklyClasses { get; set; }
         

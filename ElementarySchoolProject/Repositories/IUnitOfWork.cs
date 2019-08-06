@@ -21,6 +21,7 @@ namespace ElementarySchoolProject.Repositories
         IGenericRepository<SchoolSubject> SchoolSubjectsRepository { get; }
         IGenericRepository<SchoolClass> SchoolClassesRepository { get; }
         IGenericRepository<TeacherSchoolSubject> TeacherSchoolSubjectSRepository { get; }
+        IGenericRepository<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjectRepository { get; }
         IGenericRepository<Grade> GradesRepository { get; }
 
         //TODO 6: ***DONE*** Add and implement all other repositories

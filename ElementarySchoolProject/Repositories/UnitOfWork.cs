@@ -48,6 +48,9 @@ namespace ElementarySchoolProject.Repositories
         public IGenericRepository<TeacherSchoolSubject> TeacherSchoolSubjectSRepository { get; set; }
 
         [Dependency]
+        public IGenericRepository<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjectRepository { get; set; }
+
+        [Dependency]
         public IGenericRepository<Grade> GradesRepository { get; set; }
 
         public void Save()

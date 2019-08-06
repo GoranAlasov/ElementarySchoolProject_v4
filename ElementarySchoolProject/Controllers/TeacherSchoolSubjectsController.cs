@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace ElementarySchoolProject.Controllers
 {
@@ -20,20 +21,60 @@ namespace ElementarySchoolProject.Controllers
         }
 
 
-
-        public IEnumerable<TeacherSchoolSubjectDTO> GetAll()
+        //GET: api/teacherschoolsubjects
+        public IEnumerable<TeacherSchoolSubjectDTO> GetTeacherSchoolSubjects()
         {
             return service.GetAll();
         }
 
-        public TeacherSchoolSubjectDTO GetById(int id)
+        //GET: api/teacherschoolsubjects/5
+        [ResponseType(typeof(TeacherSchoolSubjectDTO))]
+        public IHttpActionResult GetTeacherSchoolSubjectById(int id)
         {
-            return service.GetById(id);
+            TeacherSchoolSubjectDTO retVal = service.GetById(id);
+            if (retVal == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(retVal);
         }
 
-        public TeacherSchoolSubjectDTO PostTeacherSchoolSubject([FromBody] TeacherSchoolSubjectCreateAndEditDTO dto)
+        //PUT: api/teacherschoolsubjects/6
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutTeacherSchoolSubject(int id, [FromBody] TeacherSchoolSubjectCreateAndEditDTO dto)
         {
-            return service.CreateTeacherSchoolSubject(dto);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            service.EditTeacherSchoolSubject(id, dto);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        //POST: api/teacherschoolsubjects
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PostTeacherSchoolSubject([FromBody] TeacherSchoolSubjectCreateAndEditDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            TeacherSchoolSubjectDTO retVal = service.CreateTeacherSchoolSubject(dto);
+
+            return CreatedAtRoute("DefaultApi", new { id = retVal.Id }, retVal);
+        }        
+
+        //DELETE: api/teacherschoolsubject/8
+        [ResponseType(typeof(TeacherSchoolSubjectDTO))]
+        public IHttpActionResult DeleteTeacherSchoolSubject(int id)
+        {
+            TeacherSchoolSubjectDTO retVal = service.DeleteTeacherSchoolSubject(id);
+
+            return Ok(retVal);
         }
     }
 }

@@ -57,13 +57,12 @@ namespace ElementarySchoolProject.Utilities
 
         public static SchoolSubject SchoolSubjectWithWeeklyClassesDTOToSchoolSubject(SchoolSubjectWithWeeklyClassesDTO dto)
         {
-            SchoolSubject retVal = new SchoolSubject()
-            {
-                Id = dto.Id,
-                Name = dto.Name,
-                WeeklyClasses = dto.WeeklyClasses
-            };
+            SchoolSubject retVal = new SchoolSubject();
 
+            retVal.Id = dto.Id;
+            retVal.Name = dto.Name;
+            retVal.WeeklyClasses = dto.WeeklyClasses;
+            
             return retVal;
         }
 

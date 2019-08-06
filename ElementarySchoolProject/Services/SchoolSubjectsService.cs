@@ -45,13 +45,15 @@ namespace ElementarySchoolProject.Services
         public SchoolSubjectWithWeeklyClassesDTO EditSchoolSubject(int id, SchoolSubjectCreateAndEditDTO dto)
         {
             SchoolSubject subject = db.SchoolSubjectsRepository.GetByID(id);
-            subject.Name = dto.Name;
-            subject.WeeklyClasses = dto.WeeklyClasses;
-            //subject = SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectCreateAndEditDTOToSchoolSubject(dto);
-            //subject.Id = id;
 
-            db.SchoolSubjectsRepository.Update(subject);
-            db.Save();
+            if (subject != null)
+            {
+                subject.Name = dto.Name;
+                subject.WeeklyClasses = dto.WeeklyClasses;
+
+                db.SchoolSubjectsRepository.Update(subject);
+                db.Save();                
+            }
 
             return SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesDTO(subject);
         }

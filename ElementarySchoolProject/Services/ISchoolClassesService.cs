@@ -11,7 +11,7 @@ namespace ElementarySchoolProject.Services
     public interface ISchoolClassesService
     {
         IEnumerable<SchoolClassDTO> GetAll();
-        SchoolClassDTO GetById(int id);
+        SchoolClassDetailsDTO GetById(int id);
         IEnumerable<SchoolClassDTO> GetBySchoolGrade(int grade);
         
         SchoolClassDTO CreateSchoolClass(SchoolClassCreateAndEditDTO dto);

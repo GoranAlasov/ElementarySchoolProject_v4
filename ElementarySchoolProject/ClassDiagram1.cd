@@ -38,8 +38,10 @@
     </AssociationLine>
     <AssociationLine Name="Grades" Type="ElementarySchoolProject.Models.Grade" FixedToPoint="true">
       <Path>
-        <Point X="4.5" Y="4.078" />
-        <Point X="5.75" Y="4.078" />
+        <Point X="4.5" Y="3.374" />
+        <Point X="4.875" Y="3.374" />
+        <Point X="4.875" Y="4.421" />
+        <Point X="5.75" Y="4.421" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.089" Y="-0.242" />
@@ -61,8 +63,8 @@
     <Position X="11.75" Y="3.5" Width="1.5" />
     <AssociationLine Name="TeacherSchoolSubjects" Type="ElementarySchoolProject.Models.TeacherSchoolSubject" FixedToPoint="true">
       <Path>
-        <Point X="11.75" Y="3.532" />
-        <Point X="10" Y="3.532" />
+        <Point X="11.75" Y="3.718" />
+        <Point X="10" Y="3.718" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -96,11 +98,13 @@
     <AssociationLine Name="Student" Type="ElementarySchoolProject.Models.Student" FixedToPoint="true">
       <Path>
         <Point X="5.75" Y="3.811" />
+        <Point X="4.958" Y="3.811" Type="JumpStart" />
+        <Point X="4.792" Y="3.811" Type="JumpEnd" />
         <Point X="4.5" Y="3.811" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAQAAAAAEAAAAAAAAAAAAAAAAAAAAgAAAAAEA=</HashCode>
+      <HashCode>AAACAAAAQAAEAAEAAAAAAAAAAAAAAAAAAAAgAAACAEA=</HashCode>
       <FileName>Models\Grade.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -112,8 +116,8 @@
     <Position X="8" Y="3" Width="2" />
     <AssociationLine Name="Teacher" Type="ElementarySchoolProject.Models.Teacher" FixedFromPoint="true">
       <Path>
-        <Point X="10" Y="3.812" />
-        <Point X="11.75" Y="3.812" />
+        <Point X="10" Y="4.096" />
+        <Point X="11.75" Y="4.096" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="SchoolSubject" Type="ElementarySchoolProject.Models.SchoolSubject" FixedFromPoint="true" FixedToPoint="true">
@@ -124,7 +128,7 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>QAECAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAECAAAAAAAAAAIQAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\TeacherSchoolSubject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -166,8 +170,8 @@
     <Position X="5.75" Y="0.75" Width="1.5" />
     <AssociationLine Name="TeacherSchoolSubject" Type="ElementarySchoolProject.Models.TeacherSchoolSubject" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="7.25" Y="0.938" />
-        <Point X="8.616" Y="0.938" />
+        <Point X="7.25" Y="1.003" />
+        <Point X="8.616" Y="1.003" />
         <Point X="8.616" Y="3" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
@@ -175,7 +179,7 @@
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AACCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AACCAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Models\SchoolClassTeacherSchoolSubject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
