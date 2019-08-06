@@ -18,6 +18,7 @@ namespace ElementarySchoolProject.Infrastructure
         public DbSet<SchoolClass> SchoolClasses { get; set; }
         public DbSet<SchoolSubject> SchoolSubjects { get; set; }
         public DbSet<TeacherSchoolSubject> TeacherSchoolSubjects { get; set; }
+        public DbSet<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjects { get; set; }
         public DbSet<Grade> Grades { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

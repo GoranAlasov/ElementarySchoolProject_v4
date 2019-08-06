@@ -15,6 +15,6 @@ namespace ElementarySchoolProject.Models
         public string Name { get; set; }
 
         public virtual IEnumerable<Student> Students { get; set; }
-        public virtual IEnumerable<TeacherSchoolSubject> TeacherSchoolSubjects { get; set; }
+        public virtual IEnumerable<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjects { get; set; }
     }
 }

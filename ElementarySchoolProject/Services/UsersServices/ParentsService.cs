@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using ElementarySchoolProject.Models;
-using ElementarySchoolProject.Models.Users.UserDTOs;
+using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Repositories;
 using ElementarySchoolProject.Utilities;
 

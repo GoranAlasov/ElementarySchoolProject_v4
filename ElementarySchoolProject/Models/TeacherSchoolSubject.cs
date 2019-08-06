@@ -9,8 +9,8 @@ namespace ElementarySchoolProject.Models
     {
         public int Id { get; set; }
 
-        public virtual Teacher Teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }        
         public virtual SchoolSubject SchoolSubject { get; set; }
-        public virtual IEnumerable<SchoolClass> SchoolClasses { get; set; }
+        public virtual IEnumerable<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjects { get; set; }
     }
 }

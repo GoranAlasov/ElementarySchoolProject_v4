@@ -10,8 +10,8 @@ namespace ElementarySchoolProject.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public int WeeklyClasses { get; set; }        
-
-        public virtual IEnumerable<TeacherSchoolSubject> TeacherSchoolSubjects { get; set; }        
+        public int WeeklyClasses { get; set; }
+        
+        public virtual List<TeacherSchoolSubject> TeacherSchoolSubjects { get; set; }        
     }
 }

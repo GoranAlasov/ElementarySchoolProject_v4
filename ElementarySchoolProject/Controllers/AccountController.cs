@@ -1,5 +1,5 @@
 ﻿using ElementarySchoolProject.Models;
-using ElementarySchoolProject.Models.Users.UserDTOs;
+using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Services.UsersServices;
 using Microsoft.AspNet.Identity;
 using System;
@@ -131,7 +131,7 @@ namespace ElementarySchoolProject.Controllers
         [Route("")]
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public async Task<IEnumerable<UserViewWithRoleIds>> GetAllUsers()
+        public async Task<IEnumerable<UserViewWithRoleIdsDTO>> GetAllUsers()
         {
             var retVal = await service.GetAllUsers();            
 
@@ -173,7 +173,7 @@ namespace ElementarySchoolProject.Controllers
         [Route("students")]
         [AllowAnonymous]
         [HttpGet]
-        public IEnumerable<StudentSimpleViewDTO> GetAllStudents()
+        public IEnumerable<StudentWithParentDTO> GetAllStudents()
         {
             var retVal = service.GetAllStudents();
 
@@ -183,9 +183,9 @@ namespace ElementarySchoolProject.Controllers
         [Route("{id}")]
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public async Task<UserViewWithRoleIds> GetUserById(string id)
+        public async Task<UserViewWithRoleIdsDTO> GetUserById(string id)
         {
-            UserViewWithRoleIds retVal = await service.GetUserById(id);            
+            UserViewWithRoleIdsDTO retVal = await service.GetUserById(id);            
 
             return retVal;
         }
@@ -246,7 +246,7 @@ namespace ElementarySchoolProject.Controllers
         [HttpGet]
         public IHttpActionResult GetStudentById(string id)
         {
-            StudentSimpleViewDTO retVal = service.GetStudentById(id);
+            StudentWithParentDTO retVal = service.GetStudentById(id);
 
             if (retVal == null)
             {

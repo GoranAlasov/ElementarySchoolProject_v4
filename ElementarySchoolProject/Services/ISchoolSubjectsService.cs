@@ -9,8 +9,8 @@ namespace ElementarySchoolProject.Services
 { 
     public interface ISchoolSubjectsService
     {
-        IEnumerable<SchoolSubjectWithWeeklyClassesDTO> GetAll();
-        SchoolSubjectWithWeeklyClassesDTO GetById(int id);
+        IEnumerable<SchoolSubjectWithWeeklyClassesAndTeachersDTO> GetAll();
+        SchoolSubjectWithWeeklyClassesAndTeachersDTO GetById(int id);
         SchoolSubjectWithWeeklyClassesDTO CreateSchoolSubject(SchoolSubjectCreateAndEditDTO dto);
         SchoolSubjectWithWeeklyClassesDTO EditSchoolSubject(int id, SchoolSubjectCreateAndEditDTO dto);
         SchoolSubjectWithWeeklyClassesDTO DeleteSchoolSubject(int id);

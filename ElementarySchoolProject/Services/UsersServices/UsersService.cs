@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Routing;
 using ElementarySchoolProject.Models;
-using ElementarySchoolProject.Models.Users.UserDTOs;
 using ElementarySchoolProject.Repositories;
 using Microsoft.AspNet.Identity;
 using ElementarySchoolProject.Utilities;
+using ElementarySchoolProject.Models.DTOs.UserDTOs;
 
 namespace ElementarySchoolProject.Services.UsersServices
 {
@@ -55,19 +55,19 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         #region GettingUsers
 
-        public async Task<IEnumerable<UserViewWithRoleIds>> GetAllUsers()
+        public async Task<IEnumerable<UserViewWithRoleIdsDTO>> GetAllUsers()
         {
             IEnumerable<ApplicationUser> users = await db.AuthRepository.GetAllUsers();
-            IEnumerable<UserViewWithRoleIds> retVal = users.Select(x => UserToUserDTOConverters.UserToUserViewWithRoleIds(x));
+            IEnumerable<UserViewWithRoleIdsDTO> retVal = users.Select(x => UserToUserDTOConverters.UserToUserViewWithRoleIds(x));
 
             return retVal;
         }
 
-        public async Task<UserViewWithRoleIds> GetUserById(string id)
+        public async Task<UserViewWithRoleIdsDTO> GetUserById(string id)
         {
             ApplicationUser user = await db.AuthRepository.FindUserById(id);
 
-            UserViewWithRoleIds retVal = UserToUserDTOConverters.UserToUserViewWithRoleIds(user);
+            UserViewWithRoleIdsDTO retVal = UserToUserDTOConverters.UserToUserViewWithRoleIds(user);
 
             return retVal;
         }
@@ -96,10 +96,10 @@ namespace ElementarySchoolProject.Services.UsersServices
             return retVal;
         }
 
-        public IEnumerable<StudentSimpleViewDTO> GetAllStudents()
+        public IEnumerable<StudentWithParentDTO> GetAllStudents()
         {
             IEnumerable<Student> users = db.StudentsRepository.Get();
-            IEnumerable<StudentSimpleViewDTO> retVal = users.Select(x => UserToUserDTOConverters.StudentToStudentSimpleViewDTO(x));
+            IEnumerable<StudentWithParentDTO> retVal = users.Select(x => UserToUserDTOConverters.StudentToStudentWithParentDTO(x));
 
             return retVal;
         }
@@ -148,7 +148,7 @@ namespace ElementarySchoolProject.Services.UsersServices
             return retVal;
         }
 
-        public StudentSimpleViewDTO GetStudentById(string id)
+        public StudentWithParentDTO GetStudentById(string id)
         {
             Student student = db.StudentsRepository.Get(s => s.Id == id).FirstOrDefault();
             
@@ -157,7 +157,7 @@ namespace ElementarySchoolProject.Services.UsersServices
                 return null;
             }
 
-            StudentSimpleViewDTO retVal = UserToUserDTOConverters.StudentToStudentSimpleViewDTO(student);
+            StudentWithParentDTO retVal = UserToUserDTOConverters.StudentToStudentWithParentDTO(student);
 
             return retVal;
         }

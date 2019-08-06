@@ -14,11 +14,22 @@ namespace ElementarySchoolProject.Utilities
             SchoolClassDTO retVal = new SchoolClassDTO()
             {
                 Id = sc.Id,
-                Grade = sc.SchoolGrade,
+                SchoolGrade = sc.SchoolGrade,
                 ClassName = sc.Name
             };
 
             return retVal;
-        }
+        }        
+
+        public static SchoolClass SchoolClassCreateAndEditDTOToSchoolClass(SchoolClassCreateAndEditDTO dto)
+        {
+            SchoolClass retVal = new SchoolClass()
+            {
+                Name = dto.Name,
+                SchoolGrade = dto.SchoolGrade
+            };
+
+            return retVal;
+        }        
     }
 }

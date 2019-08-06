@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ElementarySchoolProject.Models.Users.UserDTOs
+namespace ElementarySchoolProject.Models.DTOs.UserDTOs
 {
     public class RegisterUserDTO
     {

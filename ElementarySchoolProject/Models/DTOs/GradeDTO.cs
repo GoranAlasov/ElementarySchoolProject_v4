@@ -1,4 +1,4 @@
-﻿using ElementarySchoolProject.Models.Users.UserDTOs;
+﻿using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +13,6 @@ namespace ElementarySchoolProject.Models.DTOs
         public DateTime DateOfGrading { get; set; }
         public SchoolSubjectBasicDTO Subject { get; set; }
         public UserSimpleViewDTO GradingTeacher { get; set; }
+        public StudentBasicDTO Student { get; set; }
     }
 }

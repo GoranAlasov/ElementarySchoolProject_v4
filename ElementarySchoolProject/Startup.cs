@@ -76,12 +76,15 @@ namespace ElementarySchoolProject
             container.RegisterType<IGenericRepository<SchoolClass>, GenericRepository<SchoolClass>>();
             container.RegisterType<IGenericRepository<SchoolSubject>, GenericRepository<SchoolSubject>>();
             container.RegisterType<IGenericRepository<TeacherSchoolSubject>, GenericRepository<TeacherSchoolSubject>>();
+            container.RegisterType<IGenericRepository<SchoolClassTeacherSchoolSubject>, GenericRepository<SchoolClassTeacherSchoolSubject>>();
             container.RegisterType<IGenericRepository<Grade>, GenericRepository<Grade>>();
 
             container.RegisterType<IUsersService, UsersService>();
             container.RegisterType<IStudentsService, StudentsService>();
             container.RegisterType<IParentsSerivce, ParentsService>();
             container.RegisterType<ISchoolSubjectsService, SchoolSubjectsService>();
+            container.RegisterType<ISchoolClassesService, SchoolClassesService>();
+            container.RegisterType<ITeacherSchoolSubjectsService, TeacherSchoolSubjectService>();
             //TODO 0.1: Adding dependencies
             
             return container;

@@ -1,4 +1,4 @@
-﻿using ElementarySchoolProject.Models.Users.UserDTOs;
+﻿using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

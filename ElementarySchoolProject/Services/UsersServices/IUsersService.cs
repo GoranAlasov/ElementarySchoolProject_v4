@@ -1,5 +1,5 @@
 ﻿using ElementarySchoolProject.Models;
-using ElementarySchoolProject.Models.Users.UserDTOs;
+using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -16,18 +16,18 @@ namespace ElementarySchoolProject.Services.UsersServices
         Task<IdentityResult> RegisterParent(RegisterUserDTO user);
         Task<IdentityResult> RegisterStudent(RegisterStudentDTO user);
 
-        Task<IEnumerable<UserViewWithRoleIds>> GetAllUsers();
-        Task<UserViewWithRoleIds> GetUserById(string id);
+        Task<IEnumerable<UserViewWithRoleIdsDTO>> GetAllUsers();
+        Task<UserViewWithRoleIdsDTO> GetUserById(string id);
 
         IEnumerable<UserSimpleViewDTO> GetAllAdmins();
         IEnumerable<UserSimpleViewDTO> GetAllTeachers();
         IEnumerable<ParentSimpleViewDTO> GetAllParents();
-        IEnumerable<StudentSimpleViewDTO> GetAllStudents();
+        IEnumerable<StudentWithParentDTO> GetAllStudents();
 
         UserSimpleViewDTO GetAdminById(string id);
         UserSimpleViewDTO GetTeacherById(string id);
         ParentSimpleViewDTO GetParentById(string id);
-        StudentSimpleViewDTO GetStudentById(string id);
+        StudentWithParentDTO GetStudentById(string id);
 
         UserSimpleViewDTO DeleteAdmin(string id);
         UserSimpleViewDTO DeleteTeacher(string id);

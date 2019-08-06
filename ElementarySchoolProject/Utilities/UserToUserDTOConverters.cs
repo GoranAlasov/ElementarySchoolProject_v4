@@ -1,5 +1,5 @@
 ﻿using ElementarySchoolProject.Models;
-using ElementarySchoolProject.Models.Users.UserDTOs;
+using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Repositories;
 using Microsoft.AspNet.Identity;
 using System;
@@ -85,9 +85,9 @@ namespace ElementarySchoolProject.Utilities
             };
         }
 
-        public static UserViewWithRoleIds UserToUserViewWithRoleIds(ApplicationUser user)
+        public static UserViewWithRoleIdsDTO UserToUserViewWithRoleIds(ApplicationUser user)
         {            
-            return new UserViewWithRoleIds()
+            return new UserViewWithRoleIdsDTO()
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -136,9 +136,22 @@ namespace ElementarySchoolProject.Utilities
             return retVal;
         }
 
-        public static StudentSimpleViewDTO StudentToStudentSimpleViewDTO(Student user)
+        public static StudentBasicDTO StudentToStudentBasicDTO(Student user)
         {
-            StudentSimpleViewDTO retVal = new StudentSimpleViewDTO();
+            StudentBasicDTO retVal = new StudentBasicDTO();
+
+            retVal.Id = user.Id;
+            retVal.FirstName = user.FirstName;
+            retVal.LastName = user.LastName;
+            retVal.UserName = user.UserName;
+            retVal.Email = user.Email;
+
+            return retVal;
+        }
+
+        public static StudentWithParentDTO StudentToStudentWithParentDTO(Student user)
+        {
+            StudentWithParentDTO retVal = new StudentWithParentDTO();
 
             retVal.Id = user.Id;
             retVal.FirstName = user.FirstName;
@@ -158,9 +171,9 @@ namespace ElementarySchoolProject.Utilities
             return retVal;
         }
 
-        public static StudentWithGradesView StudentToStudentWithGradesView(Student user)
+        public static StudentWithParentGradesClassDTO StudentToStudentWithParentGradesClassDTO(Student user)
         {
-            StudentWithGradesView retVal = new StudentWithGradesView();
+            StudentWithParentGradesClassDTO retVal = new StudentWithParentGradesClassDTO();
 
             retVal.Id = user.Id;
             retVal.FirstName = user.FirstName;

@@ -18,15 +18,6 @@
   </Class>
   <Class Name="ElementarySchoolProject.Models.Student">
     <Position X="3" Y="3" Width="1.5" />
-    <AssociationLine Name="Grades" Type="ElementarySchoolProject.Models.Grade" FixedToPoint="true">
-      <Path>
-        <Point X="4.5" Y="4.078" />
-        <Point X="5.75" Y="4.078" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.089" Y="-0.242" />
-      </MemberNameLabel>
-    </AssociationLine>
     <AssociationLine Name="Parent" Type="ElementarySchoolProject.Models.Parent" FixedToPoint="true">
       <Path>
         <Point X="3.438" Y="4.233" />
@@ -45,6 +36,15 @@
         <Position X="-1.057" Y="0.133" />
       </MemberNameLabel>
     </AssociationLine>
+    <AssociationLine Name="Grades" Type="ElementarySchoolProject.Models.Grade" FixedToPoint="true">
+      <Path>
+        <Point X="4.5" Y="4.078" />
+        <Point X="5.75" Y="4.078" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.089" Y="-0.242" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAEAAAA=</HashCode>
       <FileName>Models\Users\Student.cs</FileName>
@@ -61,8 +61,8 @@
     <Position X="11.75" Y="3.5" Width="1.5" />
     <AssociationLine Name="TeacherSchoolSubjects" Type="ElementarySchoolProject.Models.TeacherSchoolSubject" FixedToPoint="true">
       <Path>
-        <Point X="11.75" Y="3.625" />
-        <Point X="10" Y="3.625" />
+        <Point X="11.75" Y="3.532" />
+        <Point X="10" Y="3.532" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
@@ -82,23 +82,13 @@
   </Class>
   <Class Name="ElementarySchoolProject.Models.SchoolClass">
     <Position X="3" Y="0.5" Width="1.5" />
-    <AssociationLine Name="TeacherSchoolSubjects" Type="ElementarySchoolProject.Models.TeacherSchoolSubject" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="4.5" Y="1.463" />
-        <Point X="8.583" Y="1.463" />
-        <Point X="8.583" Y="3" />
-      </Path>
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.036" Y="1.633" />
-      </MemberNameLabel>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAIDAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <HashCode>QAIDAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\SchoolClass.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Students" />
-      <Property Name="TeacherSchoolSubjects" />
+      <Property Name="SchoolClassTeacherSchoolSubjects" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="ElementarySchoolProject.Models.Grade">
@@ -122,8 +112,8 @@
     <Position X="8" Y="3" Width="2" />
     <AssociationLine Name="Teacher" Type="ElementarySchoolProject.Models.Teacher" FixedFromPoint="true">
       <Path>
-        <Point X="10" Y="3.954" />
-        <Point X="11.75" Y="3.954" />
+        <Point X="10" Y="3.812" />
+        <Point X="11.75" Y="3.812" />
       </Path>
     </AssociationLine>
     <AssociationLine Name="SchoolSubject" Type="ElementarySchoolProject.Models.SchoolSubject" FixedFromPoint="true" FixedToPoint="true">
@@ -134,13 +124,16 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAECAAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QAECAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\TeacherSchoolSubject.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Teacher" />
       <Property Name="SchoolSubject" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="SchoolClassTeacherSchoolSubjects" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="ElementarySchoolProject.Models.ApplicationUser">
     <Position X="6.25" Y="5.25" Width="1.5" />
@@ -168,6 +161,27 @@
     <ShowAsCollectionAssociation>
       <Property Name="TeacherSchoolSubjects" />
     </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ElementarySchoolProject.Models.SchoolClassTeacherSchoolSubject">
+    <Position X="5.75" Y="0.75" Width="1.5" />
+    <AssociationLine Name="TeacherSchoolSubject" Type="ElementarySchoolProject.Models.TeacherSchoolSubject" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.25" Y="0.938" />
+        <Point X="8.616" Y="0.938" />
+        <Point X="8.616" Y="3" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.048" Y="0.654" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\SchoolClassTeacherSchoolSubject.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TeacherSchoolSubject" />
+      <Property Name="SchoolClass" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

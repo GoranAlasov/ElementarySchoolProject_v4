@@ -45,8 +45,10 @@ namespace ElementarySchoolProject.Services
         public SchoolSubjectWithWeeklyClassesDTO EditSchoolSubject(int id, SchoolSubjectCreateAndEditDTO dto)
         {
             SchoolSubject subject = db.SchoolSubjectsRepository.GetByID(id);
-
-            subject = SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectCreateAndEditDTOToSchoolSubject(dto);
+            subject.Name = dto.Name;
+            subject.WeeklyClasses = dto.WeeklyClasses;
+            //subject = SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectCreateAndEditDTOToSchoolSubject(dto);
+            //subject.Id = id;
 
             db.SchoolSubjectsRepository.Update(subject);
             db.Save();
@@ -54,15 +56,15 @@ namespace ElementarySchoolProject.Services
             return SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesDTO(subject);
         }
 
-        public IEnumerable<SchoolSubjectWithWeeklyClassesDTO> GetAll()
+        public IEnumerable<SchoolSubjectWithWeeklyClassesAndTeachersDTO> GetAll()
         {
             return db.SchoolSubjectsRepository.Get()
-                .Select(ss => SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesDTO(ss));
+                .Select(ss => SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesAndTeachersDTO(ss));
         }
 
-        public SchoolSubjectWithWeeklyClassesDTO GetById(int id)
+        public SchoolSubjectWithWeeklyClassesAndTeachersDTO GetById(int id)
         {
-            return SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesDTO(db.SchoolSubjectsRepository.GetByID(id));
+            return SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesAndTeachersDTO(db.SchoolSubjectsRepository.GetByID(id));
         }
     }
 }

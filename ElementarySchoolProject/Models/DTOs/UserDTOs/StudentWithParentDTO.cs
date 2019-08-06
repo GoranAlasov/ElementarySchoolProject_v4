@@ -1,13 +1,12 @@
-﻿using ElementarySchoolProject.Models.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ElementarySchoolProject.Models.Users.UserDTOs
+namespace ElementarySchoolProject.Models.DTOs.UserDTOs
 {
-    public class StudentWithGradesView
+    public class StudentWithParentDTO
     {
         public string Id { get; set; }
 
@@ -25,9 +24,5 @@ namespace ElementarySchoolProject.Models.Users.UserDTOs
 
         [Required]
         public UserSimpleViewDTO Parent { get; set; }
-
-        public SchoolClassDTO Class { get; set; }
-
-        public IEnumerable<GradeDTO> Grades { get; set; }
     }
 }

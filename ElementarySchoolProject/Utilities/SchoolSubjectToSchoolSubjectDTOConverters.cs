@@ -32,6 +32,29 @@ namespace ElementarySchoolProject.Utilities
             return retVal;
         }
 
+        public static SchoolSubjectWithWeeklyClassesAndTeachersDTO SchoolSubjectToSchoolSubjectWithWeeklyClassesAndTeachersDTO(SchoolSubject subject)
+        {
+            SchoolSubjectWithWeeklyClassesAndTeachersDTO retVal = new SchoolSubjectWithWeeklyClassesAndTeachersDTO();
+
+            retVal.Id = subject.Id;
+            retVal.Name = subject.Name;
+            retVal.WeeklyClasses = subject.WeeklyClasses;
+
+            if (subject.TeacherSchoolSubjects.Count() < 0 )
+            {
+                retVal.Teachers = null;
+            }
+            else
+            {
+                
+            }
+
+            IEnumerable<ApplicationUser> teachers = subject.TeacherSchoolSubjects.Select(x => x.Teacher);
+            retVal.Teachers = teachers.Select(x => UserToUserDTOConverters.UserToUserSimpleViewDTO(x));
+
+            return retVal;                       
+        }
+
         public static SchoolSubject SchoolSubjectWithWeeklyClassesDTOToSchoolSubject(SchoolSubjectWithWeeklyClassesDTO dto)
         {
             SchoolSubject retVal = new SchoolSubject()

@@ -25,28 +25,28 @@ namespace ElementarySchoolProject.Repositories
         public async Task<IdentityResult> RegisterAdmin(Admin admin, string password)
         {
             var result = await _userManager.CreateAsync(admin, password);
-            _userManager.AddToRole(admin.Id, "admins");
+            _userManager.AddToRole(admin.Id, "admin");
             return result;
         }
 
         public async Task<IdentityResult> RegisterTeacher(Teacher teacher, string password)
         {
             var result = await _userManager.CreateAsync(teacher, password);
-            _userManager.AddToRole(teacher.Id, "teachers");
+            _userManager.AddToRole(teacher.Id, "teacher");
             return result;
         }
 
         public async Task<IdentityResult> RegisterParent(Parent parent, string password)
         {
             var result = await _userManager.CreateAsync(parent, password);
-            _userManager.AddToRole(parent.Id, "parents");
+            _userManager.AddToRole(parent.Id, "parent");
             return result;
         }
 
         public async Task<IdentityResult> RegisterStudent(Student student, string password)
         {
             var result = await _userManager.CreateAsync(student, password);
-            _userManager.AddToRole(student.Id, "students");
+            _userManager.AddToRole(student.Id, "student");
             return result;
         }
 

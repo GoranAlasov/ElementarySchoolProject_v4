@@ -1,5 +1,5 @@
 ﻿using ElementarySchoolProject.Models;
-using ElementarySchoolProject.Models.Users.UserDTOs;
+using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Services.UsersServices;
 using System;
 using System.Collections.Generic;

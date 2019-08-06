@@ -163,16 +163,25 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ParentsController.cs" />
+    <Compile Include="Controllers\SchoolSubjectsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\TeacherSchoolSubjectsController.cs" />
     <Compile Include="Infrastructure\DataAccessContext.cs" />
     <Compile Include="Infrastructure\DataAccessContextInitializer.cs" />
+    <Compile Include="Models\DTOs\GradeCreateAndEditDTO.cs" />
     <Compile Include="Models\DTOs\GradeDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassCreateAndEditDTO.cs" />
     <Compile Include="Models\DTOs\SchoolClassDTO.cs" />
     <Compile Include="Models\DTOs\SchoolSubjectBasicDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectWithWeeklyClassesAndTeachersDTO.cs" />
     <Compile Include="Models\DTOs\SchoolSubjectWithWeeklyClassesDTO.cs" />
     <Compile Include="Models\DTOs\SchoolSubjectCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\TeacherSchoolSubjectCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\TeacherSchoolSubjectDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\StudentBasicDTO.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\SchoolClass.cs" />
+    <Compile Include="Models\SchoolClassTeacherSchoolSubject.cs" />
     <Compile Include="Models\SchoolSubject.cs" />
     <Compile Include="Models\TeacherSchoolSubject.cs" />
     <Compile Include="Models\Users\Admin.cs" />
@@ -183,9 +192,9 @@
     <Compile Include="Models\DTOs\UserDTOs\ParentSimpleViewDTO.cs" />
     <Compile Include="Models\DTOs\UserDTOs\RegisterStudentDTO.cs" />
     <Compile Include="Models\DTOs\UserDTOs\RegisterUserDTO.cs" />
-    <Compile Include="Models\DTOs\UserDTOs\StudentSimpleViewDTO.cs" />
-    <Compile Include="Models\DTOs\UserDTOs\StudentWithGradesView.cs" />
-    <Compile Include="Models\DTOs\UserDTOs\UserViewWithRoleIds.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\StudentWithParentDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\StudentWithParentGradesClassDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\UserViewWithRoleIdsDTO.cs" />
     <Compile Include="Models\DTOs\UserDTOs\UserSimpleViewDTO.cs" />
     <Compile Include="Models\Users\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -196,8 +205,13 @@
     <Compile Include="Repositories\IGenericRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
-    <Compile Include="Services\ISchoolClassService.cs" />
+    <Compile Include="Services\GradesService.cs" />
+    <Compile Include="Services\IGradesService.cs" />
+    <Compile Include="Services\ISchoolClassesService.cs" />
+    <Compile Include="Services\ITeacherSchoolSubjectsService.cs" />
+    <Compile Include="Services\SchoolClassesService.cs" />
     <Compile Include="Services\SchoolSubjectsService.cs" />
+    <Compile Include="Services\TeacherSchoolSubjectService.cs" />
     <Compile Include="Services\UsersServices\IParentsService.cs" />
     <Compile Include="Services\ISchoolSubjectsService.cs" />
     <Compile Include="Services\UsersServices\IStudentsService.cs" />
@@ -210,6 +224,7 @@
     <Compile Include="Utilities\GradeToGradeDTOConverters.cs" />
     <Compile Include="Utilities\SchoolClassToSchoolClassDTOConverters.cs" />
     <Compile Include="Utilities\SchoolSubjectToSchoolSubjectDTOConverters.cs" />
+    <Compile Include="Utilities\TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.cs" />
     <Compile Include="Utilities\UserToUserDTOConverters.cs" />
   </ItemGroup>
   <ItemGroup>

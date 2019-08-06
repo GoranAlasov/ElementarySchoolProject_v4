@@ -1,4 +1,4 @@
-﻿using ElementarySchoolProject.Models.Users.UserDTOs;
+﻿using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +9,17 @@ namespace ElementarySchoolProject.Services.UsersServices
 {
     public interface IStudentsService
     {
-        IEnumerable<StudentSimpleViewDTO> GetAll();
-        StudentWithGradesView GetById(string id);
-        StudentWithGradesView GetByIdAndParentUserName(string parentId, string childId);
-        IEnumerable<StudentSimpleViewDTO> GetAllByParentId(string parentId);
-        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolClassId(int id);
-        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolClassGrade(int grade);
-        IEnumerable<StudentSimpleViewDTO> GetAllByTeacherId(string id);
-        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolClassGradeAndTeacherId(int grade, string id);
-        IEnumerable<StudentSimpleViewDTO> GetAllBySchoolSubjectId(int id);
-        IEnumerable<StudentSimpleViewDTO> GetAllByTeacherSchoolSubjectId(int id);        
-        IEnumerable<StudentSimpleViewDTO> GetAllByGradeDates(DateTime minValue, DateTime maxValue);
+        IEnumerable<StudentWithParentDTO> GetAll();
+        StudentWithParentGradesClassDTO GetById(string id);
+        StudentWithParentGradesClassDTO GetByIdAndParentUserName(string parentId, string childId);
+        IEnumerable<StudentWithParentDTO> GetAllByParentId(string parentId);
+        IEnumerable<StudentWithParentDTO> GetAllBySchoolClassId(int id);
+        IEnumerable<StudentWithParentDTO> GetAllBySchoolClassGrade(int grade);
+        IEnumerable<StudentWithParentDTO> GetAllByTeacherId(string id);
+        IEnumerable<StudentWithParentDTO> GetAllBySchoolClassGradeAndTeacherId(int grade, string id);
+        IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectId(int id);
+        IEnumerable<StudentWithParentDTO> GetAllByTeacherSchoolSubjectId(int id);        
+        IEnumerable<StudentWithParentDTO> GetAllByGradeDates(DateTime minValue, DateTime maxValue);
     }
 }
 

@@ -87,7 +87,7 @@ namespace ElementarySchoolProject.Infrastructure
             {
                 Id = 3,
                 Name = "Biologija 5",
-                WeeklyClasses = 2
+                WeeklyClasses = 2,                
             };
             context.SchoolSubjects.Add(biology5);
 
@@ -127,7 +127,7 @@ namespace ElementarySchoolProject.Infrastructure
                 SchoolGrade = 5,
                 Name = "A"
             };
-            //context.SchoolClasses.Add(petiA);
+            context.SchoolClasses.Add(petiA);
 
             SchoolClass petiB = new SchoolClass()
             {
@@ -135,7 +135,7 @@ namespace ElementarySchoolProject.Infrastructure
                 SchoolGrade = 5,
                 Name = "B"
             };
-            //context.SchoolClasses.Add(petiB);
+            context.SchoolClasses.Add(petiB);
 
             SchoolClass sestiA = new SchoolClass()
             {
@@ -143,7 +143,7 @@ namespace ElementarySchoolProject.Infrastructure
                 SchoolGrade = 6,
                 Name = "A"
             };
-            //context.SchoolClasses.Add(sestiA);
+            context.SchoolClasses.Add(sestiA);
 
             SchoolClass sestiB = new SchoolClass()
             {
@@ -151,7 +151,7 @@ namespace ElementarySchoolProject.Infrastructure
                 SchoolGrade = 6,
                 Name = "B"
             };
-            //context.SchoolClasses.Add(sestiB);
+            context.SchoolClasses.Add(sestiB);
 
             #endregion            
 
@@ -438,12 +438,7 @@ namespace ElementarySchoolProject.Infrastructure
                     {
                         Id = 1,
                         Teacher = peca,
-                        SchoolSubject = geography5,
-                        SchoolClasses = new List<SchoolClass>()
-                        {
-                            petiA,
-                            petiB
-                        }
+                        SchoolSubject = geography5                       
                     };
                     context.TeacherSchoolSubjects.Add(pecaGeo5);
 
@@ -451,12 +446,7 @@ namespace ElementarySchoolProject.Infrastructure
                     {
                         Id = 2,
                         Teacher = peca,
-                        SchoolSubject = geography6,
-                        SchoolClasses = new List<SchoolClass>()
-                        {
-                            sestiA,
-                            sestiB
-                        }
+                        SchoolSubject = geography6                        
                     };
                     context.TeacherSchoolSubjects.Add(pecaGeo6);
 
@@ -464,12 +454,7 @@ namespace ElementarySchoolProject.Infrastructure
                     {
                         Id = 3,
                         Teacher = eugen,
-                        SchoolSubject = biology5,
-                        SchoolClasses = new List<SchoolClass>()
-                        {
-                            petiA,
-                            petiB
-                        }
+                        SchoolSubject = biology5                        
                     };
                     context.TeacherSchoolSubjects.Add(eugenBio5);
 
@@ -477,12 +462,7 @@ namespace ElementarySchoolProject.Infrastructure
                     {
                         Id = 4,
                         Teacher = eugen,
-                        SchoolSubject = biology6,
-                        SchoolClasses = new List<SchoolClass>()
-                        {
-                            sestiA,
-                            sestiB
-                        }
+                        SchoolSubject = biology6
                     };
                     context.TeacherSchoolSubjects.Add(eugenBio6);
 
@@ -490,12 +470,7 @@ namespace ElementarySchoolProject.Infrastructure
                     {
                         Id = 5,
                         Teacher = kolarov,
-                        SchoolSubject = serbian5,
-                        SchoolClasses = new List<SchoolClass>()
-                        {
-                            petiA,
-                            petiB
-                        }
+                        SchoolSubject = serbian5
                     };
                     context.TeacherSchoolSubjects.Add(kolarovSrp5);
 
@@ -503,18 +478,101 @@ namespace ElementarySchoolProject.Infrastructure
                     {
                         Id = 6,
                         Teacher = obrad,
-                        SchoolSubject = serbian6,
-                        SchoolClasses = new List<SchoolClass>()
-                        {
-                            sestiA,
-                            sestiB
-                        }
+                        SchoolSubject = serbian6
                     };
                     context.TeacherSchoolSubjects.Add(obradSrp6);
 
                     #endregion
 
                     context.SaveChanges();
+
+                    #region AddingSchoolClassTeacherSchoolSubjects
+
+                    SchoolClassTeacherSchoolSubject pecaGeo5PetiA = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = pecaGeo5,
+                        SchoolClass = petiA
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(pecaGeo5PetiA);
+
+                    SchoolClassTeacherSchoolSubject pecaGeo5PetiB = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = pecaGeo5,
+                        SchoolClass = petiB
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(pecaGeo5PetiB);
+
+                    SchoolClassTeacherSchoolSubject pecaGeo6SestiA = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = pecaGeo6,
+                        SchoolClass = sestiA
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(pecaGeo6SestiA);
+
+                    SchoolClassTeacherSchoolSubject pecaGeo6SestiB = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = pecaGeo6,
+                        SchoolClass = sestiB
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(pecaGeo6SestiB);
+
+                    SchoolClassTeacherSchoolSubject eugenBio5PetiA = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = eugenBio5,
+                        SchoolClass = petiA
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(eugenBio5PetiA);
+
+                    SchoolClassTeacherSchoolSubject eugenBio5PetiB = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = eugenBio5,
+                        SchoolClass = petiB
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(eugenBio5PetiB);
+
+                    SchoolClassTeacherSchoolSubject eugenBio6SestiA = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = eugenBio6,
+                        SchoolClass = sestiA
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(eugenBio6SestiA);
+
+                    SchoolClassTeacherSchoolSubject eugenBio6SestiB = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = eugenBio6,
+                        SchoolClass = sestiB
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(eugenBio6SestiB);
+
+                    SchoolClassTeacherSchoolSubject kolarovSrp5PetiA = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = kolarovSrp5,
+                        SchoolClass = petiA
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(kolarovSrp5PetiA);
+
+                    SchoolClassTeacherSchoolSubject kolarovSrp5PetiB = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = kolarovSrp5,
+                        SchoolClass = petiB
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(kolarovSrp5PetiB);
+
+                    SchoolClassTeacherSchoolSubject obradSrp6SestiA = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = obradSrp6,
+                        SchoolClass = sestiA
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(obradSrp6SestiA);
+
+                    SchoolClassTeacherSchoolSubject obradSrp6SestiB = new SchoolClassTeacherSchoolSubject()
+                    {
+                        TeacherSchoolSubject = obradSrp6,
+                        SchoolClass = sestiB
+                    };
+                    context.SchoolClassTeacherSchoolSubjects.Add(obradSrp6SestiB);
+
+                    #endregion
 
                     Grade g1 = new Grade()
                     {

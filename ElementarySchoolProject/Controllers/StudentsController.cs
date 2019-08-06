@@ -1,4 +1,4 @@
-﻿using ElementarySchoolProject.Models.Users.UserDTOs;
+﻿using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Services.UsersServices;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,7 @@ namespace ElementarySchoolProject.Controllers
 
             try
             {
-                StudentWithGradesView retVal = service.GetById(userId);
+                StudentWithParentGradesClassDTO retVal = service.GetById(userId);
                 return Ok(retVal);
             }
             catch (Exception)
@@ -47,7 +47,7 @@ namespace ElementarySchoolProject.Controllers
 
             try
             {
-                StudentWithGradesView retVal = service.GetByIdAndParentUserName(parentUserName, studentId);
+                StudentWithParentGradesClassDTO retVal = service.GetByIdAndParentUserName(parentUserName, studentId);
                 return Ok(retVal);
             }
             catch (Exception e)

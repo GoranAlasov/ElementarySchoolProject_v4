@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ElementarySchoolProject.Models.Users.UserDTOs
+namespace ElementarySchoolProject.Models.DTOs.UserDTOs
 {
-    public class StudentSimpleViewDTO
+    public class StudentBasicDTO
     {
         public string Id { get; set; }
 
@@ -21,8 +21,5 @@ namespace ElementarySchoolProject.Models.Users.UserDTOs
 
         [Required]
         public string LastName { get; set; }
-
-        [Required]
-        public UserSimpleViewDTO Parent { get; set; }
     }
 }
