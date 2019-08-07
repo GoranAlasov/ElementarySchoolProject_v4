@@ -1,5 +1,6 @@
 ﻿using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.DTOs;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace ElementarySchoolProject.Utilities
 {
     public static class GradeToGradeDTOConverters
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public static GradeDTO GradeToGradeDTO (Grade grade)
         {
             GradeDTO retVal = new GradeDTO()
@@ -16,8 +19,15 @@ namespace ElementarySchoolProject.Utilities
                 Id = grade.Id,
                 Value = grade.Value,
                 DateOfGrading = grade.DateOfGrading,
-                Subject = SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectDTO(grade.TeacherSchoolSubject.SchoolSubject),
-                GradingTeacher = UserToUserDTOConverters.UserToUserSimpleViewDTO(grade.TeacherSchoolSubject.Teacher)
+
+                Subject = SchoolSubjectToSchoolSubjectDTOConverters
+                .SchoolSubjectToSchoolSubjectDTO(grade.SchoolClassTeacherSchoolSubject.TeacherSchoolSubject.SchoolSubject),
+
+                GradingTeacher = UserToUserDTOConverters
+                .UserToUserSimpleViewDTO(grade.SchoolClassTeacherSchoolSubject.TeacherSchoolSubject.Teacher),
+
+                Student = UserToUserDTOConverters
+                .StudentToStudentBasicDTO(grade.Student)
             };
 
             return retVal;
@@ -31,7 +41,7 @@ namespace ElementarySchoolProject.Utilities
             retVal.Value = dto.Value;
             retVal.DateOfGrading = dto.DateOfGrading;
             retVal.Student.Id = dto.StudentId;
-            retVal.TeacherSchoolSubject.Id = dto.TeacherSubjectId;
+            //retVal.
 
             return retVal;
         }

@@ -286,7 +286,7 @@ namespace ElementarySchoolProject.Infrastructure
                         FirstName = "Mile",
                         LastName = "Etinski",
                         UserName = "mile_etinski",
-                        Email = "mile_etinski@mail.com",
+                        Email = "alasov.jr@gmail.com",
                     };
                     userManager.Create(parent7, "milee1");
                     userManager.AddToRole(parent7.Id, "parent");
@@ -580,7 +580,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Value = 4,
                         DateOfGrading = new DateTime(2000, 12, 21),
                         Student = goran,
-                        TeacherSchoolSubject = pecaGeo6
+                        SchoolClassTeacherSchoolSubject = pecaGeo6SestiA
                     };
                     context.Grades.Add(g1);
 
@@ -590,7 +590,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Value = 3,
                         DateOfGrading = new DateTime(1998, 5, 8),
                         Student = mao,
-                        TeacherSchoolSubject = obradSrp6
+                        SchoolClassTeacherSchoolSubject = obradSrp6SestiA
                     };
                     context.Grades.Add(g2);
 
@@ -600,7 +600,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Value = 3,
                         DateOfGrading = new DateTime(1997, 1, 27),
                         Student = mao,
-                        TeacherSchoolSubject = eugenBio6
+                        SchoolClassTeacherSchoolSubject = eugenBio6SestiA
                     };
                     context.Grades.Add(g3);
 
@@ -610,7 +610,7 @@ namespace ElementarySchoolProject.Infrastructure
                         Value = 1,
                         DateOfGrading = new DateTime(1997, 9, 11),
                         Student = roki,
-                        TeacherSchoolSubject = eugenBio5
+                        SchoolClassTeacherSchoolSubject = eugenBio5PetiB
                     };
                     context.Grades.Add(g4);
 

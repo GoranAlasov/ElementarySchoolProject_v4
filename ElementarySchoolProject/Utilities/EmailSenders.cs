@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -9,10 +10,16 @@ namespace ElementarySchoolProject.Utilities
 {
     public static class EmailSenders
     {
-        public static void TestSendEmail(string toEmail)
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        public static void EmailGradingEventToParent(string toEmail, string parentName, string studentName, string date, string subjectName, int gradeValue)
         {
-            string subject = "TestToTempmail";
-            string body = "Email body";
+            string subject = String.Format($"{studentName} has just been graded");
+            string body = String.Format(
+                $"Dear {parentName},\n\n" +
+                $"Your child, {studentName}, has been graded on {date}, and received {gradeValue} in subject {subjectName}.\n\n" +
+                $"This is an automated email. Please do not respond."
+                );
             string FromMail = ConfigurationManager.AppSettings["from"];
             string emailTo = toEmail;
             MailMessage mail = new MailMessage();

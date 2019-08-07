@@ -13,8 +13,8 @@ namespace ElementarySchoolProject.Models
         public DateTime DateOfGrading { get; set; }
 
         [NotMapped]
-        public int? TeacherSchoolSubjectId { get; set; }
-        public virtual TeacherSchoolSubject TeacherSchoolSubject { get; set; }
+        public int? SchoolClassTeacherSchoolSubjectId { get; set; }
+        public virtual SchoolClassTeacherSchoolSubject SchoolClassTeacherSchoolSubject { get; set; }
 
         [NotMapped]
         public int? StudentId { get; set; }

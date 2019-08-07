@@ -8,11 +8,14 @@ using System.Linq;
 using System.Web;
 using ElementarySchoolProject.Utilities;
 using ElementarySchoolProject.Models.DTOs.UserDTOs;
+using NLog;
 
 namespace ElementarySchoolProject.Services.UsersServices
 {
     public class StudentsService : IStudentsService
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         IUnitOfWork db;
 
         public StudentsService(IUnitOfWork db)
@@ -217,6 +220,24 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             return students
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentGradesClassDTO(s));
+        }
+
+        public StudentWithParentDTO ChangeParent(string studentId, string parentId)
+        {
+            var student = db.StudentsRepository.GetByID(studentId);
+            var parent = db.ParentsRepository.GetByID(parentId);
+
+            if (parent == null || student == null)
+            {
+                throw new ArgumentException("That parent does not exist.");
+            }
+
+            student.Parent = parent;
+
+            db.StudentsRepository.Update(student);
+            db.Save();
+
+            return UserToUserDTOConverters.StudentToStudentWithParentDTO(student);
         }
     }
 }

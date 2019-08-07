@@ -1,5 +1,6 @@
 ﻿using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Services.UsersServices;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace ElementarySchoolProject.Controllers
     [RoutePrefix("api/students")]
     public class StudentsController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private IStudentsService service;
 
         public StudentsController(IStudentsService service)
@@ -161,6 +164,22 @@ namespace ElementarySchoolProject.Controllers
             try
             {
                 var retVal = service.GetAllByParentId(id);
+
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Route("{studentId}/setparent/{parentId}")]
+        [HttpPut]
+        public IHttpActionResult ChangeParent(string studentId, string parentId)
+        {
+            try
+            {
+                var retVal = service.ChangeParent(studentId, parentId);
 
                 return Ok(retVal);
             }

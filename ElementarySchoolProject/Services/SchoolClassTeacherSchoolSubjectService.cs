@@ -2,6 +2,7 @@
 using ElementarySchoolProject.Models.DTOs;
 using ElementarySchoolProject.Repositories;
 using ElementarySchoolProject.Utilities;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace ElementarySchoolProject.Services
 {
     public class SchoolClassTeacherSchoolSubjectService : ISchoolClassTeacherSchoolSubjectService
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private IUnitOfWork db;
         public SchoolClassTeacherSchoolSubjectService(IUnitOfWork db)
         {

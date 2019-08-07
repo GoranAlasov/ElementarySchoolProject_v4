@@ -18,6 +18,14 @@ namespace ElementarySchoolProject.Repositories
 
         Task<IdentityResult> RegisterStudent(Student student, string password);
 
+        Task<IdentityResult> EditAdmin(Admin admin);
+
+        Task<IdentityResult> EditTeacher(Teacher teacher);
+
+        Task<IdentityResult> EditParent(Parent parent);
+
+        Task<IdentityResult> EditStudent(Student student);
+
         Task<ApplicationUser> FindUser(string userName, string password);
 
         Task<ApplicationUser> FindUserById(string id);

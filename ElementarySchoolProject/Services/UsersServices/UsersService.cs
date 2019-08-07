@@ -9,11 +9,14 @@ using ElementarySchoolProject.Repositories;
 using Microsoft.AspNet.Identity;
 using ElementarySchoolProject.Utilities;
 using ElementarySchoolProject.Models.DTOs.UserDTOs;
+using NLog;
 
 namespace ElementarySchoolProject.Services.UsersServices
 {
     public class UsersService : IUsersService
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         IUnitOfWork db;
 
         public UsersService(IUnitOfWork db)
@@ -114,9 +117,7 @@ namespace ElementarySchoolProject.Services.UsersServices
             }            
 
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(admin);
-
-            EmailSenders.TestSendEmail(retVal.Email);
-
+            
             return retVal;
         }
 
@@ -237,6 +238,66 @@ namespace ElementarySchoolProject.Services.UsersServices
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(student);
 
             return retVal;
+        }
+
+        #endregion
+
+        #region EditingUsers
+
+        public async Task<IdentityResult> EditAdmin(string id, EditUserDTO user)
+        {
+            Admin admin = db.AdminsRepository.GetByID(id);
+            if (admin != null)
+            {
+                admin.Email = user.Email;
+                admin.FirstName = user.FirstName;
+                admin.LastName = user.LastName;
+                admin.UserName = user.UserName;
+            }
+
+            return await db.AuthRepository.EditAdmin(admin);
+        }
+
+        public async Task<IdentityResult> EditTeahcher(string id, EditUserDTO user)
+        {
+            Teacher teacher = db.TeachersRepository.GetByID(id);
+            if (teacher != null)
+            {
+                teacher.Email = user.Email;
+                teacher.FirstName = user.FirstName;
+                teacher.LastName = user.LastName;
+                teacher.UserName = user.UserName;
+            }
+
+            return await db.AuthRepository.EditTeacher(teacher);
+        }
+
+        public async Task<IdentityResult> EditParent(string id, EditUserDTO user)
+        {
+            Parent parent = db.ParentsRepository.GetByID(id);
+            if (parent != null)
+            {
+                parent.Email = user.Email;
+                parent.FirstName = user.FirstName;
+                parent.LastName = user.LastName;
+                parent.UserName = user.UserName;
+            }            
+
+            return await db.AuthRepository.EditParent(parent);            
+        }
+
+        public async Task<IdentityResult> EditStudent(string id, EditUserDTO user)
+        {
+            Student student = db.StudentsRepository.GetByID(id);
+            if (student != null)
+            {
+                student.Email = user.Email;
+                student.FirstName = user.FirstName;
+                student.LastName = user.LastName;
+                student.UserName = student.UserName;
+            }
+
+            return await db.AuthRepository.EditStudent(student);
         }
 
         #endregion

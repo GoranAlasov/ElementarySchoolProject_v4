@@ -12,11 +12,14 @@ using ElementarySchoolProject.Infrastructure;
 using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.DTOs;
 using ElementarySchoolProject.Services;
+using NLog;
 
 namespace ElementarySchoolProject.Controllers
 {
     public class SchoolSubjectsController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private ISchoolSubjectsService service;
 
         public SchoolSubjectsController(ISchoolSubjectsService service)

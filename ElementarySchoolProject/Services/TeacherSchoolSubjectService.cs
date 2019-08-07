@@ -6,11 +6,14 @@ using System.Linq;
 using System.Web;
 using ElementarySchoolProject.Utilities;
 using ElementarySchoolProject.Models.DTOs;
+using NLog;
 
 namespace ElementarySchoolProject.Services
 {
     public class TeacherSchoolSubjectService : ITeacherSchoolSubjectsService
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         IUnitOfWork db;
 
         public TeacherSchoolSubjectService(IUnitOfWork db)

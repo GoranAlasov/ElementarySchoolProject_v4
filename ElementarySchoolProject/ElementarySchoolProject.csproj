@@ -92,6 +92,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.6\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -101,6 +104,7 @@
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -109,7 +113,9 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
@@ -162,12 +168,14 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GradesController.cs" />
     <Compile Include="Controllers\ParentsController.cs" />
     <Compile Include="Controllers\SchoolClassesController.cs" />
     <Compile Include="Controllers\SchoolClassTeacherSchoolSubjectsController.cs" />
     <Compile Include="Controllers\SchoolSubjectsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TeacherSchoolSubjectsController.cs" />
+    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Infrastructure\DataAccessContext.cs" />
     <Compile Include="Infrastructure\DataAccessContextInitializer.cs" />
     <Compile Include="Models\DTOs\GradeCreateAndEditDTO.cs" />
@@ -183,7 +191,9 @@
     <Compile Include="Models\DTOs\SchoolSubjectCreateAndEditDTO.cs" />
     <Compile Include="Models\DTOs\TeacherSchoolSubjectCreateAndEditDTO.cs" />
     <Compile Include="Models\DTOs\TeacherSchoolSubjectDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\EditUserDTO.cs" />
     <Compile Include="Models\DTOs\UserDTOs\StudentBasicDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\TeacherBasicDTO.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\SchoolClass.cs" />
     <Compile Include="Models\SchoolClassTeacherSchoolSubject.cs" />
@@ -222,9 +232,11 @@
     <Compile Include="Services\UsersServices\IParentsService.cs" />
     <Compile Include="Services\ISchoolSubjectsService.cs" />
     <Compile Include="Services\UsersServices\IStudentsService.cs" />
+    <Compile Include="Services\UsersServices\ITeachersService.cs" />
     <Compile Include="Services\UsersServices\IUsersService.cs" />
     <Compile Include="Services\UsersServices\ParentsService.cs" />
     <Compile Include="Services\UsersServices\StudentsService.cs" />
+    <Compile Include="Services\UsersServices\TeachersService.cs" />
     <Compile Include="Services\UsersServices\UsersService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utilities\EmailSenders.cs" />
@@ -238,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="NLog.config" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

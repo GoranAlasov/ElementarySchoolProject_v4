@@ -8,11 +8,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using NLog;
 
 namespace ElementarySchoolProject.Controllers
 {
     public class SchoolClassesController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         ISchoolClassesService service;
         public SchoolClassesController(ISchoolClassesService service)
         {

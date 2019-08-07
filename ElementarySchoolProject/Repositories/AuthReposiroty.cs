@@ -2,6 +2,7 @@
 using ElementarySchoolProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,6 +14,8 @@ namespace ElementarySchoolProject.Repositories
 {
     public class AuthRepository : IAuthRepository, IDisposable
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private UserManager<ApplicationUser> _userManager;
 
         public AuthRepository(DbContext context)
@@ -20,7 +23,33 @@ namespace ElementarySchoolProject.Repositories
             _userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
         }        
 
+        public async Task<IdentityResult> EditAdmin(Admin admin)
+        {
+            var result = await _userManager.UpdateAsync(admin);
 
+            return result;
+        }
+
+        public async Task<IdentityResult> EditTeacher(Teacher teacher)
+        {
+            var result = await _userManager.UpdateAsync(teacher);
+
+            return result;
+        }
+
+        public async Task<IdentityResult> EditParent(Parent parent)
+        {
+            var result = await _userManager.UpdateAsync(parent);
+
+            return result;
+        }
+
+        public async Task<IdentityResult> EditStudent(Student student)
+        {
+            var result = await _userManager.UpdateAsync(student);
+
+            return result;
+        }
 
         public async Task<IdentityResult> RegisterAdmin(Admin admin, string password)
         {
@@ -63,27 +92,13 @@ namespace ElementarySchoolProject.Repositories
 
             return user;
         }
-
-        //public void DeleteUser(string id)
-        //{         
-        //    ApplicationUser user = _userManager.FindById(id);
-        //    _userManager.Delete(user);           
-        //}
-
-        //TODO111: moje izmisljanje
+        
         public async Task<IList<ApplicationUser>> GetAllUsers()
         {
             List<ApplicationUser> users = await _userManager.Users.ToListAsync();
 
             return users;
-        }
-
-        //public async Task<IList<ApplicationUser>> GetAllActiveUsers()
-        //{
-        //    List<ApplicationUser> users = await _userManager.Users.Where(u => u.Status == UserStatus.Active).ToListAsync();
-
-        //    return users;
-        //}
+        }        
 
         public async Task<IList<string>> FindRoles(string userId)
         {

@@ -1,5 +1,6 @@
 ﻿using ElementarySchoolProject.Models.DTOs;
 using ElementarySchoolProject.Services;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace ElementarySchoolProject.Controllers
 {
     public class SchoolClassTeacherSchoolSubjectsController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         ISchoolClassTeacherSchoolSubjectService service;
         public SchoolClassTeacherSchoolSubjectsController(ISchoolClassTeacherSchoolSubjectService service)
         {

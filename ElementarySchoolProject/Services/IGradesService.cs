@@ -9,9 +9,9 @@ namespace ElementarySchoolProject.Services
 {
     public interface IGradesService
     {
-        GradeDTO GetAll();
+        IEnumerable<GradeDTO> GetAll();
         GradeDTO GetById(int id);
-        GradeDTO CreateGrade(GradeCreateAndEditDTO dto);
+        GradeDTO CreateGrade(string teacherId, GradeCreateAndEditDTO dto);     
         GradeDTO EditGrade(int id, GradeCreateAndEditDTO dto);
         GradeDTO DeleteGrade(int id);
     }

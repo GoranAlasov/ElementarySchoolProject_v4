@@ -8,11 +8,14 @@ using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Repositories;
 using ElementarySchoolProject.Utilities;
+using NLog;
 
 namespace ElementarySchoolProject.Services.UsersServices
 {
     public class ParentsService : IParentsSerivce
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         IUnitOfWork db;
 
         public ParentsService(IUnitOfWork db)

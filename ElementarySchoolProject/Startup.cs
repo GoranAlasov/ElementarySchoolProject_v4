@@ -82,10 +82,12 @@ namespace ElementarySchoolProject
             container.RegisterType<IUsersService, UsersService>();
             container.RegisterType<IStudentsService, StudentsService>();
             container.RegisterType<IParentsSerivce, ParentsService>();
+            container.RegisterType<ITeachersService, TeachersService>();
             container.RegisterType<ISchoolSubjectsService, SchoolSubjectsService>();
             container.RegisterType<ISchoolClassesService, SchoolClassesService>();
             container.RegisterType<ITeacherSchoolSubjectsService, TeacherSchoolSubjectService>();
             container.RegisterType<ISchoolClassTeacherSchoolSubjectService, SchoolClassTeacherSchoolSubjectService>();
+            container.RegisterType<IGradesService, GradesService>();
             //TODO 0.1: Adding dependencies
             
             return container;

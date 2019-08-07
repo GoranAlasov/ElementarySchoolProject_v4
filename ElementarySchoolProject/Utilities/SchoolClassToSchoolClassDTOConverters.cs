@@ -1,5 +1,6 @@
 ﻿using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.DTOs;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace ElementarySchoolProject.Utilities
 {
     public static class SchoolClassToSchoolClassDTOConverters
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public static SchoolClassDTO SchoolClassToSchoolClassDTO(SchoolClass sc) 
         {
             SchoolClassDTO retVal = new SchoolClassDTO()

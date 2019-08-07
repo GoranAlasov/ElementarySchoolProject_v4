@@ -2,6 +2,7 @@
 using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Services.UsersServices;
 using Microsoft.AspNet.Identity;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace ElementarySchoolProject.Controllers
     [RoutePrefix("api/accounts")]
     public class AccountController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private IUsersService service;
 
         public AccountController(IUsersService userService)
@@ -26,13 +29,15 @@ namespace ElementarySchoolProject.Controllers
 
         #region RegisteringUsers
 
-        [Authorize(Roles = "admin")]
-        [Route("register-admin")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        [Route("admins")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterAdmin(RegisterUserDTO userModel)
         {
             if (!ModelState.IsValid)
             {
+                logger.Warn("RegisterAdmin returned BadRequest with invalid ModelState");
                 return BadRequest(ModelState);
             }
 
@@ -40,19 +45,23 @@ namespace ElementarySchoolProject.Controllers
 
             if (result == null)
             {
+                logger.Warn("RegisterAdmin returned BadRequest with null result");
                 return BadRequest(ModelState);
             }
 
+            logger.Info("RegisterAdmin finished OK. New Admin was created");
             return Ok(result);
         }
 
-        [Authorize(Roles = "admin")]
-        [Route("register-teacher")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        [Route("teachers")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterTeacher(RegisterUserDTO userModel)
         {
             if (!ModelState.IsValid)
             {
+                logger.Warn("RegisterTeacher returned BadRequest with invalid ModelState");
                 return BadRequest(ModelState);
             }
 
@@ -60,19 +69,23 @@ namespace ElementarySchoolProject.Controllers
 
             if (result == null)
             {
+                logger.Warn("RegisterTeacher returned BadRequest with null result");
                 return BadRequest(ModelState);
             }
 
+            logger.Info("RegisterTeacher finished OK. New Teacher was created");
             return Ok(result);
         }
 
-        [Authorize(Roles = "admin")]
-        [Route("register-parent")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        [Route("parents")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterParent(RegisterUserDTO userModel)
         {
             if (!ModelState.IsValid)
             {
+                logger.Warn("RegisterParent returned BadRequest with invalid ModelState");
                 return BadRequest(ModelState);
             }
 
@@ -80,20 +93,24 @@ namespace ElementarySchoolProject.Controllers
 
             if (result == null)
             {
+                logger.Warn("RegisterParent returned BadRequest with null result");
                 return BadRequest(ModelState);
             }
-            
+
+            logger.Info("RegisterParent finished OK. New Parent was created");
             return Ok(result);
         }
 
         
-        [Authorize(Roles = "admin")]
-        [Route("register-student")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        [Route("students")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterStudent(RegisterStudentDTO userModel)
         {
             if (!ModelState.IsValid)
             {
+                logger.Warn("RegisterStudent returned BadRequest with invalid ModelState");
                 return BadRequest(ModelState);
             }
 
@@ -101,17 +118,36 @@ namespace ElementarySchoolProject.Controllers
 
             if (result == null)
             {
+                logger.Warn("RegisterStudent returned BadRequest with null result");
                 return BadRequest(ModelState);
             }
 
+            logger.Warn("RegisterStudent finished OK. New Studen was created");
             return Ok(result);
         }
 
         #endregion
 
+        [AllowAnonymous]
+        [Route("admins/{id}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> PutAdmin(string id, [FromBody]EditUserDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await service.EditAdmin(id, user);
+
+            return Ok(result);
+        }
+
+
         #region GettingUsers
         
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [Route("me")]
         [HttpGet]
         public IHttpActionResult GetMySelfAdmin()
@@ -129,7 +165,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [Route("")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<UserViewWithRoleIdsDTO>> GetAllUsers()
         {
@@ -150,7 +187,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [Route("teachers")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpGet]
         public IEnumerable<UserSimpleViewDTO> GetAllTeachers()
         {
@@ -181,7 +219,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [Route("{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<UserViewWithRoleIdsDTO> GetUserById(string id)
         {
@@ -207,7 +246,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [Route("teachers/{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetTeacherById(string id)
         {
@@ -222,7 +262,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [Route("parents/{id}")]
-        [Authorize(Roles = "admin")]        
+        //[Authorize(Roles = "admin")]        
+        [AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetParentById(string id)
         {
@@ -242,7 +283,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [Route("students/{id}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetStudentById(string id)
         {
@@ -260,7 +302,7 @@ namespace ElementarySchoolProject.Controllers
 
         #region DeletingUsers
 
-        [Route("admins/delete/{id}")]
+        [Route("admins/{id}")]
         [AllowAnonymous]
         [HttpDelete]
         public IHttpActionResult DeleteAdmin(string id)
@@ -275,7 +317,7 @@ namespace ElementarySchoolProject.Controllers
             return Ok(retVal);
         }
 
-        [Route("teachers/delete/{id}")]
+        [Route("teachers/{id}")]
         [AllowAnonymous]
         [HttpDelete]
         public IHttpActionResult DeleteTeacher(string id)
@@ -290,7 +332,7 @@ namespace ElementarySchoolProject.Controllers
             return Ok(retVal);
         }
 
-        [Route("parents/delete/{id}")]
+        [Route("parents/{id}")]
         [AllowAnonymous]
         [HttpDelete]
         public IHttpActionResult DeleteParent(string id)

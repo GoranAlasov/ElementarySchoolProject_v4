@@ -16,6 +16,11 @@ namespace ElementarySchoolProject.Services.UsersServices
         Task<IdentityResult> RegisterParent(RegisterUserDTO user);
         Task<IdentityResult> RegisterStudent(RegisterStudentDTO user);
 
+        Task<IdentityResult> EditAdmin(string id, EditUserDTO user);
+        Task<IdentityResult> EditTeahcher(string id, EditUserDTO user);
+        Task<IdentityResult> EditParent(string id, EditUserDTO user);
+        Task<IdentityResult> EditStudent(string id, EditUserDTO user);
+
         Task<IEnumerable<UserViewWithRoleIdsDTO>> GetAllUsers();
         Task<UserViewWithRoleIdsDTO> GetUserById(string id);
 

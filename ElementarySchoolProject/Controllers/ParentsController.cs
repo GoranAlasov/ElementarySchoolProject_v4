@@ -1,6 +1,7 @@
 ﻿using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Services.UsersServices;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace ElementarySchoolProject.Controllers
     [RoutePrefix("api/parents")]
     public class ParentsController : ApiController
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         IParentsSerivce service;
 
         public ParentsController(IParentsSerivce service)

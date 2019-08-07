@@ -2,6 +2,7 @@
 using ElementarySchoolProject.Models.DTOs.UserDTOs;
 using ElementarySchoolProject.Repositories;
 using Microsoft.AspNet.Identity;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace ElementarySchoolProject.Utilities
 {
     public static class UserToUserDTOConverters
     {
-        
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         #region RegisterUserDTOs
 
         public static Admin RegisterUserDTOtoAdmin(RegisterUserDTO dto)
@@ -49,6 +51,50 @@ namespace ElementarySchoolProject.Utilities
         }
 
         public static Student RegisterUserDTOtoStudent(RegisterUserDTO dto)
+        {
+            return new Student()
+            {
+                Email = dto.Email,
+                UserName = dto.UserName,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName
+            };
+        }
+
+        public static Admin EditUserDTOToAdmin(EditUserDTO dto)
+        {
+            return new Admin()
+            {
+                Email = dto.Email,
+                UserName = dto.UserName,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName
+            };
+        }
+
+        public static Teacher EditUserDTOToTeacher(EditUserDTO dto)
+        {
+            return new Teacher()
+            {
+                Email = dto.Email,
+                UserName = dto.UserName,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName
+            };
+        }
+
+        public static Parent EditUserDTOToParent(EditUserDTO dto)
+        {
+            return new Parent()
+            {
+                Email = dto.Email,
+                UserName = dto.UserName,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName
+            };
+        }
+
+        public static Student EditUserDTOToStudent(EditUserDTO dto)
         {
             return new Student()
             {
@@ -132,6 +178,21 @@ namespace ElementarySchoolProject.Utilities
                     return dto;
                 }).ToList();
             }            
+
+            return retVal;
+        }
+
+        public static TeacherBasicDTO TeacherToTeacherBasicDTO(Teacher teacher)
+        {
+            TeacherBasicDTO retVal = new TeacherBasicDTO();
+
+            retVal.Id = teacher.Id;
+            retVal.FirstName = teacher.FirstName;
+            retVal.LastName = teacher.LastName;
+            retVal.UserName = teacher.UserName;
+            retVal.TeachesSubjects = teacher.TeacherSchoolSubjects
+                .Where(x => x.Teacher.Id == teacher.Id)
+                .Select(x => SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectDTO(x.SchoolSubject));
 
             return retVal;
         }
