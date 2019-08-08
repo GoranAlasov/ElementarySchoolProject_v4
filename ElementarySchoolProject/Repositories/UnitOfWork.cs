@@ -53,6 +53,9 @@ namespace ElementarySchoolProject.Repositories
         [Dependency]
         public IGenericRepository<Grade> GradesRepository { get; set; }
 
+        [Dependency]
+        public IGenericRepository<LogEntry> LogEntriesRepository { get; set; }
+
         public void Save()
         {
             context.SaveChanges();

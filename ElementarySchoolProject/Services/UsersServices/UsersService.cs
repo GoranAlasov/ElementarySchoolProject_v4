@@ -30,6 +30,7 @@ namespace ElementarySchoolProject.Services.UsersServices
         {
             Admin userToInsert = UserToUserDTOConverters.RegisterUserDTOtoAdmin(user);
 
+            logger.Info("Registering admin.");
             return await db.AuthRepository.RegisterAdmin(userToInsert, user.Password);
         }
 
@@ -37,6 +38,7 @@ namespace ElementarySchoolProject.Services.UsersServices
         {
             Teacher userToInsert = UserToUserDTOConverters.RegisterUserDTOtoTeacher(user);
 
+            logger.Info("Registering teacher.");
             return await db.AuthRepository.RegisterTeacher(userToInsert, user.Password);
         }
 
@@ -44,6 +46,7 @@ namespace ElementarySchoolProject.Services.UsersServices
         {
             Parent userToInsert = UserToUserDTOConverters.RegisterUserDTOtoParent(user);
 
+            logger.Info("Registering parent.");
             return await db.AuthRepository.RegisterParent(userToInsert, user.Password);
         }
 
@@ -51,6 +54,7 @@ namespace ElementarySchoolProject.Services.UsersServices
         {
             Student userToInsert = UserToUserDTOConverters.RegisterStudentDTOtoStudent(user);
 
+            logger.Info("Registering student.");
             return await db.AuthRepository.RegisterStudent(userToInsert, user.Password);
         }
 
@@ -69,7 +73,13 @@ namespace ElementarySchoolProject.Services.UsersServices
         public async Task<UserViewWithRoleIdsDTO> GetUserById(string id)
         {
             ApplicationUser user = await db.AuthRepository.FindUserById(id);
-
+            if (user == null)
+            {
+                logger.Warn("No such user. {0}", id);
+                return null;
+            }
+            logger.Info("Getting user with id {0}", id);
+            
             UserViewWithRoleIdsDTO retVal = UserToUserDTOConverters.UserToUserViewWithRoleIds(user);
 
             return retVal;
@@ -78,6 +88,8 @@ namespace ElementarySchoolProject.Services.UsersServices
         public IEnumerable<UserSimpleViewDTO> GetAllAdmins()
         {
             IEnumerable<ApplicationUser> users = db.AdminsRepository.Get();
+            logger.Info("Getting all admins.");
+
             IEnumerable<UserSimpleViewDTO> retVal = users.Select(x => UserToUserDTOConverters.UserToUserSimpleViewDTO(x));
 
             return retVal;
@@ -86,6 +98,8 @@ namespace ElementarySchoolProject.Services.UsersServices
         public IEnumerable<UserSimpleViewDTO> GetAllTeachers()
         {
             IEnumerable<ApplicationUser> users = db.TeachersRepository.Get();
+            logger.Info("Getting all teachers.");
+
             IEnumerable<UserSimpleViewDTO> retVal = users.Select(x => UserToUserDTOConverters.UserToUserSimpleViewDTO(x));
 
             return retVal;
@@ -94,6 +108,8 @@ namespace ElementarySchoolProject.Services.UsersServices
         public IEnumerable<ParentSimpleViewDTO> GetAllParents()
         {
             IEnumerable<Parent> users = db.ParentsRepository.Get();
+            logger.Info("Getting all parents.");
+
             IEnumerable<ParentSimpleViewDTO> retVal = users.Select(x => UserToUserDTOConverters.ParentToParentSimpleViewDTO(x));
 
             return retVal;
@@ -102,6 +118,8 @@ namespace ElementarySchoolProject.Services.UsersServices
         public IEnumerable<StudentWithParentDTO> GetAllStudents()
         {
             IEnumerable<Student> users = db.StudentsRepository.Get();
+            logger.Info("Getting all students.");
+
             IEnumerable<StudentWithParentDTO> retVal = users.Select(x => UserToUserDTOConverters.StudentToStudentWithParentDTO(x));
 
             return retVal;
@@ -113,9 +131,11 @@ namespace ElementarySchoolProject.Services.UsersServices
             
             if (admin == null)
             {
-                return null;
-            }            
+                logger.Warn("No such admin. {0}", id);
 
+                return null;
+            }
+            logger.Info("Getting admin with id {0}", id);
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(admin);
             
             return retVal;
@@ -127,8 +147,10 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             if (teacher == null)
             {
+                logger.Warn("No such teacher. {0}", id);
                 return null;
             }
+            logger.Info("Getting teacher with id {0}", id);
 
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(teacher);
 
@@ -141,8 +163,10 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             if (parent == null)
             {
+                logger.Warn("No such parent. {0}", id);
                 return null;
             }
+            logger.Info("Getting parent with id {0}", id);
 
             ParentSimpleViewDTO retVal = UserToUserDTOConverters.ParentToParentSimpleViewDTO(parent);
 
@@ -155,8 +179,11 @@ namespace ElementarySchoolProject.Services.UsersServices
             
             if (student == null)
             {
+                logger.Warn("No such student. {0}", id);
+
                 return null;
             }
+            logger.Info("Getting student with id {0}", id);
 
             StudentWithParentDTO retVal = UserToUserDTOConverters.StudentToStudentWithParentDTO(student);
 
@@ -173,13 +200,21 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             int adminCount = db.AdminsRepository.Get().Count();
 
-            if (admin == null || adminCount < 2)
+            if (admin == null)
             {
+                logger.Warn("Admin with id {0} not found.");
+                return null;
+            }
+
+            if (adminCount < 2)
+            {
+                logger.Warn("Less than 2 admins present in the system. Can't delete the last one!");
                 return null;
             }
 
             db.AdminsRepository.Delete(admin);
             db.Save();
+            logger.Info("Deleting admin with id {0}", id);
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(admin);
 
             return retVal;
@@ -191,11 +226,14 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             if (teacher == null)
             {
+                logger.Warn("Teacher with id {0} not found.", id);
                 return null;
             }
 
             db.TeachersRepository.Delete(teacher);
             db.Save();
+
+            logger.Info("Teacher with id {0} deleted.", id);
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(teacher);
 
             return retVal;
@@ -209,16 +247,20 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             if (parent == null)
             {
+                logger.Warn("Parent with id {0} not found.", id);
                 return null;
             }
 
             foreach (var item in students)
             {
+                logger.Info("Removing child with id {0} from parents' children list. Parent id {1}", item.Id, id);
                 item.Parent = null;
             }
 
             db.ParentsRepository.Delete(parent);
             db.Save();
+
+            logger.Info("Parent with id {0} deleted.", id);
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(parent);
 
             return retVal;            
@@ -230,11 +272,13 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             if (student == null)
             {
+                logger.Warn("Student with id {0} not found.", id);
                 return null;
             }
 
             db.StudentsRepository.Delete(student);
             db.Save();
+            logger.Info("Student with id {0} deleted.", id);
             UserSimpleViewDTO retVal = UserToUserDTOConverters.UserToUserSimpleViewDTO(student);
 
             return retVal;
@@ -253,6 +297,7 @@ namespace ElementarySchoolProject.Services.UsersServices
                 admin.FirstName = user.FirstName;
                 admin.LastName = user.LastName;
                 admin.UserName = user.UserName;
+                logger.Info("Editing admin with id {0}.", id);
             }
 
             return await db.AuthRepository.EditAdmin(admin);
@@ -267,6 +312,7 @@ namespace ElementarySchoolProject.Services.UsersServices
                 teacher.FirstName = user.FirstName;
                 teacher.LastName = user.LastName;
                 teacher.UserName = user.UserName;
+                logger.Info("Editing teacher with id {0}.", id);
             }
 
             return await db.AuthRepository.EditTeacher(teacher);
@@ -281,6 +327,7 @@ namespace ElementarySchoolProject.Services.UsersServices
                 parent.FirstName = user.FirstName;
                 parent.LastName = user.LastName;
                 parent.UserName = user.UserName;
+                logger.Info("Editing parent with id {0}.", id);
             }            
 
             return await db.AuthRepository.EditParent(parent);            
@@ -295,6 +342,7 @@ namespace ElementarySchoolProject.Services.UsersServices
                 student.FirstName = user.FirstName;
                 student.LastName = user.LastName;
                 student.UserName = student.UserName;
+                logger.Info("Editing student with id {0}.", id);
             }
 
             return await db.AuthRepository.EditStudent(student);

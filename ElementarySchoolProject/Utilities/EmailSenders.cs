@@ -32,6 +32,7 @@ namespace ElementarySchoolProject.Utilities
             SmtpServer.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["from"], ConfigurationManager.AppSettings["password"]);
             //SmtpServer.Credentials = new System.Net.NetworkCredential("d65f17fc8b19f7", "db511567a7b18c");
             SmtpServer.EnableSsl = bool.Parse(ConfigurationManager.AppSettings["smtpSsl"]);
+            logger.Info("Seding grade email to parent {0}, for student {1}, date {2}, subject {3}, value {4}", parentName, studentName, date, subjectName, gradeValue);
             SmtpServer.Send(mail);
         }
     }

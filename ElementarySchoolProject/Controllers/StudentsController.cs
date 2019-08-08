@@ -23,35 +23,75 @@ namespace ElementarySchoolProject.Controllers
             this.service = service;
         }
 
-        [Route("me")]
-        [Authorize(Roles = "student")]
+        [Authorize(Roles = "parent, teacher, admin")]
+        [Route("")]
         [HttpGet]
-        public IHttpActionResult GetMyself()
+        public IHttpActionResult GetAll()
         {
-            string userId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
+            string role = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == ClaimTypes.Role).Value;
 
             try
             {
-                StudentWithParentGradesClassDTO retVal = service.GetById(userId);
-                return Ok(retVal);
+                switch (role)
+                {
+                    case "admin":
+                        var retVal1 = service.GetAll();
+                        return Ok(retVal1);
+
+                    case "teacher":
+                        string teacherId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
+                        var retVal2 = service.GetAllByTeacherId(teacherId);
+                        return Ok(retVal2);
+
+                    case "parent":
+                        string parentId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
+                        var retVal3 = service.GetAllByParentId(parentId);
+                        return Ok(retVal3);                    
+
+                    default:
+                        return BadRequest();
+                }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return NotFound();
+                return BadRequest(e.Message);
             }
         }
 
-        [Authorize(Roles = "parent")]
+        [Authorize(Roles = "parent, student, teacher, admin")]        
         [Route("{studentId}")]
         [HttpGet]
-        public IHttpActionResult GetStudentByIdAndParentIdentity(string studentId)
-        {
-            string parentUserName = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserName").Value;
+        public IHttpActionResult GetStudentById(string studentId)
+        {            
+            string role = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == ClaimTypes.Role).Value;            
 
             try
             {
-                StudentWithParentGradesClassDTO retVal = service.GetByIdAndParentUserName(parentUserName, studentId);
-                return Ok(retVal);
+                switch (role)
+                {
+                    case "admin":
+                        StudentWithParentGradesClassDTO retVal1 = service.GetById(studentId);
+                        return Ok(retVal1);
+
+                    case "teacher":
+                        string teacherId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
+                        StudentWithParentGradesClassDTO retVal2 = service.GetByIdAndTeacherId(studentId, teacherId);
+                        return Ok(retVal2);
+
+                    case "parent":
+                        string parentId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
+                        StudentWithParentGradesClassDTO retVal3 = service.GetByIdAndParentId(studentId, parentId);
+                        return Ok(retVal3);
+
+                    case "student":
+                        string userId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
+                        StudentWithParentGradesClassDTO retVal4 = service.GetById(userId);
+                        return Ok(retVal4);
+
+                    default:
+                        return BadRequest();
+                }
+                
             }
             catch (Exception e)
             {
@@ -65,16 +105,30 @@ namespace ElementarySchoolProject.Controllers
                 }
             }
         }
-
-        [AllowAnonymous]
+        
+        [Authorize(Roles = "teacher, admin")]
         [Route("grade_dates")]
+        [HttpGet]
         public IHttpActionResult GetStudentsByGradeDates([FromUri]DateTime d1, [FromUri]DateTime d2)
         {
+            string role = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == ClaimTypes.Role).Value;
+
             try
             {
-                var retVal = service.GetAllByGradeDates(d1, d2);
+                switch (role)
+                {
+                    case "admin":
+                        var retVal1 = service.GetAllByGradeDates(d1, d2);
+                        return Ok(retVal1);
 
-                return Ok(retVal);
+                    case "teacher":
+                        string teacherId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
+                        var retVal2 = service.GetAllByGradeDatesAndTeacherId(d1, d2, teacherId);
+                        return Ok(retVal2);                    
+
+                    default:
+                        return BadRequest();
+                }
             }
             catch (Exception e)
             {
@@ -156,22 +210,7 @@ namespace ElementarySchoolProject.Controllers
             {
                 return BadRequest(e.Message);
             }
-        }
-
-        [Route("parent/{id}")]
-        public IHttpActionResult GetAllByParentId(string id)
-        {
-            try
-            {
-                var retVal = service.GetAllByParentId(id);
-
-                return Ok(retVal);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        }        
 
         [Route("{studentId}/setparent/{parentId}")]
         [HttpPut]

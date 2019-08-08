@@ -168,7 +168,9 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiMethodController.cs" />
     <Compile Include="Controllers\GradesController.cs" />
+    <Compile Include="Controllers\LogEntriesController.cs" />
     <Compile Include="Controllers\ParentsController.cs" />
     <Compile Include="Controllers\SchoolClassesController.cs" />
     <Compile Include="Controllers\SchoolClassTeacherSchoolSubjectsController.cs" />
@@ -223,9 +225,11 @@
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Services\GradesService.cs" />
     <Compile Include="Services\IGradesService.cs" />
+    <Compile Include="Services\ILogEntriesService.cs" />
     <Compile Include="Services\ISchoolClassesService.cs" />
     <Compile Include="Services\ISchoolClassTeacherSchoolSubjectService.cs" />
     <Compile Include="Services\ITeacherSchoolSubjectsService.cs" />
+    <Compile Include="Services\LogEntriesService.cs" />
     <Compile Include="Services\SchoolClassesService.cs" />
     <Compile Include="Services\SchoolClassTeacherSchoolSubjectService.cs" />
     <Compile Include="Services\SchoolSubjectsService.cs" />

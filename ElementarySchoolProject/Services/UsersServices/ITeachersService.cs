@@ -13,6 +13,7 @@ namespace ElementarySchoolProject.Services.UsersServices
         TeacherBasicDTO GetById(string id);
 
         IEnumerable<TeacherBasicDTO> GetAllTeachingASubject(int id);
+        IEnumerable<TeacherBasicDTO> GetAllTeachingToAGrade(int grade);
         IEnumerable<TeacherBasicDTO> GetAllTeachingToClass(int id);
         IEnumerable<TeacherBasicDTO> GetAllTeachingToStudent(string id);
         
