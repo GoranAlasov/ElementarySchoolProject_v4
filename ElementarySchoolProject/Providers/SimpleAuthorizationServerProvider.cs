@@ -58,7 +58,7 @@ namespace ElementarySchoolProject.Providers
             identity.AddClaim(new Claim("UserId", user.Id));
             //TODO 4: ***DONE*** Need to add various claims!
 
-            string loggerMessage = "Grabbed token for roles:";
+            string loggerMessage = String.Format( "User {0} Grabbed token for roles:", context.UserName);
 
             foreach (var item in roles)
             {

@@ -20,6 +20,7 @@ namespace ElementarySchoolProject.Infrastructure
         public DbSet<TeacherSchoolSubject> TeacherSchoolSubjects { get; set; }
         public DbSet<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjects { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<LogEntry> LogEntries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

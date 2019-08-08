@@ -27,18 +27,23 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<StudentWithParentDTO> GetAll()
         {
-            return db.StudentsRepository.Get().Select(x => UserToUserDTOConverters.StudentToStudentWithParentDTO(x));
+            var students = db.StudentsRepository.Get();
+            logger.Info("Getting all entries of type {0}.", students.GetType());
+
+            return students.Select(x => UserToUserDTOConverters.StudentToStudentWithParentDTO(x));
         }
 
         public IEnumerable<StudentWithParentDTO> GetAllByGradeDates(DateTime minValue, DateTime maxValue)
         {            
             if (minValue < DateTime.MinValue || maxValue > DateTime.MaxValue || minValue > maxValue)
             {
+                logger.Error("Date range incorrect. Date from: {0}, date to: {1}. Throwing DatesRangeException.", minValue, maxValue);
                 throw new DatesRangeException();
             }
 
             var students = db.StudentsRepository
                 .Get(s => s.Grades.Any(grade => grade.DateOfGrading >= minValue && grade.DateOfGrading <= maxValue));
+            logger.Info("Getting students graded between {0} and {1}.", minValue, maxValue);
 
             var retVal = students.Select(
                 s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s)
@@ -52,11 +57,13 @@ namespace ElementarySchoolProject.Services.UsersServices
             //TODO 11.2 **DONE** exception if grade not between 1-8
             if (grade < 1 || grade > 8)
             {
+                logger.Error("Grade parameter value ({0}) incorrect. Must be in range 1-8. Throwing ArgumentOutOfRangeException.", grade);
                 throw new ArgumentOutOfRangeException("Grade must be between 1 and 8!", new ArgumentOutOfRangeException());
             }
 
             var students = db.StudentsRepository
                 .Get(s => s.SchoolClass.SchoolGrade == grade);
+            logger.Info("Getting students in grade: {0}.", grade);
 
             return students
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
@@ -70,11 +77,13 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             if (grade < 1 || grade > 8)
             {
+                logger.Error("Grade parameter value ({0}) incorrect. Must be in range 1-8. Throwing ArgumentOutOfRangeException.", grade);
                 throw new ArgumentOutOfRangeException("Grade must be between 1 and 8!", new ArgumentOutOfRangeException());
             }
 
             if (id == null)
             {
+                logger.Warn("TeacherId parameter missing. Throwing ArgumentNullException.");
                 throw new ArgumentNullException("TeacherId must be specified.");
             }
 
@@ -84,6 +93,7 @@ namespace ElementarySchoolProject.Services.UsersServices
 
                 if (teacher == null || !(teacher is Teacher))
                 {
+                    logger.Error("Teacher with id {0} not fount, or of a wrong user type. Throwing KeyNotFoundException.");
                     throw new KeyNotFoundException("Teacher is missing or is of a wrong user type!");
                 }                
 

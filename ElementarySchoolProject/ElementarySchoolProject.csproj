@@ -195,6 +195,7 @@
     <Compile Include="Models\DTOs\UserDTOs\StudentBasicDTO.cs" />
     <Compile Include="Models\DTOs\UserDTOs\TeacherBasicDTO.cs" />
     <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\LogEntry.cs" />
     <Compile Include="Models\SchoolClass.cs" />
     <Compile Include="Models\SchoolClassTeacherSchoolSubject.cs" />
     <Compile Include="Models\SchoolSubject.cs" />

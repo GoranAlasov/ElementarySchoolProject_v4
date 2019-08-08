@@ -26,6 +26,7 @@ namespace ElementarySchoolProject.Repositories
         public async Task<IdentityResult> EditAdmin(Admin admin)
         {
             var result = await _userManager.UpdateAsync(admin);
+            
 
             return result;
         }
