@@ -160,6 +160,33 @@ namespace ElementarySchoolProject.Services.UsersServices
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
         }
 
+        public IEnumerable<StudentWithParentDTO> GetAllBySchoolClassIdAndTeacherId(int classId, string teacherId)
+        {
+            var schoolClass = db.SchoolClassesRepository.GetByID(classId);
+            var teacher = db.TeachersRepository.GetByID(teacherId);
+
+            if (schoolClass == null)
+            {
+                logger.Error("SchoolClassId {0} doesn't exist.", classId);
+                throw new KeyNotFoundException("That SchoolClassId doesn't exist. Throwing KeyNotFoundException.");
+            }
+
+            if (teacher == null)
+            {
+                logger.Error("TeacherID {0} doesn't exist.", teacherId);
+                throw new KeyNotFoundException("That TeacherId doesn't exist. Throwing KeyNotFoundException.");
+            }
+
+            var students = db.StudentsRepository
+            .Get(s => s.SchoolClass.Id == classId 
+            && s.SchoolClass.SchoolClassTeacherSchoolSubjects
+            .Any(x => x.TeacherSchoolSubject.Teacher.Id == teacherId));
+            logger.Info("Getting all students from class with id {0}, taught by teacher with ID {1}", classId, teacherId);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
+        }
+
         public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectId(int id)
         {
             //TODO 11.7 **DONE** exception if school subject id nonexistant
@@ -313,6 +340,101 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             logger.Info("Getting StudentId {0}, taught by of {1}", studentId, teacherId);
             return UserToUserDTOConverters.StudentToStudentWithParentGradesClassDTO(student);
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllByStudentName(string name)
+        {
+            var students = db.StudentsRepository.Get().Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(name.ToLower()));
+
+            if (students == null)
+            {
+                logger.Warn("No students' name or surname contain the given string parameter \"{0}\"", name);
+                throw new KeyNotFoundException("student with that string in their name or surname not found.");
+            }
+                        
+            logger.Info("Getting all students whose name or surname contain \"{0}\"", name);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllByStudentNameAndTeacherID(string name, string teacherId)
+        {
+            var students = db.StudentsRepository.Get().Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(name.ToLower()));
+            var teacher = db.TeachersRepository.GetByID(teacherId);
+
+            if (students == null)
+            {
+                logger.Warn("No students' name or surname contain the given string parameter \"{0}\"", name);
+                throw new KeyNotFoundException("student with that string in their name or surname not found.");
+            }
+
+            if (teacher == null)
+            {
+                logger.Warn("No teacher with id {0} found.", teacherId);
+                throw new KeyNotFoundException("Teacher with that id not found.");
+            } 
+
+            var retVal = students.Where(x => x.SchoolClass.SchoolClassTeacherSchoolSubjects.Any( y => y.TeacherSchoolSubject.Teacher.Id == teacherId));
+            logger.Info("Getting all students whose name or surname contain \"{0}\", and who have teacher id {1}", name, teacherId);
+
+            return retVal
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
+        }
+                
+        public IEnumerable<StudentWithParentDTO> GetAllByTeahcerName(string teacherName)
+        {
+            var students = db.StudentsRepository.Get(st => st.SchoolClass.SchoolClassTeacherSchoolSubjects
+            .Any(sctss => (sctss.TeacherSchoolSubject.Teacher.FirstName + " " + sctss.TeacherSchoolSubject.Teacher.LastName).ToLower().Contains(teacherName.ToLower())));
+
+            if (students == null)
+            {
+                logger.Warn("No students found whose one of the teachers' name or surname contain the given string parameter \"{0}\"", teacherName);
+                throw new KeyNotFoundException("teacher with that string in their name or surname not found.");
+            }
+
+            logger.Info("Getting all students one of whos' teachers' name or surname contain \"{0}\"", teacherName);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllByTeacherNameAndTeacherId(string teacherName, string teacherId)
+        {
+            var students = db.StudentsRepository.Get(st => st.SchoolClass.SchoolClassTeacherSchoolSubjects
+            .Any(sctss => sctss.TeacherSchoolSubject.Teacher.Id == teacherId 
+            && (sctss.TeacherSchoolSubject.Teacher.FirstName + " " + sctss.TeacherSchoolSubject.Teacher.LastName).ToLower().Contains(teacherName.ToLower())));
+
+            if (students == null)
+            {
+                logger.Warn("No students found whose one of the teachers' name or surname contain the given string parameter \"{0}\"", teacherName);
+                throw new KeyNotFoundException("teacher with that string in their name or surname not found.");
+            }
+
+            logger.Info("Getting all students one of whos' teachers' name or surname contain \"{0}\"", teacherName);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectIdAndTeacherId(int subjectId, string teacherId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectName(string subjectName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectNameAndTeacherId(string subjectName, string teacherId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllByTeacherSchoolSubjectIdAndTeacherId(int id, string teacherId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
