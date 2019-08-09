@@ -20,6 +20,7 @@ namespace ElementarySchoolProject.Utilities
                 Name = subject.Name
             };
 
+            logger.Info("Converting SchoolSubject to SchoolSubjectDTO");
             return retVal;
         }
 
@@ -32,6 +33,7 @@ namespace ElementarySchoolProject.Utilities
                 WeeklyClasses = subject.WeeklyClasses
             };
 
+            logger.Info("Coverting SchoolSubject to SchoolSubjectWithWeeklyClassesDTO.");
             return retVal;
         }
 
@@ -49,12 +51,11 @@ namespace ElementarySchoolProject.Utilities
             }
             else
             {
-                
-            }
+                IEnumerable<ApplicationUser> teachers = subject.TeacherSchoolSubjects.Select(x => x.Teacher);
+                retVal.Teachers = teachers.Select(x => UserToUserDTOConverters.UserToUserSimpleViewDTO(x));
+            }           
 
-            IEnumerable<ApplicationUser> teachers = subject.TeacherSchoolSubjects.Select(x => x.Teacher);
-            retVal.Teachers = teachers.Select(x => UserToUserDTOConverters.UserToUserSimpleViewDTO(x));
-
+            logger.Info("Converting SchoolSubject to SchoolSubjectWithWeeklyClassesAndTeachersDTO.");
             return retVal;                       
         }
 
@@ -65,7 +66,8 @@ namespace ElementarySchoolProject.Utilities
             retVal.Id = dto.Id;
             retVal.Name = dto.Name;
             retVal.WeeklyClasses = dto.WeeklyClasses;
-            
+
+            logger.Info("Coverting SchoolSubjectWithWeeklyClassesDTO To SchoolSubject");
             return retVal;
         }
 
@@ -77,6 +79,7 @@ namespace ElementarySchoolProject.Utilities
                 WeeklyClasses = dto.WeeklyClasses
             };
 
+            logger.Info("Converting SchoolSubjectCreateAndEditDTO to SchoolSubject.");
             return retVal;
         }
     }

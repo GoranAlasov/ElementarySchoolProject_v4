@@ -24,6 +24,7 @@ namespace ElementarySchoolProject.Utilities
                 SchoolSubjectName = sctss.TeacherSchoolSubject.SchoolSubject.Name
             };
 
+            logger.Info("Converting SchoolClassTeacherSchoolSubject to SchoolClassTeacherSchoolSubjectDTO.");
             return retVal;
         }
 
@@ -36,6 +37,7 @@ namespace ElementarySchoolProject.Utilities
                 TeacherSchoolSubject = tss
             };
 
+            logger.Info("Converting SchoolClassTeacherSchoolSubjectCreateAndEditDTO to SchoolClassTeacherSchoolSubject.");
             return retVal;
         }
     }

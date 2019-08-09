@@ -16,6 +16,7 @@ using System.Web.Http;
 namespace ElementarySchoolProject.Controllers
 {
     [RoutePrefix("api/accounts")]
+    [Authorize(Roles = "admin")]
     public class AccountController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -29,8 +30,8 @@ namespace ElementarySchoolProject.Controllers
 
         #region RegisteringUsers
 
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [Route("admins")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterAdmin(RegisterUserDTO userModel)
@@ -53,8 +54,8 @@ namespace ElementarySchoolProject.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [Route("teachers")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterTeacher(RegisterUserDTO userModel)
@@ -77,8 +78,8 @@ namespace ElementarySchoolProject.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [Route("parents")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterParent(RegisterUserDTO userModel)
@@ -102,8 +103,8 @@ namespace ElementarySchoolProject.Controllers
         }
 
         
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [Route("students")]
         [HttpPost]
         public async Task<IHttpActionResult> RegisterStudent(RegisterStudentDTO userModel)
@@ -128,26 +129,118 @@ namespace ElementarySchoolProject.Controllers
 
         #endregion
 
-        [AllowAnonymous]
+        #region EditingUsers
+
+        [Authorize(Roles = "admin")]
         [Route("admins/{id}")]
         [HttpPut]
         public async Task<IHttpActionResult> PutAdmin(string id, [FromBody]EditUserDTO user)
         {
             if (!ModelState.IsValid)
             {
+                logger.Warn("PutAdmin returned BadRequest with invalid ModelState");
+                return BadRequest(ModelState);
+            }
+                        
+            var result = await service.EditAdmin(id, user);
+
+            logger.Info("PutAdmin finished Ok. Admin {0} was edited.", id);
+            return Ok(result);
+        }        
+
+        [Authorize(Roles = "admin")]
+        [Route("teachers/{id}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> PutTeacher(string id, [FromBody]EditUserDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                logger.Warn("PutTeacher returned BadRequest with invalid ModelState");
                 return BadRequest(ModelState);
             }
 
-            var result = await service.EditAdmin(id, user);
+            var result = await service.EditTeacher(id, user);
 
+            logger.Info("PutTeacher finished Ok. Teacher {0} was edited.", id);
             return Ok(result);
         }
 
+        [Authorize(Roles = "admin")]
+        [Route("parents/{id}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> PutParent(string id, [FromBody]EditUserDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                logger.Warn("PutParent returned BadRequest with invalid ModelState");
+                return BadRequest(ModelState);
+            }
+
+            var result = await service.EditParent(id, user);
+
+            logger.Info("PutParent finished Ok. Parent {0} was edited.", id);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
+        [Route("students/{id}")]
+        [HttpPut]
+        public async Task<IHttpActionResult> PutStudent(string id, [FromBody]EditUserDTO user)
+        {
+            if (!ModelState.IsValid)
+            {
+                logger.Warn("PutStudent returned BadRequest with invalid ModelState");
+                return BadRequest(ModelState);
+            }
+
+            var result = await service.EditStudent(id, user);
+
+            logger.Info("PutStudent finished Ok. Student {0} was edited.", id);
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
+        [Route("students/{studentId}/setparent/{parentId}")]
+        [HttpPut]
+        public IHttpActionResult ChangeParent(string studentId, string parentId)
+        {
+            try
+            {
+                var retVal = service.ChangeParent(studentId, parentId);
+                logger.Info("Changed parent of student {0} to {1}", studentId, parentId);
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                logger.Warn("Exception caught with message {0}. Returning bad request.", e.Message);
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [Route("students/{studentId}/setclass/{classId}")]
+        [HttpPut]
+        public IHttpActionResult AssignStudentToClass(string studentId, int classId)
+        {
+            try
+            {
+                var retVal = service.AddStudentToClass(studentId, classId);
+                logger.Info("Added student {0} to class {1}", studentId, classId);
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                logger.Warn("Exception caught with message {0}. Returning bad request.", e.Message);
+                return BadRequest(e.Message);
+            }
+        }
+
+        #endregion
 
         #region GettingUsers
-        
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [Route("me")]
         [HttpGet]
         public IHttpActionResult GetMySelfAdmin()
@@ -158,80 +251,89 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Info("Not found admin with id {0}", userId);
                 return NotFound();
             }
 
+            logger.Info("Returning admin with id {0}", userId);
             return Ok(retVal);
         }
 
         [Route("")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<UserViewWithRoleIdsDTO>> GetAllUsers()
         {
-            var retVal = await service.GetAllUsers();            
+            var retVal = await service.GetAllUsers();
 
+            logger.Info("Getting all users");
             return retVal;
         }
 
         [Route("admins")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public IEnumerable<UserSimpleViewDTO> GetAllAdmins()
         {
             var retVal = service.GetAllAdmins();
 
+            logger.Info("Getting all admins.");
             return retVal;
         }
 
         [Route("teachers")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public IEnumerable<UserSimpleViewDTO> GetAllTeachers()
         {
             var retVal = service.GetAllTeachers();
 
+            logger.Info("Getiing all teahcers");
             return retVal;
         }
 
         [Route("parents")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public IEnumerable<ParentSimpleViewDTO> GetAllParents()
         {
             var retVal = service.GetAllParents();
 
+            logger.Info("Getting all parents.");
             return retVal;
         }
 
         [Route("students")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public IEnumerable<StudentWithParentDTO> GetAllStudents()
         {
             var retVal = service.GetAllStudents();
 
+            logger.Info("Getting all students.");
             return retVal;
         }
 
         [Route("{id}")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<UserViewWithRoleIdsDTO> GetUserById(string id)
         {
-            UserViewWithRoleIdsDTO retVal = await service.GetUserById(id);            
+            UserViewWithRoleIdsDTO retVal = await service.GetUserById(id);
 
+            logger.Info("Getting user with id {0}", id);
             return retVal;
         }
 
         [Route("admins/{id}")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetAdminById(string id)
         {
@@ -239,15 +341,17 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn("Admin with id {0} not found", id);
                 return NotFound();
             }
 
+            logger.Info("Getting admin with id {0}", id);
             return Ok(retVal);
         }
 
         [Route("teachers/{id}")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetTeacherById(string id)
         {
@@ -255,15 +359,17 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn("Teacher with id {0} not found", id);
                 return NotFound();
             }
 
+            logger.Info($"Getting teacher with id {id}");
             return Ok(retVal);
         }
 
         [Route("parents/{id}")]
-        //[Authorize(Roles = "admin")]        
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]        
+        //[AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetParentById(string id)
         {
@@ -271,20 +377,17 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn($"Parent with id {id} not found.");
                 return NotFound();
             }
 
+            logger.Info($"Getting parent with id {id}");
             return Ok(retVal);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
+        }        
 
         [Route("students/{id}")]
-        //[Authorize(Roles = "admin")]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetStudentById(string id)
         {
@@ -292,9 +395,11 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn($"Student with id {id} not found.");
                 return NotFound();
             }
 
+            logger.Info($"Getting student with id {id}");
             return Ok(retVal);
         }
 
@@ -303,7 +408,8 @@ namespace ElementarySchoolProject.Controllers
         #region DeletingUsers
 
         [Route("admins/{id}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeleteAdmin(string id)
         {
@@ -311,14 +417,17 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn($"Admin with id {id} not found.");
                 return BadRequest();
             }
 
+            logger.Info($"Deleting admin with id {id}");
             return Ok(retVal);
         }
 
         [Route("teachers/{id}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeleteTeacher(string id)
         {
@@ -326,14 +435,17 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn($"Teacher with id {id} not found.");
                 return BadRequest();
             }
 
+            logger.Info($"Deleting teacher with id {id}");
             return Ok(retVal);
         }
 
         [Route("parents/{id}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeleteParent(string id)
         {
@@ -341,14 +453,17 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn($"Parent with id {id} nto found.");
                 return BadRequest();
             }
 
+            logger.Info($"Deleting parent with id {id}");
             return Ok(retVal);
         }
 
         [Route("students/{id}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public IHttpActionResult DeleteStudent(string id)
         {
@@ -356,12 +471,14 @@ namespace ElementarySchoolProject.Controllers
 
             if (retVal == null)
             {
+                logger.Warn($"Student with id {id} not found.");
                 return BadRequest();
             }
 
+            logger.Info($"Deleting student with id {id}");
             return Ok(retVal);
         }
 
-        #endregion        
+        #endregion                
     }
 }

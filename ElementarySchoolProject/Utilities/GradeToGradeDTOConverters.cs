@@ -30,6 +30,7 @@ namespace ElementarySchoolProject.Utilities
                 .StudentToStudentBasicDTO(grade.Student)
             };
 
+            logger.Info("Converting Grade to GradeDTO.");
             return retVal;
         }
 
@@ -39,11 +40,23 @@ namespace ElementarySchoolProject.Utilities
 
             retVal.Id = dto.Id;
             retVal.Value = dto.Value;
-            retVal.DateOfGrading = dto.DateOfGrading;
+            retVal.DateOfGrading = DateTime.Now;
             retVal.Student.Id = dto.StudentId;
             //retVal.
 
+            logger.Info("Converting GradeCreateAndEditDTO to Grade.");
             return retVal;
+        }
+
+        public static AverageGradeDTO GradeCollectionToAverageGradeDTO(IEnumerable<Grade> gradeList)
+        {
+            AverageGradeDTO avg = new AverageGradeDTO();
+            IEnumerable<int> grades = gradeList.Select(x => x.Value);
+
+            avg.AvgGrade = grades.Average(x => x);
+
+            logger.Info("Converting collection of grades to average grade.");
+            return avg;
         }
     }
 }

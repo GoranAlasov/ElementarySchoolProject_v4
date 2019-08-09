@@ -8,8 +8,10 @@ using System.Web.Http.Description;
 
 namespace ElementarySchoolProject.Controllers
 {
+  
     public class ApiMethodController : ApiController
     {
+        [Route("endpoints")]
         public IEnumerable<HelpMethod> GetMethods()
         {
             // get the IApiExplorer registered automatically

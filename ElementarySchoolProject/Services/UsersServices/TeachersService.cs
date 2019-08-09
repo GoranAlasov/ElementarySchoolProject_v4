@@ -29,6 +29,36 @@ namespace ElementarySchoolProject.Services.UsersServices
             return retVal.Select(x => UserToUserDTOConverters.TeacherToTeacherBasicDTO(x));
         }
 
+        public IEnumerable<TeacherBasicDTO> GetAllByName(string name)
+        {
+            var retVal = db.TeachersRepository.Get()
+                .Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(name.ToLower()));
+
+            if (retVal == null)
+            {
+                logger.Warn("Teacher with name and surname containing \"{0}\" is non existant.", name);
+                throw new ArgumentException("No teacher with name and surname containing that string.");
+            }
+
+            logger.Info("Getting teachers with names and/or surnames containing \"{0}\"", name);
+            return retVal.Select(x => UserToUserDTOConverters.TeacherToTeacherBasicDTO(x));
+        }
+
+        public IEnumerable<TeacherBasicDTO> GetAllBySubjectName(string name)
+        {
+            var retVal = db.TeachersRepository.Get()
+                .Where(x => x.TeacherSchoolSubjects.Any(y => y.SchoolSubject.Name.ToLower().Contains(name.ToLower())));
+
+            if (retVal == null)
+            {
+                logger.Warn("No teachers teaching subject with name containg \"{0}\" exist.", name);
+                throw new ArgumentException("No teachers teaching subject with name containing that string.");
+            }
+
+            logger.Info("Getting teachers teaching subjects with names containing \"{0}\"", name);
+            return retVal.Select(x => UserToUserDTOConverters.TeacherToTeacherBasicDTO(x));
+        }
+
         public IEnumerable<TeacherBasicDTO> GetAllTeachingASubject(int id)
         {
             var retVal = db.TeachersRepository.Get()

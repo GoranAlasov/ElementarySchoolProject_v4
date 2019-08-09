@@ -180,6 +180,7 @@
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Infrastructure\DataAccessContext.cs" />
     <Compile Include="Infrastructure\DataAccessContextInitializer.cs" />
+    <Compile Include="Models\DTOs\AverageGradeDTO.cs" />
     <Compile Include="Models\DTOs\GradeCreateAndEditDTO.cs" />
     <Compile Include="Models\DTOs\GradeDTO.cs" />
     <Compile Include="Models\DTOs\SchoolClassCreateAndEditDTO.cs" />

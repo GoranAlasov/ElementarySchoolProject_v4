@@ -12,6 +12,7 @@ using System.Web.Http.Description;
 
 namespace ElementarySchoolProject.Controllers
 {
+    [RoutePrefix("api/teacherschoolsubjects")]
     public class TeacherSchoolSubjectsController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -25,58 +26,78 @@ namespace ElementarySchoolProject.Controllers
 
 
         //GET: api/teacherschoolsubjects
+        [Authorize(Roles = "admin")]
+        [Route("")]
+        [HttpGet]
         public IEnumerable<TeacherSchoolSubjectDTO> GetTeacherSchoolSubjects()
         {
+            logger.Info("Returning all teacherschoolsubjects to front.");
             return service.GetAll();
         }
 
         //GET: api/teacherschoolsubjects/5
         [ResponseType(typeof(TeacherSchoolSubjectDTO))]
+        [Authorize(Roles = "admin")]
+        [Route("{id}")]
+        [HttpGet]
         public IHttpActionResult GetTeacherSchoolSubjectById(int id)
         {
             TeacherSchoolSubjectDTO retVal = service.GetById(id);
             if (retVal == null)
             {
+                logger.Warn("Not found teacherschoolsubject");
                 return NotFound();
             }
 
+            logger.Info("Returning OK to front.");
             return Ok(retVal);
         }
 
         //PUT: api/teacherschoolsubjects/6
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "admin")]
+        [Route("{id}")]
+        [HttpPut]
         public IHttpActionResult PutTeacherSchoolSubject(int id, [FromBody] TeacherSchoolSubjectCreateAndEditDTO dto)
         {
             if (!ModelState.IsValid)
             {
+                logger.Warn("Invalid model state, teacherschoolsubject edit failed. returning bad request");
                 return BadRequest();
             }
 
             service.EditTeacherSchoolSubject(id, dto);
-
+            logger.Info("Successfully edited teacherschoolsubject. returning ok to front");
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         //POST: api/teacherschoolsubjects
         [ResponseType(typeof(void))]
+        [Authorize(Roles = "admin")]
+        [Route("")]
+        [HttpPost] 
         public IHttpActionResult PostTeacherSchoolSubject([FromBody] TeacherSchoolSubjectCreateAndEditDTO dto)
         {
             if (!ModelState.IsValid)
             {
+                logger.Warn("Invalid model state, teacherschoolsubject create failed. returning bad request");
                 return BadRequest(ModelState);
             }
 
             TeacherSchoolSubjectDTO retVal = service.CreateTeacherSchoolSubject(dto);
-
+            logger.Info("Successfully created teacherschoolsubject. returning ok to front");
             return CreatedAtRoute("DefaultApi", new { id = retVal.Id }, retVal);
         }        
 
         //DELETE: api/teacherschoolsubject/8
-        [ResponseType(typeof(TeacherSchoolSubjectDTO))]
+        [ResponseType(typeof(TeacherSchoolSubjectDTO))]    
+        [Authorize(Roles = "admin")]
+        [Route("{id}")]
+        [HttpDelete]
         public IHttpActionResult DeleteTeacherSchoolSubject(int id)
         {
             TeacherSchoolSubjectDTO retVal = service.DeleteTeacherSchoolSubject(id);
-
+            logger.Info("Successfully deleted teacherschoolsubject. returning ok to front");
             return Ok(retVal);
         }
     }

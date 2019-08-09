@@ -23,6 +23,7 @@ namespace ElementarySchoolProject.Utilities
             retVal.TeacherFirstName = tss.Teacher.FirstName;
             retVal.TeacherLastName = tss.Teacher.LastName;
 
+            logger.Info("Converting TeacherSchoolSubject to TeacherSchoolSubjectDTO.");
             return retVal;
         }
 
@@ -33,6 +34,7 @@ namespace ElementarySchoolProject.Utilities
             retVal.Teacher = teacher;
             retVal.SchoolSubject = subject;
 
+            logger.Info("Converting TeacherSchoolSubjectCreateAndEditDTO to TeacherSchoolSubject.");
             return retVal;
         }
     }

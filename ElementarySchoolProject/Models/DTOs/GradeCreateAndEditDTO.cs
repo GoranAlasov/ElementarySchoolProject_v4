@@ -13,7 +13,7 @@ namespace ElementarySchoolProject.Models.DTOs
         [Range(1, 2, ErrorMessage = "Must be between 1 and 5.")]        
         public int Value { get; set; }
 
-        public DateTime DateOfGrading { get; set; }
+        //public DateTime DateOfGrading { get; set; }
 
         public string StudentId { get; set; }
 

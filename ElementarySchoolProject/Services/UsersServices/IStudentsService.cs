@@ -29,10 +29,7 @@ namespace ElementarySchoolProject.Services.UsersServices
         IEnumerable<StudentWithParentDTO> GetAllByStudentName(string name);
         IEnumerable<StudentWithParentDTO> GetAllByStudentNameAndTeacherID(string name, string teacherId);
 
-
-
-        //TODO: to finish therse methods! check if properly implemented all through to the controller
-        IEnumerable<StudentWithParentDTO> GetAllByTeahcerName(string teacherName);
+        IEnumerable<StudentWithParentDTO> GetAllByTeacherName(string teacherName);
         IEnumerable<StudentWithParentDTO> GetAllByTeacherNameAndTeacherId(string teacherName, string teacherId);
 
         IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectId(int id);
@@ -43,11 +40,6 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         IEnumerable<StudentWithParentDTO> GetAllByTeacherSchoolSubjectId(int id);
         IEnumerable<StudentWithParentDTO> GetAllByTeacherSchoolSubjectIdAndTeacherId(int id, string teacherId);
-
-        
-        
-
-        StudentWithParentDTO ChangeParent(string studentId, string parentId);
     }
 }
 

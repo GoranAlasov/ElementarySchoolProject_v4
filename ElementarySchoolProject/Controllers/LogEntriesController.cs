@@ -24,6 +24,7 @@ namespace ElementarySchoolProject.Controllers
 
         [HttpGet]
         [Route("")]
+        [Authorize(Roles = "admin")]
         public IEnumerable<LogEntry> GetAll()
         {
             return service.GetAll();
@@ -31,6 +32,7 @@ namespace ElementarySchoolProject.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "admin")]
         public IHttpActionResult GetById(int id)
         {
             var retVal = service.GetById(id);
@@ -40,6 +42,7 @@ namespace ElementarySchoolProject.Controllers
 
         [Route("dl")]
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public HttpResponseMessage ExportCSV()
         {
             string constr = ConfigurationManager.ConnectionStrings["Elementary"].ConnectionString;

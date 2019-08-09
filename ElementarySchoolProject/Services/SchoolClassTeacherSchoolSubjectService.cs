@@ -38,7 +38,7 @@ namespace ElementarySchoolProject.Services
         public SchoolClassTeacherSchoolSubjectDTO DeleteSchoolClassTeacherSchoolSubject(int id)
         {
             SchoolClassTeacherSchoolSubject sctss = db.SchoolClassTeacherSchoolSubjectRepository.GetByID(id);
-
+            
             db.SchoolClassTeacherSchoolSubjectRepository.Delete(sctss);
             db.Save();
 

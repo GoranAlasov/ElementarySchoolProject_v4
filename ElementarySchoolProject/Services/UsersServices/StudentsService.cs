@@ -185,27 +185,7 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             return students
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
-        }
-
-        public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectId(int id)
-        {
-            //TODO 11.7 **DONE** exception if school subject id nonexistant
-
-            var schoolSubject = db.SchoolClassesRepository.GetByID(id);
-
-            if (schoolSubject == null)
-            {
-                logger.Error("SchoolSubjectId {0} doesn't exist. Throwing KeyNotFoundException.", id);
-                throw new KeyNotFoundException("That SchoolSubjectId doesn't exist.");
-            }
-
-            var students = db.StudentsRepository            
-            .Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects.Any(x => x.TeacherSchoolSubject.SchoolSubject.Id == id));
-            logger.Info("Getting all students who have school subject with id {0}.", id);
-
-            return students
-                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
-        }
+        }        
 
         public IEnumerable<StudentWithParentDTO> GetAllByTeacherId(string id)
         {
@@ -226,27 +206,7 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             return students
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
-        }
-
-        public IEnumerable<StudentWithParentDTO> GetAllByTeacherSchoolSubjectId(int id)
-        {
-            //TODO 11.10 **DONE** exception if teacherschoolsubject nonexistant
-
-            TeacherSchoolSubject ts = db.TeacherSchoolSubjectSRepository.GetByID(id);
-
-            if (ts == null)
-            {
-                logger.Error("That teacher + school subject combination is nonexistant, id : {0}. Throwing ArgumentException.", id);
-                throw new ArgumentException("TeacherSchoolSubjectId is not correct.", new ArgumentException());
-            }
-            var students = db.StudentsRepository            
-            .Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects.Any(x => x.TeacherSchoolSubject.Id == id));
-            logger.Info("Getting students taught by {0} {1}, subject: {2}. TeacherSchoolSubjectId : {3}", 
-                ts.Teacher.FirstName, ts.Teacher.LastName, ts.SchoolSubject.Name, id);
-
-            return students
-                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
-        }
+        }        
 
         public StudentWithParentGradesClassDTO GetById(string id)
         {
@@ -300,27 +260,7 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             return students
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentGradesClassDTO(s));
-        }
-
-        public StudentWithParentDTO ChangeParent(string studentId, string parentId)
-        {
-            var student = db.StudentsRepository.GetByID(studentId);
-            var parent = db.ParentsRepository.GetByID(parentId);
-
-            if (parent == null || student == null)
-            {
-                logger.Error("Nonexistant studentId ({0}) or parentId({1})", studentId, parentId);
-                throw new ArgumentException("That parent or student does not exist.");
-            }
-
-            student.Parent = parent;
-
-            db.StudentsRepository.Update(student);
-            db.Save();
-            logger.Info("Changing studentId {0} parent to parentId {1}", studentId, parentId);
-
-            return UserToUserDTOConverters.StudentToStudentWithParentDTO(student);
-        }
+        }        
 
         public StudentWithParentGradesClassDTO GetByIdAndTeacherId(string studentId, string teacherId)
         {
@@ -382,7 +322,7 @@ namespace ElementarySchoolProject.Services.UsersServices
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
         }
                 
-        public IEnumerable<StudentWithParentDTO> GetAllByTeahcerName(string teacherName)
+        public IEnumerable<StudentWithParentDTO> GetAllByTeacherName(string teacherName)
         {
             var students = db.StudentsRepository.Get(st => st.SchoolClass.SchoolClassTeacherSchoolSubjects
             .Any(sctss => (sctss.TeacherSchoolSubject.Teacher.FirstName + " " + sctss.TeacherSchoolSubject.Teacher.LastName).ToLower().Contains(teacherName.ToLower())));
@@ -417,24 +357,130 @@ namespace ElementarySchoolProject.Services.UsersServices
                 .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
         }
 
+        public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectId(int id)
+        {
+            //TODO 11.7 **DONE** exception if school subject id nonexistant
+
+            var schoolSubject = db.SchoolClassesRepository.GetByID(id);
+
+            if (schoolSubject == null)
+            {
+                logger.Error("SchoolSubjectId {0} doesn't exist. Throwing KeyNotFoundException.", id);
+                throw new KeyNotFoundException("That SchoolSubjectId doesn't exist.");
+            }
+
+            var students = db.StudentsRepository
+            .Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects.Any(x => x.TeacherSchoolSubject.SchoolSubject.Id == id));
+            logger.Info("Getting all students who have school subject with id {0}.", id);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
+        }
+
         public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectIdAndTeacherId(int subjectId, string teacherId)
         {
-            throw new NotImplementedException();
+            var schoolSubject = db.SchoolClassesRepository.GetByID(subjectId);
+            var teacher = db.TeachersRepository.GetByID(teacherId);
+
+            if (schoolSubject == null)
+            {
+                logger.Error("SchoolSubjectId {0} doesn't exist. Throwing KeyNotFoundException.", subjectId);
+                throw new KeyNotFoundException("That SchoolSubjectId doesn't exist.");
+            }
+
+            if (teacher == null)
+            {
+                logger.Warn("No teacher with id {0} found.", teacherId);
+                throw new KeyNotFoundException("Teacher with that id not found.");
+            }
+
+            var students = db.StudentsRepository
+            .Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects
+            .Any(x => x.TeacherSchoolSubject.SchoolSubject.Id == subjectId 
+            && x.TeacherSchoolSubject.Teacher.Id == teacherId));
+
+            logger.Info("Getting all students who have school subject with id {0} and who are taught by teacher with id {1}.", subjectId, teacherId);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
         }
 
         public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectName(string subjectName)
         {
-            throw new NotImplementedException();
+            var students = db.StudentsRepository.Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects
+            .Any(x => x.TeacherSchoolSubject.SchoolSubject.Name.ToLower().Contains(subjectName.ToLower())));
+
+            if (students == null)
+            {
+                logger.Warn("No students of subject with that name {0}", subjectName);
+                throw new KeyNotFoundException("Schoolsubject with that name not found.");
+            }
+
+            logger.Info("Getting all students having school subject containing {0}", subjectName);
+            return students.Select(x => UserToUserDTOConverters.StudentToStudentWithParentDTO(x));
         }
 
         public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectNameAndTeacherId(string subjectName, string teacherId)
         {
-            throw new NotImplementedException();
+            var students = db.StudentsRepository.Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects
+            .Any(x => x.TeacherSchoolSubject.SchoolSubject.Name.ToLower().Contains(subjectName.ToLower())
+            && x.TeacherSchoolSubject.Teacher.Id == teacherId));
+
+            if (students == null)
+            {
+                logger.Warn("No students of subject with that name {0}", subjectName);
+                throw new KeyNotFoundException("Schoolsubject with that name not found.");
+            }
+
+            logger.Info("Getting all students having school subject containing {0}", subjectName);
+            return students.Select(x => UserToUserDTOConverters.StudentToStudentWithParentDTO(x));
+        }
+
+        public IEnumerable<StudentWithParentDTO> GetAllByTeacherSchoolSubjectId(int id)
+        {
+            //TODO 11.10 **DONE** exception if teacherschoolsubject nonexistant
+
+            TeacherSchoolSubject ts = db.TeacherSchoolSubjectSRepository.GetByID(id);
+
+            if (ts == null)
+            {
+                logger.Error("That teacher + school subject combination is nonexistant, id : {0}. Throwing ArgumentException.", id);
+                throw new ArgumentException("TeacherSchoolSubjectId is not correct.", new ArgumentException());
+            }
+            var students = db.StudentsRepository
+            .Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects.Any(x => x.TeacherSchoolSubject.Id == id));
+            logger.Info("Getting students taught by {0} {1}, subject: {2}. TeacherSchoolSubjectId : {3}",
+                ts.Teacher.FirstName, ts.Teacher.LastName, ts.SchoolSubject.Name, id);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
         }
 
         public IEnumerable<StudentWithParentDTO> GetAllByTeacherSchoolSubjectIdAndTeacherId(int id, string teacherId)
         {
-            throw new NotImplementedException();
+            TeacherSchoolSubject ts = db.TeacherSchoolSubjectSRepository.GetByID(id);
+            var teacher = db.TeachersRepository.GetByID(teacherId);
+
+            if (teacher == null)
+            {
+                logger.Warn("No teacher with id {0} found.", teacherId);
+                throw new KeyNotFoundException("Teacher with that id not found.");
+            }
+
+            if (ts == null)
+            {
+                logger.Error("That teacher + school subject combination is nonexistant, id : {0}. Throwing ArgumentException.", id);
+                throw new ArgumentException("TeacherSchoolSubjectId is not correct.", new ArgumentException());
+            }
+
+            var students = db.StudentsRepository
+            .Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects.Any(x => x.TeacherSchoolSubject.Id == id
+            && x.TeacherSchoolSubject.Teacher.Id == teacherId));
+            logger.Info("Getting students taught by {0} {1}, subject: {2}. TeacherSchoolSubjectId : {3}",
+                ts.Teacher.FirstName, ts.Teacher.LastName, ts.SchoolSubject.Name, id);
+
+            return students
+                .Select(s => UserToUserDTOConverters.StudentToStudentWithParentDTO(s));
         }
     }
 }

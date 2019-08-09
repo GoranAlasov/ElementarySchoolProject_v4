@@ -303,7 +303,7 @@ namespace ElementarySchoolProject.Services.UsersServices
             return await db.AuthRepository.EditAdmin(admin);
         }
 
-        public async Task<IdentityResult> EditTeahcher(string id, EditUserDTO user)
+        public async Task<IdentityResult> EditTeacher(string id, EditUserDTO user)
         {
             Teacher teacher = db.TeachersRepository.GetByID(id);
             if (teacher != null)
@@ -346,6 +346,46 @@ namespace ElementarySchoolProject.Services.UsersServices
             }
 
             return await db.AuthRepository.EditStudent(student);
+        }
+
+        public StudentWithParentDTO ChangeParent(string studentId, string parentId)
+        {
+            var student = db.StudentsRepository.GetByID(studentId);
+            var parent = db.ParentsRepository.GetByID(parentId);
+
+            if (parent == null || student == null)
+            {
+                logger.Error("Nonexistant studentId ({0}) or parentId({1})", studentId, parentId);
+                throw new ArgumentException("That parent or student does not exist.");
+            }
+
+            student.Parent = parent;
+
+            db.StudentsRepository.Update(student);
+            db.Save();
+            logger.Info("Changing studentId {0} parent to parentId {1}", studentId, parentId);
+
+            return UserToUserDTOConverters.StudentToStudentWithParentDTO(student);
+        }
+
+        public StudentWithParentDTO AddStudentToClass(string studentId, int classId)
+        {
+            var student = db.StudentsRepository.GetByID(studentId);
+            var schoolClass = db.SchoolClassesRepository.GetByID(classId);
+
+            if (schoolClass == null || student == null)
+            {
+                logger.Error("Nonexistant studentId ({0}) or schoolClassId({1})", studentId, classId);
+                throw new ArgumentException("That class or student does not exist.");
+            }
+
+            student.SchoolClass = schoolClass;
+
+            db.StudentsRepository.Update(student);
+            db.Save();
+            logger.Info("Assigned student id {0} to class id {1}.", studentId, classId);
+
+            return UserToUserDTOConverters.StudentToStudentWithParentDTO(student);
         }
 
         #endregion

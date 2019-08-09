@@ -39,6 +39,11 @@ namespace ElementarySchoolProject.Services
         {
             SchoolSubject subject = db.SchoolSubjectsRepository.GetByID(id);
 
+            foreach (var item in subject.TeacherSchoolSubjects)
+            {
+                item.SchoolSubject = null;
+            }
+
             db.SchoolSubjectsRepository.Delete(id);
             db.Save();
 
@@ -65,6 +70,13 @@ namespace ElementarySchoolProject.Services
         {
             return db.SchoolSubjectsRepository.Get()
                 .Select(ss => SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesAndTeachersDTO(ss));
+        }
+
+        public IEnumerable<SchoolSubjectWithWeeklyClassesAndTeachersDTO> GetAllByTeacherId(string teacherId)
+        {
+            var subjects = db.SchoolSubjectsRepository.Get(x => x.TeacherSchoolSubjects.Any(y => y.Teacher.Id == teacherId));
+
+            return subjects.Select(ss => SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesAndTeachersDTO(ss));
         }
 
         public SchoolSubjectWithWeeklyClassesAndTeachersDTO GetById(int id)

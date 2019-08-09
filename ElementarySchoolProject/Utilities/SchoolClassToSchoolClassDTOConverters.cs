@@ -21,6 +21,7 @@ namespace ElementarySchoolProject.Utilities
                 ClassName = sc.Name
             };
 
+            logger.Info("Converting SchoolClass to SchoolClassDTO");
             return retVal;
         }        
 
@@ -32,6 +33,7 @@ namespace ElementarySchoolProject.Utilities
                 SchoolGrade = dto.SchoolGrade
             };
 
+            logger.Info("Converting SchoolClassCreateAndEditDTO to SchoolClass");
             return retVal;
         }        
 
@@ -45,6 +47,7 @@ namespace ElementarySchoolProject.Utilities
                 Students = sc.Students.Select(student => UserToUserDTOConverters.StudentToStudentBasicDTO(student))
             };
 
+            logger.Info("Converting SchoolClass to SchoolClassDetaildSTO");
             return retVal;
         }
     }

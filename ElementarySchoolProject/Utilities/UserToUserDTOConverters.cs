@@ -19,6 +19,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Admin RegisterUserDTOtoAdmin(RegisterUserDTO dto)
         {
+            logger.Info("Converting RegisterUserDTO to Admin.");
             return new Admin()
             {
                 Email = dto.Email,
@@ -30,6 +31,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Teacher RegisterUserDTOtoTeacher(RegisterUserDTO dto)
         {
+            logger.Info("Converting RegisterUserDTO to Teacher.");
             return new Teacher()
             {
                 Email = dto.Email,
@@ -41,6 +43,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Parent RegisterUserDTOtoParent(RegisterUserDTO dto)
         {
+            logger.Info("Converting RegisterUserDTO to Parent.");
             return new Parent()
             {
                 Email = dto.Email,
@@ -52,6 +55,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Student RegisterUserDTOtoStudent(RegisterUserDTO dto)
         {
+            logger.Info("Converting RegisterUserDTO to Student.");
             return new Student()
             {
                 Email = dto.Email,
@@ -63,6 +67,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Admin EditUserDTOToAdmin(EditUserDTO dto)
         {
+            logger.Info("Converting EditUserDTO to Admin.");
             return new Admin()
             {
                 Email = dto.Email,
@@ -74,6 +79,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Teacher EditUserDTOToTeacher(EditUserDTO dto)
         {
+            logger.Info("Converting EditUserDTO to Teacher.");
             return new Teacher()
             {
                 Email = dto.Email,
@@ -85,6 +91,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Parent EditUserDTOToParent(EditUserDTO dto)
         {
+            logger.Info("Converting EditUserDTO to Parent.");
             return new Parent()
             {
                 Email = dto.Email,
@@ -96,6 +103,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static Student EditUserDTOToStudent(EditUserDTO dto)
         {
+            logger.Info("Converting EditUserDTO to Student.");
             return new Student()
             {
                 Email = dto.Email,
@@ -115,6 +123,7 @@ namespace ElementarySchoolProject.Utilities
             retVal.LastName = dto.LastName;
             retVal.Parent.Id = dto.ParentId;
 
+            logger.Info("Covetring RegisterStudentDTO to Student.");
             return retVal;
         }
 
@@ -122,6 +131,7 @@ namespace ElementarySchoolProject.Utilities
 
         public static RegisterUserDTO AdminToRegisterUserDTO(Admin user)
         {
+            logger.Info("Coverting Admin to RegisterUserDTO.");
             return new RegisterUserDTO()
             {
                 FirstName = user.FirstName,
@@ -132,7 +142,8 @@ namespace ElementarySchoolProject.Utilities
         }
 
         public static UserViewWithRoleIdsDTO UserToUserViewWithRoleIds(ApplicationUser user)
-        {            
+        {
+            logger.Info("Coverting User to UserViewWithRoleIds.");
             return new UserViewWithRoleIdsDTO()
             {
                 Id = user.Id,
@@ -146,6 +157,7 @@ namespace ElementarySchoolProject.Utilities
         
         public static UserSimpleViewDTO UserToUserSimpleViewDTO(ApplicationUser user)
         {
+            logger.Info("Convetring User to UserSimpleViewDTO.");
             return new UserSimpleViewDTO()
             {
                 Id = user.Id,
@@ -177,8 +189,9 @@ namespace ElementarySchoolProject.Utilities
                     UserSimpleViewDTO dto = UserToUserSimpleViewDTO(child);
                     return dto;
                 }).ToList();
-            }            
+            }
 
+            logger.Info("Convetring Parent to ParentSimpleViewDTO.");
             return retVal;
         }
 
@@ -194,6 +207,7 @@ namespace ElementarySchoolProject.Utilities
                 .Where(x => x.Teacher.Id == teacher.Id)
                 .Select(x => SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectDTO(x.SchoolSubject));
 
+            logger.Info("Coverting Teacher to TeacherBasicDTO.");
             return retVal;
         }
 
@@ -207,6 +221,7 @@ namespace ElementarySchoolProject.Utilities
             retVal.UserName = user.UserName;
             retVal.Email = user.Email;
 
+            logger.Info("Converting Student to StudentBasicDTO.");
             return retVal;
         }
 
@@ -227,8 +242,9 @@ namespace ElementarySchoolProject.Utilities
             else
             {
                 retVal.Parent = UserToUserSimpleViewDTO(user.Parent);
-            }            
+            }
 
+            logger.Info("Student to StudentWithParentDTO.");
             return retVal;
         }
 
@@ -269,6 +285,7 @@ namespace ElementarySchoolProject.Utilities
                 retVal.Grades = user.Grades.Select(x => GradeToGradeDTOConverters.GradeToGradeDTO(x));
             }
 
+            logger.Info("Converting Student to StudentWithParentGradesClassDTO");
             return retVal;
         }
     }
