@@ -103,7 +103,7 @@ namespace ElementarySchoolProject.Controllers
 
         //GET: api/schoolclasses/3
         [Authorize(Roles = "admin, teacher")]
-        [Route("grade/{grade}")]
+        [Route("{id}")]
         [HttpGet]
         public IHttpActionResult GetSchoolClassById(int id)
         {

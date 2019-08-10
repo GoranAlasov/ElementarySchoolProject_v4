@@ -19,32 +19,7 @@ namespace ElementarySchoolProject.Infrastructure
                 , string.Format("ALTER DATABASE {0} SET SINGLE_USER WITH ROLLBACK IMMEDIATE", context.Database.Connection.Database));
 
             base.InitializeDatabase(context);
-        }
-
-        //private void SetAllRoles(List<ApplicationUser> users, DataAccessContext context)
-        //{
-        //    var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-
-        //    foreach (var user in users)
-        //    {
-        //        if (user.GetType() == typeof(Admin))
-        //        {
-        //            manager.AddToRole(user.Id, "admins");
-        //        }
-        //        else if (user.GetType() == typeof(Teacher))
-        //        {
-        //            manager.AddToRole(user.Id, "teachers");
-        //        }
-        //        else if (user.GetType() == typeof(Parent))
-        //        {
-        //            manager.AddToRole(user.Id, "parents");
-        //        }
-        //        else if (user.GetType() == typeof(Student))
-        //        {
-        //            manager.AddToRole(user.Id, "students");
-        //        }
-        //    }            
-        //}
+        }        
 
         protected override void Seed(DataAccessContext context)
         {

@@ -284,6 +284,11 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<StudentWithParentDTO> GetAllByStudentName(string name)
         {
+            if (name == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var students = db.StudentsRepository.Get().Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(name.ToLower()));
 
             if (students == null)
@@ -300,6 +305,11 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<StudentWithParentDTO> GetAllByStudentNameAndTeacherID(string name, string teacherId)
         {
+            if (name == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var students = db.StudentsRepository.Get().Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(name.ToLower()));
             var teacher = db.TeachersRepository.GetByID(teacherId);
 
@@ -324,6 +334,11 @@ namespace ElementarySchoolProject.Services.UsersServices
                 
         public IEnumerable<StudentWithParentDTO> GetAllByTeacherName(string teacherName)
         {
+            if (teacherName == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var students = db.StudentsRepository.Get(st => st.SchoolClass.SchoolClassTeacherSchoolSubjects
             .Any(sctss => (sctss.TeacherSchoolSubject.Teacher.FirstName + " " + sctss.TeacherSchoolSubject.Teacher.LastName).ToLower().Contains(teacherName.ToLower())));
 
@@ -341,9 +356,15 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<StudentWithParentDTO> GetAllByTeacherNameAndTeacherId(string teacherName, string teacherId)
         {
+            if (teacherName == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var students = db.StudentsRepository.Get(st => st.SchoolClass.SchoolClassTeacherSchoolSubjects
-            .Any(sctss => sctss.TeacherSchoolSubject.Teacher.Id == teacherId 
-            && (sctss.TeacherSchoolSubject.Teacher.FirstName + " " + sctss.TeacherSchoolSubject.Teacher.LastName).ToLower().Contains(teacherName.ToLower())));
+            .Any(sctss => sctss.TeacherSchoolSubject.Teacher.Id == teacherId))
+            .Where(x => x.SchoolClass.SchoolClassTeacherSchoolSubjects
+            .Any(y => (y.TeacherSchoolSubject.Teacher.FirstName + " " + y.TeacherSchoolSubject.Teacher.LastName).ToLower().Contains(teacherName.ToLower())));
 
             if (students == null)
             {
@@ -379,7 +400,7 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectIdAndTeacherId(int subjectId, string teacherId)
         {
-            var schoolSubject = db.SchoolClassesRepository.GetByID(subjectId);
+            var schoolSubject = db.SchoolSubjectsRepository.GetByID(subjectId);
             var teacher = db.TeachersRepository.GetByID(teacherId);
 
             if (schoolSubject == null)
@@ -407,6 +428,11 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectName(string subjectName)
         {
+            if (subjectName == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var students = db.StudentsRepository.Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects
             .Any(x => x.TeacherSchoolSubject.SchoolSubject.Name.ToLower().Contains(subjectName.ToLower())));
 
@@ -422,6 +448,11 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<StudentWithParentDTO> GetAllBySchoolSubjectNameAndTeacherId(string subjectName, string teacherId)
         {
+            if (subjectName == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var students = db.StudentsRepository.Get(s => s.SchoolClass.SchoolClassTeacherSchoolSubjects
             .Any(x => x.TeacherSchoolSubject.SchoolSubject.Name.ToLower().Contains(subjectName.ToLower())
             && x.TeacherSchoolSubject.Teacher.Id == teacherId));

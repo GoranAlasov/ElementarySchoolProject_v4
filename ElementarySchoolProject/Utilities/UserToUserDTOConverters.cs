@@ -203,6 +203,7 @@ namespace ElementarySchoolProject.Utilities
             retVal.FirstName = teacher.FirstName;
             retVal.LastName = teacher.LastName;
             retVal.UserName = teacher.UserName;
+            retVal.Email = teacher.Email;
             retVal.TeachesSubjects = teacher.TeacherSchoolSubjects
                 .Where(x => x.Teacher.Id == teacher.Id)
                 .Select(x => SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectDTO(x.SchoolSubject));

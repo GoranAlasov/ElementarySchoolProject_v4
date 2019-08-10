@@ -41,15 +41,22 @@ namespace ElementarySchoolProject.Controllers
         [Authorize(Roles = "admin")]
         public IHttpActionResult GetSchoolClassTeacherSchoolSubject(int id)
         {
-            SchoolClassTeacherSchoolSubjectDTO retVal = service.GetById(id);
-            if (retVal == null)
+            try
             {
-                logger.Warn("No schoolclassteacherschoolsubject with id {0}", id);
-                return NotFound();
-            }
+                SchoolClassTeacherSchoolSubjectDTO retVal = service.GetById(id);
+                if (retVal == null)
+                {
+                    logger.Warn("No schoolclassteacherschoolsubject with id {0}", id);
+                    return NotFound();
+                }
 
-            logger.Info("Returning schoolclassteacherschoolsubject with id {0}", id);
-            return Ok(retVal);
+                logger.Info("Returning schoolclassteacherschoolsubject with id {0}", id);
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }            
         }
 
         //PUT: api/schoolclassteacherschoolsubjects/4
@@ -85,7 +92,7 @@ namespace ElementarySchoolProject.Controllers
 
             SchoolClassTeacherSchoolSubjectDTO retVal = service.CreateSchoolClassTeacherSchoolSubject(dto);
             logger.Info("Created new schoolclassteacherschoolsubject");
-            return CreatedAtRoute("DefaultApi", new { id = retVal.Id }, retVal);
+            return Created("", retVal);
         }
 
         //DELETE: api/schoolclassteacherschoolsubject/6

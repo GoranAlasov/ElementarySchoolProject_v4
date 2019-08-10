@@ -104,7 +104,7 @@ namespace ElementarySchoolProject.Controllers
                         logger.Info("Calling parent access level GradesService GetAllByStudentNameAndParentId method. Parent ID: {0}", parentId);
                         var retVal3 = service.GetAllByStudentNameAndParentId(firstName, lastName, parentId);
                         logger.Info("Returning ok to browser.");
-                        return Ok(retVal3);                    
+                        return Ok(retVal3);
 
                     default:
                         logger.Warn("BadRequest. There is no method for this role! {0}", role);
@@ -315,12 +315,12 @@ namespace ElementarySchoolProject.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
 
         [Authorize(Roles = "teacher")]
         [HttpPost]
-        [Route("grading")]        
+        [Route("grading")]
         public IHttpActionResult CreateGradeTeacher([FromBody]GradeCreateAndEditDTO dto)
         {
             string id = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
@@ -399,7 +399,7 @@ namespace ElementarySchoolProject.Controllers
         [HttpPut]
         [Route("{id}")]
         public IHttpActionResult DeleteGrade(int id)
-        {              
+        {
             try
             {
                 GradeDTO retVal = service.DeleteGrade(id);
@@ -412,6 +412,5 @@ namespace ElementarySchoolProject.Controllers
                 return BadRequest(e.Message);
             }
         }
-
     }
 }

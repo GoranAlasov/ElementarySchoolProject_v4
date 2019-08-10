@@ -102,7 +102,7 @@ namespace ElementarySchoolProject.Controllers
             return Ok(result);
         }
 
-        
+
         [Authorize(Roles = "admin")]
         //[AllowAnonymous]
         [Route("students")]
@@ -141,12 +141,12 @@ namespace ElementarySchoolProject.Controllers
                 logger.Warn("PutAdmin returned BadRequest with invalid ModelState");
                 return BadRequest(ModelState);
             }
-                        
+
             var result = await service.EditAdmin(id, user);
 
             logger.Info("PutAdmin finished Ok. Admin {0} was edited.", id);
             return Ok(result);
-        }        
+        }
 
         [Authorize(Roles = "admin")]
         [Route("teachers/{id}")]
@@ -368,7 +368,7 @@ namespace ElementarySchoolProject.Controllers
         }
 
         [Route("parents/{id}")]
-        [Authorize(Roles = "admin")]        
+        [Authorize(Roles = "admin")]
         //[AllowAnonymous]
         [HttpGet]
         public IHttpActionResult GetParentById(string id)
@@ -383,7 +383,7 @@ namespace ElementarySchoolProject.Controllers
 
             logger.Info($"Getting parent with id {id}");
             return Ok(retVal);
-        }        
+        }
 
         [Route("students/{id}")]
         [Authorize(Roles = "admin")]

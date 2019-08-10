@@ -309,7 +309,7 @@ namespace ElementarySchoolProject.Controllers
                     case "teacher":
                         string teacherId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
                         logger.Info("Calling teacher access level StudentsService method GetAllByTeacherNameAndTeacherId. Teacher ID: {0}", teacherId);
-                        var retVal2 = service.GetAllByStudentNameAndTeacherID(teacherName, teacherId);
+                        var retVal2 = service.GetAllByTeacherNameAndTeacherId(teacherName, teacherId);
                         logger.Info("Returning ok to browser.");
                         return Ok(retVal2);
 

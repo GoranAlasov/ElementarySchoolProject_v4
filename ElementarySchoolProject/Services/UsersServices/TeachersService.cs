@@ -31,8 +31,13 @@ namespace ElementarySchoolProject.Services.UsersServices
 
         public IEnumerable<TeacherBasicDTO> GetAllByName(string name)
         {
+            if (name == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var retVal = db.TeachersRepository.Get()
-                .Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(name.ToLower()));
+            .Where(x => (x.FirstName + " " + x.LastName).ToLower().Contains(name.ToLower()));
 
             if (retVal == null)
             {
@@ -42,10 +47,16 @@ namespace ElementarySchoolProject.Services.UsersServices
 
             logger.Info("Getting teachers with names and/or surnames containing \"{0}\"", name);
             return retVal.Select(x => UserToUserDTOConverters.TeacherToTeacherBasicDTO(x));
+
         }
 
         public IEnumerable<TeacherBasicDTO> GetAllBySubjectName(string name)
         {
+            if (name == null)
+            {
+                throw new NullReferenceException();
+            }
+
             var retVal = db.TeachersRepository.Get()
                 .Where(x => x.TeacherSchoolSubjects.Any(y => y.SchoolSubject.Name.ToLower().Contains(name.ToLower())));
 

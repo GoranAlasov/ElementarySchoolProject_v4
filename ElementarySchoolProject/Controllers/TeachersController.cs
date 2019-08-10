@@ -181,16 +181,26 @@ namespace ElementarySchoolProject.Controllers
         [Route("{id}")]
         public IHttpActionResult GetTeacherById(string id)
         {
-            var retVal = service.GetById(id);
-
-            if (retVal == null)
+            try
             {
-                logger.Warn($"Teacher with id {id} not found. Bad request");
-                return NotFound();
+                var retVal = service.GetById(id);
+
+                if (retVal == null)
+                {
+                    logger.Warn($"Teacher with id {id} not found. Bad request");
+                    return NotFound();
+                }
+
+                logger.Info("Returning teacher with id {0}", id);
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                logger.Warn("Cauget exception {0}", e.Message);
+                return BadRequest();
             }
 
-            logger.Info("Returning teacher with id {0}", id);
-            return Ok(retVal);
+            
         }
     }
 }

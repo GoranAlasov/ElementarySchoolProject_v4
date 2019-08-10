@@ -38,6 +38,11 @@ namespace ElementarySchoolProject.Services
         public SchoolClassTeacherSchoolSubjectDTO DeleteSchoolClassTeacherSchoolSubject(int id)
         {
             SchoolClassTeacherSchoolSubject sctss = db.SchoolClassTeacherSchoolSubjectRepository.GetByID(id);
+
+            if (sctss == null)
+            {
+                throw new NullReferenceException();
+            }
             
             db.SchoolClassTeacherSchoolSubjectRepository.Delete(sctss);
             db.Save();
@@ -52,8 +57,11 @@ namespace ElementarySchoolProject.Services
 
             if (sctss != null)
             {
-                sctss.SchoolClass.Id = dto.SchoolClassId;
-                sctss.TeacherSchoolSubject.Id = dto.TeacherSchoolSubjectId;
+                var schoolClass = db.SchoolClassesRepository.GetByID(dto.SchoolClassId);
+                var teacherSchoolSubject = db.TeacherSchoolSubjectSRepository.GetByID(dto.TeacherSchoolSubjectId);
+
+                sctss.SchoolClass = schoolClass;
+                sctss.TeacherSchoolSubject = teacherSchoolSubject;
 
                 db.SchoolClassTeacherSchoolSubjectRepository.Update(sctss);
                 db.Save();
@@ -72,6 +80,13 @@ namespace ElementarySchoolProject.Services
 
         public SchoolClassTeacherSchoolSubjectDTO GetById(int id)
         {
+            var retVal = db.SchoolClassTeacherSchoolSubjectRepository.GetByID(id);
+
+            if (retVal == null)
+            {
+                throw new NullReferenceException();
+            }
+
             return SchoolClassTeacherSchoolSubjectToSchoolClassTeacherSchoolSubjectDTOConverters
                 .SchoolClassTeacherSchoolSubjectTo_SchoolClassTeacherSchoolSubjectDTO
                 (db.SchoolClassTeacherSchoolSubjectRepository.GetByID(id));
