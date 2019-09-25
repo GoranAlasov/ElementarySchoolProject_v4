@@ -33,9 +33,17 @@ namespace ElementarySchoolProject.Services
         public TeacherSchoolSubjectDTO GetById(int id)
         {
             logger.Info("Gettin teacherschoolsubject with id {0}.", id);
+
+            var retVal = db.TeacherSchoolSubjectSRepository.GetByID(id);
+
+            if (retVal == null)
+            {
+                throw new NullReferenceException();
+            }
+
             return TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.TeacherSchoolSubjectToTeacherSchoolSubjectDTO
                 (
-                db.TeacherSchoolSubjectSRepository.GetByID(id)
+                retVal
                 );                
         }
 
@@ -71,8 +79,11 @@ namespace ElementarySchoolProject.Services
 
             if (ts != null)
             {
-                ts.SchoolSubjectId = dto.SchoolSubjectId;
-                ts.TeacherId = dto.TeacherId;
+                var schoolSubject = db.SchoolSubjectsRepository.GetByID(dto.SchoolSubjectId);
+                var teacher = db.TeachersRepository.GetByID(dto.TeacherId);
+
+                ts.SchoolSubject = schoolSubject;
+                ts.Teacher = teacher;
 
                 db.TeacherSchoolSubjectSRepository.Update(ts);
                 db.Save();
@@ -82,7 +93,7 @@ namespace ElementarySchoolProject.Services
             return TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.TeacherSchoolSubjectToTeacherSchoolSubjectDTO(ts);
         }
 
-        public TeacherSchoolSubjectDTO DeleteTeacherSchoolSubject(int id)
+        public void DeleteTeacherSchoolSubject(int id)
         {
             TeacherSchoolSubject ts = db.TeacherSchoolSubjectSRepository.GetByID(id);
 
@@ -96,7 +107,7 @@ namespace ElementarySchoolProject.Services
             db.Save();
             logger.Info("Successfully deleted teacherschoolsubject.");
 
-            return TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.TeacherSchoolSubjectToTeacherSchoolSubjectDTO(ts);
+           
         }
     }
 }

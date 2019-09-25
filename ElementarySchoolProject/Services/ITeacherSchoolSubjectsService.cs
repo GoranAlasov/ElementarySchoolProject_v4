@@ -14,6 +14,6 @@ namespace ElementarySchoolProject.Services
         TeacherSchoolSubjectDTO GetById(int id);
         TeacherSchoolSubjectDTO CreateTeacherSchoolSubject(TeacherSchoolSubjectCreateAndEditDTO dto);
         TeacherSchoolSubjectDTO EditTeacherSchoolSubject(int id, TeacherSchoolSubjectCreateAndEditDTO dto);
-        TeacherSchoolSubjectDTO DeleteTeacherSchoolSubject(int id);
+        void DeleteTeacherSchoolSubject(int id);
     }
 }

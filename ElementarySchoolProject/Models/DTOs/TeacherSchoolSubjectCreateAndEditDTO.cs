@@ -8,7 +8,7 @@ namespace ElementarySchoolProject.Models.DTOs
 {
     public class TeacherSchoolSubjectCreateAndEditDTO
     {
-        [RegularExpression("[0-9]+", ErrorMessage = "Must be a number.")]
+        
         public string TeacherId { get; set; }
 
         [RegularExpression("[0-9]+", ErrorMessage = "Must be a number.")]

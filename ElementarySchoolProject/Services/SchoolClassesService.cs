@@ -35,6 +35,18 @@ namespace ElementarySchoolProject.Services
         public SchoolClassDTO DeleteSchoolClass(int id)
         {
             SchoolClass sc = db.SchoolClassesRepository.GetByID(id);
+            var students = db.StudentsRepository.Get(x => x.SchoolClass.Id == id);
+            var sctss = db.SchoolClassTeacherSchoolSubjectRepository.Get(x => x.SchoolClass.Id == id);
+
+            foreach (var item in students)
+            {
+                item.SchoolClass = null;
+            }
+
+            foreach (var item in sctss)
+            {
+                item.SchoolClass = null;
+            }
 
             logger.Info("Deleting school class with id {0}", id);
             db.SchoolClassesRepository.Delete(sc);

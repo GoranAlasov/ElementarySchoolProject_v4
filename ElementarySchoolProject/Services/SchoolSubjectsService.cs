@@ -81,7 +81,12 @@ namespace ElementarySchoolProject.Services
 
         public SchoolSubjectWithWeeklyClassesAndTeachersDTO GetById(int id)
         {
-            return SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesAndTeachersDTO(db.SchoolSubjectsRepository.GetByID(id));
+            var retVal = db.SchoolSubjectsRepository.GetByID(id);
+            if (retVal == null)
+            {
+                throw new NullReferenceException();
+            }
+            return SchoolSubjectToSchoolSubjectDTOConverters.SchoolSubjectToSchoolSubjectWithWeeklyClassesAndTeachersDTO(retVal);
         }
     }
 }

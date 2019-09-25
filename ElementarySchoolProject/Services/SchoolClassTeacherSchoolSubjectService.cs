@@ -42,7 +42,7 @@ namespace ElementarySchoolProject.Services
             if (sctss == null)
             {
                 throw new NullReferenceException();
-            }
+            }           
             
             db.SchoolClassTeacherSchoolSubjectRepository.Delete(sctss);
             db.Save();

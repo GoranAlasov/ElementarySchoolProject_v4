@@ -77,15 +77,22 @@ namespace ElementarySchoolProject.Controllers
         [HttpGet]
         public IHttpActionResult GetSchoolSubjectById(int id)
         {
-            SchoolSubjectWithWeeklyClassesAndTeachersDTO schoolSubject = service.GetById(id);
-            if (schoolSubject == null)
+            try
             {
-                logger.Warn("No school subject with id {0}", id);
-                return NotFound();
-            }
+                SchoolSubjectWithWeeklyClassesAndTeachersDTO schoolSubject = service.GetById(id);
+                if (schoolSubject == null)
+                {
+                    logger.Warn("No school subject with id {0}", id);
+                    return NotFound();
+                }
 
-            logger.Info("Returning ok to browser.");
-            return Ok(schoolSubject);
+                logger.Info("Returning ok to browser.");
+                return Ok(schoolSubject);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);               
+            }            
         }
 
         // PUT: api/SchoolSubjects/5
@@ -123,7 +130,7 @@ namespace ElementarySchoolProject.Controllers
             SchoolSubjectWithWeeklyClassesDTO retVal = service.CreateSchoolSubject(dto);
 
             logger.Info("School subject successfully created.");
-            return CreatedAtRoute("DefaultApi", new { id = retVal.Id }, retVal);
+            return Created("", retVal);
         }
 
         // DELETE: api/SchoolSubjects/5

@@ -101,7 +101,8 @@ namespace ElementarySchoolProject.Services
             }
 
             logger.Info("Getting all grades given to all students, children of parent with id {0}, name {1} {2}.", id, parent.FirstName, parent.LastName);
-            var retVal = db.GradesRepository.Get(x => x.SchoolClassTeacherSchoolSubject.SchoolClass.Students.Any(y => y.Parent.Id == id));
+            var retVal = db.GradesRepository.Get(grade => grade.SchoolClassTeacherSchoolSubject.SchoolClass.Students.Any( x=> x.Parent.Id == id));
+                //.Select(x => x.SchoolClassTeacherSchoolSubject.SchoolClass.Students).Where(y => y.Any( z => z.Parent.Id == id));
 
             return retVal.Select(x => GradeToGradeDTOConverters.GradeToGradeDTO(x));
         }

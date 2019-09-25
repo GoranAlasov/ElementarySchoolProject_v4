@@ -128,7 +128,7 @@ namespace ElementarySchoolProject.Controllers
                     case "teacher":
                         string teacherId = ((ClaimsPrincipal)RequestContext.Principal).FindFirst(x => x.Type == "UserId").Value;
                         logger.Info("Calling teacher access level SchoolClassesService method GetByIdAndTeacherId. Teacher ID: {0}", teacherId);
-                        var retVal2 = service.GetBySchoolGradeAndTeacherId(id, teacherId);
+                        var retVal2 = service.GetByIdAndTeacherId(id, teacherId);
                         if (retVal2 == null)
                         {
                             logger.Info("School class with id {0} not found.", id);
@@ -167,7 +167,7 @@ namespace ElementarySchoolProject.Controllers
                 SchoolClassDTO retVal = service.CreateSchoolClass(dto);
                 logger.Info("New school class created.");
 
-                return CreatedAtRoute("DefaultApi", new { id = retVal.Id }, retVal);
+                return Created("", retVal);
             }
             catch (Exception e)
             {

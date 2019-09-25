@@ -42,15 +42,23 @@ namespace ElementarySchoolProject.Controllers
         [HttpGet]
         public IHttpActionResult GetTeacherSchoolSubjectById(int id)
         {
-            TeacherSchoolSubjectDTO retVal = service.GetById(id);
-            if (retVal == null)
+            try
             {
-                logger.Warn("Not found teacherschoolsubject");
-                return NotFound();
-            }
+                TeacherSchoolSubjectDTO retVal = service.GetById(id);
+                if (retVal == null)
+                {
+                    logger.Warn("Not found teacherschoolsubject");
+                    return NotFound();
+                }
 
-            logger.Info("Returning OK to front.");
-            return Ok(retVal);
+                logger.Info("Returning OK to front.");
+                return Ok(retVal);
+            }
+            catch (Exception e)
+            {
+                logger.Warn("Exception {0}", e.Message);
+                return NotFound();
+            }            
         }
 
         //PUT: api/teacherschoolsubjects/6
@@ -78,15 +86,23 @@ namespace ElementarySchoolProject.Controllers
         [HttpPost] 
         public IHttpActionResult PostTeacherSchoolSubject([FromBody] TeacherSchoolSubjectCreateAndEditDTO dto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                logger.Warn("Invalid model state, teacherschoolsubject create failed. returning bad request");
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    logger.Warn("Invalid model state, teacherschoolsubject create failed. returning bad request");
+                    return BadRequest(ModelState);
+                }
 
-            TeacherSchoolSubjectDTO retVal = service.CreateTeacherSchoolSubject(dto);
-            logger.Info("Successfully created teacherschoolsubject. returning ok to front");
-            return CreatedAtRoute("DefaultApi", new { id = retVal.Id }, retVal);
+                TeacherSchoolSubjectDTO retVal = service.CreateTeacherSchoolSubject(dto);
+                logger.Info("Successfully created teacherschoolsubject. returning ok to front");
+                return Created("", retVal);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }        
 
         //DELETE: api/teacherschoolsubject/8
@@ -96,9 +112,9 @@ namespace ElementarySchoolProject.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteTeacherSchoolSubject(int id)
         {
-            TeacherSchoolSubjectDTO retVal = service.DeleteTeacherSchoolSubject(id);
+            service.DeleteTeacherSchoolSubject(id);
             logger.Info("Successfully deleted teacherschoolsubject. returning ok to front");
-            return Ok(retVal);
+            return Ok();
         }
     }
 }
