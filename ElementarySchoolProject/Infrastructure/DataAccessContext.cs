@@ -14,7 +14,13 @@ namespace ElementarySchoolProject.Infrastructure
         {
             Database.SetInitializer<DataAccessContext>(new DataAccessContextInitializer());
         }
-            
+
+        public DbSet<SchoolClass> SchoolClasses { get; set; }
+        public DbSet<SchoolSubject> SchoolSubjects { get; set; }
+        public DbSet<TeacherSchoolSubject> TeacherSchoolSubjects { get; set; }
+        public DbSet<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjects { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<LogEntry> LogEntries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -23,16 +29,7 @@ namespace ElementarySchoolProject.Infrastructure
             modelBuilder.Entity<Admin>().ToTable("Admins");
             modelBuilder.Entity<Teacher>().ToTable("Teachers");
             modelBuilder.Entity<Parent>().ToTable("Parents");
-            modelBuilder.Entity<Student>().ToTable("Students");
-
-            //modelBuilder.Entity<ApplicationUser>().ToTable("Users");
-                        
-            //TODO 2: ***DONE***  Build all databases here
-        }
-
-        //public DbSet<ApplicationUser> Users { get; set; }
-        
-
-        
+            modelBuilder.Entity<Student>().ToTable("Students");            
+        }        
     }
 }

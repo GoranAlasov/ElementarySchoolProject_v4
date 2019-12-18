@@ -7,5 +7,6 @@ namespace ElementarySchoolProject.Models
 {
     public class Teacher : ApplicationUser
     {
+        public virtual List<TeacherSchoolSubject> TeacherSchoolSubjects { get; set; }        
     }
 }

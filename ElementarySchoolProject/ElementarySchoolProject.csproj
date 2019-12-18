@@ -43,11 +43,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -77,12 +83,29 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=8.0.17.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.17\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.10.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.10.9\lib\net452\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.6.6\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -90,6 +113,10 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Cors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -134,20 +161,61 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiMethodController.cs" />
+    <Compile Include="Controllers\GradesController.cs" />
+    <Compile Include="Controllers\LogEntriesController.cs" />
+    <Compile Include="Controllers\ParentsController.cs" />
+    <Compile Include="Controllers\SchoolClassesController.cs" />
+    <Compile Include="Controllers\SchoolClassTeacherSchoolSubjectsController.cs" />
+    <Compile Include="Controllers\SchoolSubjectsController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\TeacherSchoolSubjectsController.cs" />
+    <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Infrastructure\DataAccessContext.cs" />
     <Compile Include="Infrastructure\DataAccessContextInitializer.cs" />
+    <Compile Include="Models\DTOs\AverageGradeDTO.cs" />
+    <Compile Include="Models\DTOs\GradeCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\GradeDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassDetailsDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassTeacherSchoolSubjectCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolClassTeacherSchoolSubjectDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectBasicDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectWithWeeklyClassesAndTeachersDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectWithWeeklyClassesDTO.cs" />
+    <Compile Include="Models\DTOs\SchoolSubjectCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\TeacherSchoolSubjectCreateAndEditDTO.cs" />
+    <Compile Include="Models\DTOs\TeacherSchoolSubjectDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\EditUserDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\StudentBasicDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\TeacherBasicDTO.cs" />
+    <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\LogEntry.cs" />
+    <Compile Include="Models\SchoolClass.cs" />
+    <Compile Include="Models\SchoolClassTeacherSchoolSubject.cs" />
+    <Compile Include="Models\SchoolSubject.cs" />
+    <Compile Include="Models\TeacherSchoolSubject.cs" />
     <Compile Include="Models\Users\Admin.cs" />
     <Compile Include="Models\Users\ApplicationUser.cs" />
     <Compile Include="Models\Users\Parent.cs" />
     <Compile Include="Models\Users\Student.cs" />
     <Compile Include="Models\Users\Teacher.cs" />
-    <Compile Include="Models\Users\UserDTOs\RegisterUserDTO.cs" />
-    <Compile Include="Models\Users\UserDTOs\UserBasicInfoDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\ParentSimpleViewDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\RegisterStudentDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\RegisterUserDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\StudentWithParentDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\StudentWithParentGradesClassDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\UserViewWithRoleIdsDTO.cs" />
+    <Compile Include="Models\DTOs\UserDTOs\UserSimpleViewDTO.cs" />
+    <Compile Include="Models\Users\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Repositories\AuthReposiroty.cs" />
@@ -156,12 +224,39 @@
     <Compile Include="Repositories\IGenericRepository.cs" />
     <Compile Include="Repositories\IUnitOfWork.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
-    <Compile Include="Services\UsersService\IUsersService.cs" />
-    <Compile Include="Services\UsersService\UsersService.cs" />
+    <Compile Include="Services\GradesService.cs" />
+    <Compile Include="Services\IGradesService.cs" />
+    <Compile Include="Services\ILogEntriesService.cs" />
+    <Compile Include="Services\ISchoolClassesService.cs" />
+    <Compile Include="Services\ISchoolClassTeacherSchoolSubjectService.cs" />
+    <Compile Include="Services\ITeacherSchoolSubjectsService.cs" />
+    <Compile Include="Services\LogEntriesService.cs" />
+    <Compile Include="Services\SchoolClassesService.cs" />
+    <Compile Include="Services\SchoolClassTeacherSchoolSubjectService.cs" />
+    <Compile Include="Services\SchoolSubjectsService.cs" />
+    <Compile Include="Services\TeacherSchoolSubjectService.cs" />
+    <Compile Include="Services\UsersServices\IParentsService.cs" />
+    <Compile Include="Services\ISchoolSubjectsService.cs" />
+    <Compile Include="Services\UsersServices\IStudentsService.cs" />
+    <Compile Include="Services\UsersServices\ITeachersService.cs" />
+    <Compile Include="Services\UsersServices\IUsersService.cs" />
+    <Compile Include="Services\UsersServices\ParentsService.cs" />
+    <Compile Include="Services\UsersServices\StudentsService.cs" />
+    <Compile Include="Services\UsersServices\TeachersService.cs" />
+    <Compile Include="Services\UsersServices\UsersService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\EmailSenders.cs" />
+    <Compile Include="Utilities\Exceptions\DatesRangeException.cs" />
+    <Compile Include="Utilities\GradeToGradeDTOConverters.cs" />
+    <Compile Include="Utilities\SchoolClassTeacherSchoolSubjectTo SchoolClassTeacherSchoolSubjectDTOConverters.cs" />
+    <Compile Include="Utilities\SchoolClassToSchoolClassDTOConverters.cs" />
+    <Compile Include="Utilities\SchoolSubjectToSchoolSubjectDTOConverters.cs" />
+    <Compile Include="Utilities\TeacherSchoolSubjectToTeacherSchoolSubjectDTOConverters.cs" />
     <Compile Include="Utilities\UserToUserDTOConverters.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClassDiagram1.cd" />
+    <Content Include="NLog.config" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

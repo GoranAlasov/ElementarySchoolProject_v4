@@ -9,8 +9,6 @@ namespace ElementarySchoolProject.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        #region UserRepos
-
         IAuthRepository AuthRepository { get; }
                 
         IGenericRepository<Admin> AdminsRepository { get; }
@@ -19,14 +17,17 @@ namespace ElementarySchoolProject.Repositories
         IGenericRepository<Student> StudentsRepository { get; }
 
         IGenericRepository<ApplicationUser> UsersRepository { get; }
+         
+        IGenericRepository<SchoolSubject> SchoolSubjectsRepository { get; }
+        IGenericRepository<SchoolClass> SchoolClassesRepository { get; }
+        IGenericRepository<TeacherSchoolSubject> TeacherSchoolSubjectSRepository { get; }
+        IGenericRepository<SchoolClassTeacherSchoolSubject> SchoolClassTeacherSchoolSubjectRepository { get; }
+        IGenericRepository<Grade> GradesRepository { get; }
+        IGenericRepository<LogEntry> LogEntriesRepository { get; }
 
-        #endregion
+        //TODO 6: ***DONE*** Add and implement all other repositories
 
-        #region SchoolRepos
-
-        //TODO 6: Add and implement all other repositories
-
-        #endregion
+        
 
         void Save();
     }

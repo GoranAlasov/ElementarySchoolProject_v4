@@ -2,7 +2,8 @@
 using ElementarySchoolProject.Models;
 using ElementarySchoolProject.Providers;
 using ElementarySchoolProject.Repositories;
-using ElementarySchoolProject.Services.UsersService;
+using ElementarySchoolProject.Services;
+using ElementarySchoolProject.Services.UsersServices;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
@@ -43,7 +44,7 @@ namespace ElementarySchoolProject
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(15),
                 Provider = new SimpleAuthorizationServerProvider(container)
             };
 
@@ -66,16 +67,31 @@ namespace ElementarySchoolProject
             container.RegisterType<IAuthRepository, AuthRepository>();
 
             container.RegisterType<IGenericRepository<ApplicationUser>, GenericRepository<ApplicationUser>>();
-            
+
             container.RegisterType<IGenericRepository<Admin>, GenericRepository<Admin>>();
             container.RegisterType<IGenericRepository<Teacher>, GenericRepository<Teacher>>();
             container.RegisterType<IGenericRepository<Parent>, GenericRepository<Parent>>();
             container.RegisterType<IGenericRepository<Student>, GenericRepository<Student>>();
 
-            container.RegisterType<IUsersService, UsersService>();
+            container.RegisterType<IGenericRepository<SchoolClass>, GenericRepository<SchoolClass>>();
+            container.RegisterType<IGenericRepository<SchoolSubject>, GenericRepository<SchoolSubject>>();
+            container.RegisterType<IGenericRepository<TeacherSchoolSubject>, GenericRepository<TeacherSchoolSubject>>();
+            container.RegisterType<IGenericRepository<SchoolClassTeacherSchoolSubject>, GenericRepository<SchoolClassTeacherSchoolSubject>>();            
+            container.RegisterType<IGenericRepository<Grade>, GenericRepository<Grade>>();
+            container.RegisterType<IGenericRepository<LogEntry>, GenericRepository<LogEntry>>();
 
+            container.RegisterType<IUsersService, UsersService>();
+            container.RegisterType<IStudentsService, StudentsService>();
+            container.RegisterType<IParentsSerivce, ParentsService>();
+            container.RegisterType<ITeachersService, TeachersService>();
+            container.RegisterType<ISchoolSubjectsService, SchoolSubjectsService>();
+            container.RegisterType<ISchoolClassesService, SchoolClassesService>();
+            container.RegisterType<ITeacherSchoolSubjectsService, TeacherSchoolSubjectService>();
+            container.RegisterType<ISchoolClassTeacherSchoolSubjectService, SchoolClassTeacherSchoolSubjectService>();
+            container.RegisterType<IGradesService, GradesService>();
+            container.RegisterType<ILogEntriesService, LogEntriesService>();
             //TODO 0.1: Adding dependencies
-            //container.RegisterType<IUserService, UserService>();
+            
             return container;
         }
     }

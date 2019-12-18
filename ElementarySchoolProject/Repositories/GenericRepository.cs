@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace ElementarySchoolProject.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         internal DbContext context;
         internal DbSet<TEntity> dbSet;
 
